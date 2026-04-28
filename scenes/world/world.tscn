@@ -27,14 +27,14 @@ position = Vector2(-64, -64)
 
 [node name="Doran" parent="." unique_id=777630715 instance=ExtResource("7_bq33v")]
 position = Vector2(96, -64)
-personality = "grunon"
+npc_id = "doran"
 
 [node name="Mira" parent="." unique_id=813906961 instance=ExtResource("8_j2gmx")]
 position = Vector2(96, 64)
-personality = "impredecible"
+npc_id = "mira"
 
 [node name="TrainingSpot" parent="." unique_id=721216541 instance=ExtResource("4_6m72w")]
 position = Vector2(-120, 32)
 
 [node name="LibrarySpot" parent="." unique_id=674097719 instance=ExtResource("9_1yooq")]
-position = Vector2(-120, -96)
+position = Vector2(-168, -144)

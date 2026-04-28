@@ -1,11 +1,13 @@
 extends CharacterBody2D
 
-@export var npc_name: String = "Lyria"
-@export var personality: String = GameConstants.PERSONALITY_AMABLE
+@export var npc_id: String = "lyria"
 
-@export var loved_gifts: Array[String] = ["joya"]
-@export var liked_gifts: Array[String] = ["flor", "libro"]
-@export var disliked_gifts: Array[String] = ["extrano"]
+var npc_name: String = ""
+var personality: String = GameConstants.PERSONALITY_AMABLE
+
+var loved_gifts: Array[String] = []
+var liked_gifts: Array[String] = []
+var disliked_gifts: Array[String] = []
 
 var affinity: int = 0
 var mood: String = GameConstants.MOOD_NEUTRAL
@@ -13,7 +15,37 @@ var interaction_count: int = 0
 var has_received_gift_today: bool = false
 
 func _ready() -> void:
+	load_profile()
 	add_to_group("npcs")
+	
+func load_profile() -> void:
+	var profile: Dictionary = DialogueDatabase.get_npc_profile(npc_id)
+
+	if profile.is_empty():
+		npc_name = npc_id
+		personality = GameConstants.PERSONALITY_AMABLE
+		loved_gifts = []
+		liked_gifts = []
+		disliked_gifts = []
+		return
+
+	npc_name = profile.get("display_name", npc_id)
+	personality = profile.get("personality", GameConstants.PERSONALITY_AMABLE)
+
+	loved_gifts = array_to_string_array(profile.get("loved_gifts", []))
+	liked_gifts = array_to_string_array(profile.get("liked_gifts", []))
+	disliked_gifts = array_to_string_array(profile.get("disliked_gifts", []))
+	
+func array_to_string_array(value: Variant) -> Array[String]:
+	var result: Array[String] = []
+
+	if typeof(value) != TYPE_ARRAY:
+		return result
+
+	for item in value:
+		result.append(str(item))
+
+	return result
 
 func interact() -> void:
 	var dialogue_box = get_tree().current_scene.get_node("DialogueBox")
@@ -70,13 +102,13 @@ func get_personality_dialogue(context: String) -> String:
 	return DialogueDatabase.get_npc_personality_dialogue(personality, context)
 	
 func get_first_interaction_text() -> String:
-	if mood == "happy":
+	if mood == GameConstants.MOOD_HAPPY:
 		var dialogue: String = get_personality_dialogue(GameConstants.DIALOGUE_FIRST_HAPPY)
 		if dialogue != "":
 			return dialogue
 		return "Me alegra verte por aquí."
 
-	elif mood == "irritated":
+	elif mood == GameConstants.MOOD_IRRITATED:
 		var dialogue: String = get_personality_dialogue(GameConstants.DIALOGUE_FIRST_IRRITATED)
 		if dialogue != "":
 			return dialogue
@@ -107,12 +139,12 @@ func get_second_interaction_text(affinity_change: int) -> String:
 func get_limit_text() -> String:
 	var dialogue: String = ""
 
-	if mood == "irritated":
+	if mood == GameConstants.MOOD_IRRITATED:
 		dialogue = get_personality_dialogue(GameConstants.DIALOGUE_LIMIT_IRRITATED)
 		if dialogue == "":
 			dialogue = "Ya basta por hoy."
 
-	elif mood == "happy":
+	elif mood == GameConstants.MOOD_HAPPY:
 		dialogue = get_personality_dialogue(GameConstants.DIALOGUE_LIMIT_HAPPY)
 		if dialogue == "":
 			dialogue = "Hablemos luego, ¿sí?"
@@ -150,9 +182,9 @@ func get_personality_affinity_modifier() -> int:
 	return 0
 
 func get_mood_modifier() -> int:
-	if mood == "happy":
+	if mood == GameConstants.MOOD_HAPPY:
 		return 2
-	elif mood == "irritated":
+	elif mood == GameConstants.MOOD_IRRITATED:
 		return -2
 	else:
 		return 0

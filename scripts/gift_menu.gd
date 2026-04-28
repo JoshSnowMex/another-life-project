@@ -9,15 +9,42 @@ var target_npc = null
 @onready var craft_button: Button = $GiftPanel/CraftButton
 @onready var strange_button: Button = $GiftPanel/StrangeButton
 
+var gift_buttons: Dictionary = {}
+
 func _ready() -> void:
 	visible = false
 
-	food_button.pressed.connect(func(): give_gift("comida"))
-	flower_button.pressed.connect(func(): give_gift("flor"))
-	jewel_button.pressed.connect(func(): give_gift("joya"))
-	book_button.pressed.connect(func(): give_gift("libro"))
-	craft_button.pressed.connect(func(): give_gift("artesania"))
-	strange_button.pressed.connect(func(): give_gift("extrano"))
+	gift_buttons = {
+		GameConstants.GIFT_COMIDA: {
+			"button": food_button,
+			"display_name": "Comida"
+		},
+		GameConstants.GIFT_FLOR: {
+			"button": flower_button,
+			"display_name": "Flor"
+		},
+		GameConstants.GIFT_JOYA: {
+			"button": jewel_button,
+			"display_name": "Joya"
+		},
+		GameConstants.GIFT_LIBRO: {
+			"button": book_button,
+			"display_name": "Libro"
+		},
+		GameConstants.GIFT_ARTESANIA: {
+			"button": craft_button,
+			"display_name": "Artesanía"
+		},
+		GameConstants.GIFT_EXTRANO: {
+			"button": strange_button,
+			"display_name": "Extraño"
+		}
+	}
+
+	for gift_type in gift_buttons.keys():
+		var data: Dictionary = gift_buttons[gift_type]
+		var button: Button = data["button"]
+		button.pressed.connect(func(): give_gift(gift_type))
 
 func open_menu(npc) -> void:
 	target_npc = npc
@@ -29,19 +56,13 @@ func close_menu() -> void:
 	target_npc = null
 
 func update_buttons() -> void:
-	food_button.text = "Comida x" + str(PlayerStats.get_item_count("comida"))
-	flower_button.text = "Flor x" + str(PlayerStats.get_item_count("flor"))
-	jewel_button.text = "Joya x" + str(PlayerStats.get_item_count("joya"))
-	book_button.text = "Libro x" + str(PlayerStats.get_item_count("libro"))
-	craft_button.text = "Artesanía x" + str(PlayerStats.get_item_count("artesania"))
-	strange_button.text = "Extraño x" + str(PlayerStats.get_item_count("extrano"))
+	for gift_type in gift_buttons.keys():
+		var data: Dictionary = gift_buttons[gift_type]
+		var button: Button = data["button"]
+		var display_name: String = data["display_name"]
 
-	food_button.disabled = not PlayerStats.has_item("comida")
-	flower_button.disabled = not PlayerStats.has_item("flor")
-	jewel_button.disabled = not PlayerStats.has_item("joya")
-	book_button.disabled = not PlayerStats.has_item("libro")
-	craft_button.disabled = not PlayerStats.has_item("artesania")
-	strange_button.disabled = not PlayerStats.has_item("extrano")
+		button.text = display_name + " x" + str(PlayerStats.get_item_count(gift_type))
+		button.disabled = not PlayerStats.has_item(gift_type)
 
 func give_gift(gift_type: String) -> void:
 	if target_npc == null:

@@ -1,14 +1,23 @@
 extends Node
 
 const NPC_PERSONALITY_DIALOGUES_PATH: String = "res://data/npc_personality_dialogues.json"
+const NPC_PROFILES_PATH: String = "res://data/npcs.json"
 
 var npc_personality_dialogues: Dictionary = {}
+var npc_profiles: Dictionary = {}
 
 func _ready() -> void:
+	load_all_data()
+
+func load_all_data() -> void:
 	load_npc_personality_dialogues()
+	load_npc_profiles()
 
 func load_npc_personality_dialogues() -> void:
 	npc_personality_dialogues = load_json_file(NPC_PERSONALITY_DIALOGUES_PATH)
+
+func load_npc_profiles() -> void:
+	npc_profiles = load_json_file(NPC_PROFILES_PATH)
 
 func load_json_file(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -29,6 +38,13 @@ func load_json_file(path: String) -> Dictionary:
 		return {}
 
 	return parsed
+
+func get_npc_profile(npc_id: String) -> Dictionary:
+	if not npc_profiles.has(npc_id):
+		push_error("No existe perfil para npc_id: " + npc_id)
+		return {}
+
+	return npc_profiles[npc_id]
 
 func get_npc_personality_dialogue(personality: String, context: String) -> String:
 	if not npc_personality_dialogues.has(personality):

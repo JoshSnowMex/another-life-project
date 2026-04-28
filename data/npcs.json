@@ -1,0 +1,23 @@
+{
+  "lyria": {
+	"display_name": "Lyria",
+	"personality": "amable",
+	"loved_gifts": ["joya"],
+	"liked_gifts": ["flor", "libro"],
+	"disliked_gifts": ["extrano"]
+  },
+  "doran": {
+	"display_name": "Doran",
+	"personality": "grunon",
+	"loved_gifts": ["comida"],
+	"liked_gifts": ["artesania"],
+	"disliked_gifts": ["libro"]
+  },
+  "mira": {
+	"display_name": "Mira",
+	"personality": "impredecible",
+	"loved_gifts": ["libro"],
+	"liked_gifts": ["extrano", "flor"],
+	"disliked_gifts": ["comida"]
+  }
+}
