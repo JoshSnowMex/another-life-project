@@ -7,14 +7,7 @@ var charisma: int = 1
 var constitution: int = 1
 var luck: int = 1
 
-var inventory: Dictionary = {
-	"comida": 2,
-	"flor": 1,
-	"joya": 1,
-	"libro": 1,
-	"artesania": 1,
-	"extrano": 1
-}
+var inventory: Dictionary = {}
 
 var max_energy: int = 100
 var current_energy: int = 100
@@ -22,7 +15,11 @@ var current_energy: int = 100
 var life_path: String = "balanced"
 
 func _ready() -> void:
+	load_starting_inventory()
 	update_max_energy()
+
+func load_starting_inventory() -> void:
+	inventory = DialogueDatabase.get_starting_inventory()
 
 func update_max_energy() -> void:
 	max_energy = 100 + (constitution * 2)

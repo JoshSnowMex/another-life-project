@@ -19,44 +19,9 @@ offset_right = 280.0
 offset_bottom = 45.0
 text = "Elegir Regalo"
 
-[node name="FoodButton" type="Button" parent="GiftPanel" unique_id=2082988634]
+[node name="GiftButtonContainer" type="VBoxContainer" parent="GiftPanel" unique_id=1868446370]
 layout_mode = 0
 offset_left = 20.0
-offset_top = 60.0
-offset_right = 280.0
-offset_bottom = 95.0
-
-[node name="FlowerButton" type="Button" parent="GiftPanel" unique_id=946378811]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 100.0
-offset_right = 280.0
-offset_bottom = 135.0
-
-[node name="JewelButton" type="Button" parent="GiftPanel" unique_id=277002399]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 140.0
-offset_right = 280.0
-offset_bottom = 175.0
-
-[node name="BookButton" type="Button" parent="GiftPanel" unique_id=715292852]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 180.0
-offset_right = 280.0
-offset_bottom = 215.0
-
-[node name="CraftButton" type="Button" parent="GiftPanel" unique_id=1833796906]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 220.0
-offset_right = 280.0
-offset_bottom = 255.0
-
-[node name="StrangeButton" type="Button" parent="GiftPanel" unique_id=1170049547]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 260.0
-offset_right = 280.0
-offset_bottom = 295.0
+offset_top = 48.0
+offset_right = 284.0
+offset_bottom = 344.0

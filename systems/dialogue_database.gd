@@ -2,9 +2,11 @@ extends Node
 
 const NPC_PERSONALITY_DIALOGUES_PATH: String = "res://data/npc_personality_dialogues.json"
 const NPC_PROFILES_PATH: String = "res://data/npcs.json"
+const ITEMS_PATH: String = "res://data/items.json"
 
 var npc_personality_dialogues: Dictionary = {}
 var npc_profiles: Dictionary = {}
+var items: Dictionary = {}
 
 func _ready() -> void:
 	load_all_data()
@@ -12,12 +14,16 @@ func _ready() -> void:
 func load_all_data() -> void:
 	load_npc_personality_dialogues()
 	load_npc_profiles()
+	load_items()
 
 func load_npc_personality_dialogues() -> void:
 	npc_personality_dialogues = load_json_file(NPC_PERSONALITY_DIALOGUES_PATH)
 
 func load_npc_profiles() -> void:
 	npc_profiles = load_json_file(NPC_PROFILES_PATH)
+
+func load_items() -> void:
+	items = load_json_file(ITEMS_PATH)
 
 func load_json_file(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -61,3 +67,43 @@ func get_npc_personality_dialogue(personality: String, context: String) -> Strin
 		return ""
 
 	return options.pick_random()
+
+func get_item_data(item_id: String) -> Dictionary:
+	if not items.has(item_id):
+		return {}
+
+	return items[item_id]
+
+func get_item_display_name(item_id: String) -> String:
+	var item_data: Dictionary = get_item_data(item_id)
+
+	if item_data.is_empty():
+		return item_id
+
+	return item_data.get("display_name", item_id)
+
+func get_items_by_type(item_type: String) -> Dictionary:
+	var result: Dictionary = {}
+
+	for item_id in items.keys():
+		var item_data: Dictionary = items[item_id]
+
+		if item_data.get("type", "") == item_type:
+			result[item_id] = item_data
+
+	return result
+
+func get_gift_items() -> Dictionary:
+	return get_items_by_type("gift")
+
+func get_starting_inventory() -> Dictionary:
+	var result: Dictionary = {}
+
+	for item_id in items.keys():
+		var item_data: Dictionary = items[item_id]
+		var starting_amount: int = int(item_data.get("starting_amount", 0))
+
+		if starting_amount > 0:
+			result[item_id] = starting_amount
+
+	return result
