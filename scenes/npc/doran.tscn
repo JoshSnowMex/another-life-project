@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dtce8cgg4esew"]
+
+[ext_resource type="Script" uid="uid://d2dp3d54c0sqw" path="res://scripts/npc.gd" id="1_4ntli"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2vina"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sspvn"]
+size = Vector2(80, 80)
+
+[node name="Doran" type="CharacterBody2D" unique_id=561795434]
+script = ExtResource("1_4ntli")
+npc_name = "Doran"
+loved_gifts = Array[String](["comida"])
+liked_gifts = Array[String](["artesania"])
+disliked_gifts = Array[String](["libro"])
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=970786325]
+color = Color(0.9297683, 0.49566174, 0.21988326, 1)
+polygon = PackedVector2Array(16, 16, 16, -16, -16, -16, -16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2007265320]
+shape = SubResource("RectangleShape2D_2vina")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=700384561]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1531126514]
+shape = SubResource("RectangleShape2D_sspvn")

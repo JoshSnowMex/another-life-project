@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cw6b0754w6gve"]
+
+[ext_resource type="Script" uid="uid://chtaceuo32fg5" path="res://scripts/dialogue_box.gd" id="1_xg44k"]
+
+[node name="DialogueBox" type="CanvasLayer" unique_id=890622693]
+script = ExtResource("1_xg44k")
+
+[node name="DialoguePanel" type="Panel" parent="." unique_id=509400400]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -228.0
+offset_right = -392.0
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="NameLabel" type="Label" parent="DialoguePanel" unique_id=628627537]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 15.0
+offset_right = 700.0
+offset_bottom = 40.0
+text = "NPC"
+
+[node name="DialogueLabel" type="Label" parent="DialoguePanel" unique_id=1389950467]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 55.0
+offset_right = 700.0
+offset_bottom = 125.0
+text = "Hola Mundo"
+autowrap_mode = 2
