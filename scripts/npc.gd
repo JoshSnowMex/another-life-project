@@ -9,13 +9,9 @@ var loved_gifts: Array[String] = []
 var liked_gifts: Array[String] = []
 var disliked_gifts: Array[String] = []
 
-var affinity: int = 0
-var mood: String = GameConstants.MOOD_NEUTRAL
-var interaction_count: int = 0
-var has_received_gift_today: bool = false
-
 func _ready() -> void:
 	load_profile()
+	RelationshipSystem.ensure_npc_state(npc_id)
 	add_to_group("npcs")
 	
 func load_profile() -> void:
@@ -51,22 +47,35 @@ func interact() -> void:
 	var dialogue_box = get_tree().current_scene.get_node("DialogueBox")
 	var text: String = ""
 
-	interaction_count += 1
+	var interaction_count: int = RelationshipSystem.increment_interaction_count(npc_id)
 
 	if interaction_count == 1:
 		update_mood_for_today()
 		text = get_first_interaction_text()
 	elif interaction_count == 2:
 		var affinity_change: int = calculate_affinity_change()
-		affinity += affinity_change
-		affinity = clamp(affinity, -100, 100)
+		var new_affinity: int = RelationshipSystem.add_affinity(npc_id, affinity_change)
 		update_mood_after_affinity_change(affinity_change)
-		text = get_second_interaction_text(affinity_change)
+		text = get_second_interaction_text(affinity_change, new_affinity)
 	else:
 		text = get_limit_text()
 	
 	dialogue_box.show_dialogue(npc_name, text)
 
+func calculate_affinity_change() -> int:
+	var mood_modifier: int = get_mood_modifier()
+	var affinity_bias: int = get_affinity_bias()
+	var personality_modifier: int = get_personality_affinity_modifier()
+
+	var luck_roll: int = randi_range(-2, 2)
+
+	var charisma_bonus: int = int(PlayerStats.charisma / 5)
+	var luck_bonus: int = int(PlayerStats.luck / 5)
+
+	var result: int = mood_modifier + affinity_bias + personality_modifier + luck_roll + charisma_bonus + luck_bonus
+
+	return clamp(result, -5, 5)
+	
 func update_mood_for_today() -> void:
 	var roll: int = randi_range(1, 100)
 	var bias: int = get_affinity_bias()
@@ -75,11 +84,11 @@ func update_mood_for_today() -> void:
 	var final_roll: int = roll + (bias * 10) + personality_modifier
 
 	if final_roll >= 75:
-		mood = GameConstants.MOOD_HAPPY
+		RelationshipSystem.set_mood(npc_id, GameConstants.MOOD_HAPPY)
 	elif final_roll <= 25:
-		mood = GameConstants.MOOD_IRRITATED
+		RelationshipSystem.set_mood(npc_id, GameConstants.MOOD_IRRITATED)
 	else:
-		mood = GameConstants.MOOD_NEUTRAL
+		RelationshipSystem.set_mood(npc_id, GameConstants.MOOD_NEUTRAL)
 		
 func get_personality_mood_modifier() -> int:
 	match personality:
@@ -94,14 +103,16 @@ func get_personality_mood_modifier() -> int:
 
 func update_mood_after_affinity_change(affinity_change: int) -> void:
 	if affinity_change > 1:
-		mood = GameConstants.MOOD_HAPPY
+		RelationshipSystem.set_mood(npc_id, GameConstants.MOOD_HAPPY)
 	elif affinity_change < 0:
-		mood = GameConstants.MOOD_IRRITATED
+		RelationshipSystem.set_mood(npc_id, GameConstants.MOOD_IRRITATED)
 		
 func get_personality_dialogue(context: String) -> String:
 	return DialogueDatabase.get_npc_personality_dialogue(personality, context)
 	
 func get_first_interaction_text() -> String:
+	var mood: String = RelationshipSystem.get_mood(npc_id)
+
 	if mood == GameConstants.MOOD_HAPPY:
 		var dialogue: String = get_personality_dialogue(GameConstants.DIALOGUE_FIRST_HAPPY)
 		if dialogue != "":
@@ -116,7 +127,7 @@ func get_first_interaction_text() -> String:
 
 	return get_affinity_text()
 
-func get_second_interaction_text(affinity_change: int) -> String:
+func get_second_interaction_text(affinity_change: int, current_affinity: int) -> String:
 	var dialogue: String = ""
 
 	if affinity_change > 0:
@@ -134,10 +145,11 @@ func get_second_interaction_text(affinity_change: int) -> String:
 		if dialogue == "":
 			dialogue = "No tengo mucho más que decir."
 
-	return dialogue + " Afinidad: " + str(affinity)
+	return dialogue + " Afinidad: " + str(current_affinity)
 
 func get_limit_text() -> String:
 	var dialogue: String = ""
+	var mood: String = RelationshipSystem.get_mood(npc_id)
 
 	if mood == GameConstants.MOOD_IRRITATED:
 		dialogue = get_personality_dialogue(GameConstants.DIALOGUE_LIMIT_IRRITATED)
@@ -155,20 +167,6 @@ func get_limit_text() -> String:
 			dialogue = "Creo que ya hablamos suficiente por hoy."
 
 	return dialogue
-
-func calculate_affinity_change() -> int:
-	var mood_modifier: int = get_mood_modifier()
-	var affinity_bias: int = get_affinity_bias()
-	var personality_modifier: int = get_personality_affinity_modifier()
-
-	var luck_roll: int = randi_range(-2, 2)
-
-	var charisma_bonus: int = int(PlayerStats.charisma / 5)
-	var luck_bonus: int = int(PlayerStats.luck / 5)
-
-	var result: int = mood_modifier + affinity_bias + personality_modifier + luck_roll + charisma_bonus + luck_bonus
-
-	return clamp(result, -5, 5)
 	
 func get_personality_affinity_modifier() -> int:
 	match personality:
@@ -182,6 +180,8 @@ func get_personality_affinity_modifier() -> int:
 	return 0
 
 func get_mood_modifier() -> int:
+	var mood: String = RelationshipSystem.get_mood(npc_id)
+
 	if mood == GameConstants.MOOD_HAPPY:
 		return 2
 	elif mood == GameConstants.MOOD_IRRITATED:
@@ -190,6 +190,8 @@ func get_mood_modifier() -> int:
 		return 0
 
 func get_affinity_bias() -> int:
+	var affinity: int = RelationshipSystem.get_affinity(npc_id)
+
 	if affinity < -80:
 		return -3
 	elif affinity < -50:
@@ -206,6 +208,8 @@ func get_affinity_bias() -> int:
 		return 3
 
 func get_affinity_text() -> String:
+	var affinity: int = RelationshipSystem.get_affinity(npc_id)
+
 	if affinity < -80:
 		return "Te odio."
 	elif affinity < -50:
@@ -226,24 +230,23 @@ func get_affinity_text() -> String:
 func receive_gift(gift_type: String) -> void:
 	var dialogue_box = get_tree().current_scene.get_node("DialogueBox")
 
-	if has_received_gift_today:
+	if RelationshipSystem.has_received_gift_today(npc_id):
 		dialogue_box.show_dialogue(npc_name, "Ya me diste algo hoy.")
 		return
 
-	has_received_gift_today = true
+	RelationshipSystem.mark_gift_received_today(npc_id)
 
 	var affinity_change: int = calculate_gift_affinity_change(gift_type)
-	affinity += affinity_change
-	affinity = clamp(affinity, -100, 100)
+	var new_affinity: int = RelationshipSystem.add_affinity(npc_id, affinity_change)
 
 	if affinity_change >= 6:
-		mood = GameConstants.MOOD_HAPPY
+		RelationshipSystem.set_mood(npc_id, GameConstants.MOOD_HAPPY)
 	elif affinity_change < 0:
-		mood = GameConstants.MOOD_IRRITATED
+		RelationshipSystem.set_mood(npc_id, GameConstants.MOOD_IRRITATED)
 	else:
-		mood = GameConstants.MOOD_NEUTRAL
+		RelationshipSystem.set_mood(npc_id, GameConstants.MOOD_NEUTRAL)
 
-	dialogue_box.show_dialogue(npc_name, get_gift_response_text(gift_type, affinity_change))
+	dialogue_box.show_dialogue(npc_name, get_gift_response_text(gift_type, affinity_change, new_affinity))
 
 func calculate_gift_affinity_change(gift_type: String) -> int:
 	var base_change: int = 1
@@ -260,19 +263,18 @@ func calculate_gift_affinity_change(gift_type: String) -> int:
 
 	return clamp(result, -12, 15)
 
-func get_gift_response_text(gift_type: String, affinity_change: int) -> String:
+func get_gift_response_text(gift_type: String, affinity_change: int, current_affinity: int) -> String:
 	if affinity_change >= 10:
-		return "¿Esto es para mí? Me encanta. Afinidad: " + str(affinity)
+		return "¿Esto es para mí? Me encanta. Afinidad: " + str(current_affinity)
 	elif affinity_change > 1:
-		return "Gracias, me gusta. Afinidad: " + str(affinity)
+		return "Gracias, me gusta. Afinidad: " + str(current_affinity)
 	elif affinity_change == 1:
-		return "Gracias... supongo. Afinidad: " + str(affinity)
+		return "Gracias... supongo. Afinidad: " + str(current_affinity)
 	else:
-		return "Esto no me gusta. Afinidad: " + str(affinity)
+		return "Esto no me gusta. Afinidad: " + str(current_affinity)
 
 func reset_daily_interactions() -> void:
-	interaction_count = 0
-	has_received_gift_today = false
+	pass
 	
 func can_receive_gift() -> bool:
-	return not has_received_gift_today
+	return not RelationshipSystem.has_received_gift_today(npc_id)
