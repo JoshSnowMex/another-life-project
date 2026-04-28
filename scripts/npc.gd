@@ -1,5 +1,10 @@
 extends CharacterBody2D
 
+
+const PERSONALITY_AMABLE: String = "amable"
+const PERSONALITY_GRUNON: String = "grunon"
+const PERSONALITY_IMPREDECIBLE: String = "impredecible"
+
 @export var npc_name: String = "Lyria"
 @export var personality: String = "amable"
 
@@ -51,11 +56,11 @@ func update_mood_for_today() -> void:
 		
 func get_personality_mood_modifier() -> int:
 	match personality:
-		"amable":
+		PERSONALITY_AMABLE:
 			return 10
-		"grunon":
+		PERSONALITY_GRUNON:
 			return -10
-		"impredecible":
+		PERSONALITY_IMPREDECIBLE:
 			return randi_range(-20, 20)
 
 	return 0
@@ -65,30 +70,208 @@ func update_mood_after_affinity_change(affinity_change: int) -> void:
 		mood = "happy"
 	elif affinity_change < 0:
 		mood = "irritated"
+		
+func get_personality_dialogue(context: String) -> String:
+	var dialogues: Dictionary = {
+		PERSONALITY_AMABLE: {
+			"first_happy": [
+				"¡Qué alegría verte! Me alegra que hayas venido.",
+				"Justo estaba esperando encontrarme con alguien amable.",
+				"Tu presencia hace que este día se sienta un poco más ligero."
+			],
+			"first_irritated": [
+				"Perdón... hoy no me siento del todo bien.",
+				"No es tu culpa, solo tengo un día complicado.",
+				"Intentaré no descargar mi mal humor contigo."
+			],
+			"second_positive": [
+				"Hablar contigo siempre me deja una buena sensación.",
+				"Gracias por tomarte el tiempo de hablar conmigo.",
+				"Me gusta que podamos conversar así."
+			],
+			"second_negative": [
+				"Creo que esta conversación no salió como esperaba.",
+				"Perdón, quizá no estoy entendiendo bien tus palabras.",
+				"Me siento un poco incómoda con esto."
+			],
+			"second_neutral": [
+				"Supongo que aún nos estamos conociendo.",
+				"No estuvo mal. Podemos hablar más otro día.",
+				"Gracias por acercarte, aunque no tenga mucho que decir ahora."
+			],
+			"limit_happy": [
+				"Me encantaría seguir hablando, pero dejémoslo para luego.",
+				"Hablemos más otro día, ¿sí?",
+				"Guardaré algo de conversación para mañana."
+			],
+			"limit_irritated": [
+				"De verdad necesito descansar un poco.",
+				"Perdón, pero ya no quiero hablar más por hoy.",
+				"Mejor dejémoslo aquí antes de que diga algo feo."
+			],
+			"limit_neutral": [
+				"Creo que ya hablamos suficiente por hoy.",
+				"Podemos continuar otro día.",
+				"Necesito ocuparme de otras cosas ahora."
+			]
+		},
+
+		PERSONALITY_GRUNON: {
+			"first_happy": [
+				"No te acostumbres, pero hoy estoy de buen humor.",
+				"Supongo que verte no arruinó mi día.",
+				"Bueno... hoy puedo tolerar una conversación."
+			],
+			"first_irritated": [
+				"¿Qué quieres ahora?",
+				"No estoy de humor. Habla rápido.",
+				"Este no es un buen momento."
+			],
+			"second_positive": [
+				"No estuvo tan mal como esperaba.",
+				"Bien. Admito que dijiste algo útil.",
+				"Supongo que puedes ser menos molesto de lo normal."
+			],
+			"second_negative": [
+				"Sabía que esto iba a ser una pérdida de tiempo.",
+				"Eso fue exactamente lo que no quería escuchar.",
+				"Me estás dando razones para terminar esta conversación."
+			],
+			"second_neutral": [
+				"No tengo una opinión sobre eso.",
+				"Ajá. ¿Eso era todo?",
+				"No fue terrible. Tampoco interesante."
+			],
+			"limit_happy": [
+				"Ya hablamos bastante. No arruines el momento.",
+				"Terminemos aquí mientras aún estoy de buen humor.",
+				"Vuelve luego. Tal vez."
+			],
+			"limit_irritated": [
+				"Ya basta.",
+				"No voy a repetirlo: déjame en paz por hoy.",
+				"Se acabó la conversación."
+			],
+			"limit_neutral": [
+				"Eso es suficiente por hoy.",
+				"No tengo más que decir.",
+				"Vuelve otro día si insistes."
+			]
+		},
+
+		PERSONALITY_IMPREDECIBLE: {
+			"first_happy": [
+				"¡Hoy el aire sabe a aventura!",
+				"Qué curioso verte justo ahora. Tal vez era destino.",
+				"¡Perfecto! Necesitaba una interrupción interesante."
+			],
+			"first_irritated": [
+				"No sé si quiero hablar... o lanzar una piedra al río.",
+				"Hoy todo suena demasiado fuerte, incluso tus pasos.",
+				"Mi humor está mordiendo. Cuidado."
+			],
+			"second_positive": [
+				"Eso fue inesperadamente divertido.",
+				"Me agradas un poco más. No preguntes por qué.",
+				"Interesante... cambiaste el color del día."
+			],
+			"second_negative": [
+				"Uy. Eso cayó como sopa fría.",
+				"No sé qué esperaba, pero no era eso.",
+				"Algo en mí acaba de cerrar una puerta imaginaria."
+			],
+			"second_neutral": [
+				"Eso fue... una conversación.",
+				"Ni bien ni mal. Como pan sin mermelada.",
+				"Lo guardaré en mi caja mental de cosas raras."
+			],
+			"limit_happy": [
+				"Sigamos otro día antes de que se evapore la magia.",
+				"Me voy antes de cambiar de opinión.",
+				"Demasiadas palabras arruinan los buenos misterios."
+			],
+			"limit_irritated": [
+				"Ya no. Mi paciencia se fue caminando.",
+				"Necesito silencio antes de convertirme en tormenta.",
+				"Fin de la función por hoy."
+			],
+			"limit_neutral": [
+				"Mi cabeza ya cambió de canal.",
+				"Podemos hablar luego, si el universo insiste.",
+				"Ya gasté mis palabras de este momento."
+			]
+		}
+	}
+
+	if not dialogues.has(personality):
+		return ""
+
+	var personality_dialogues: Dictionary = dialogues[personality]
+
+	if not personality_dialogues.has(context):
+		return ""
+
+	var options: Array = personality_dialogues[context]
+
+	if options.is_empty():
+		return ""
+
+	return options.pick_random()
 
 func get_first_interaction_text() -> String:
 	if mood == "happy":
+		var dialogue: String = get_personality_dialogue("first_happy")
+		if dialogue != "":
+			return dialogue
 		return "Me alegra verte por aquí."
+
 	elif mood == "irritated":
+		var dialogue: String = get_personality_dialogue("first_irritated")
+		if dialogue != "":
+			return dialogue
 		return "No estoy de humor ahora mismo."
-	else:
-		return get_affinity_text()
+
+	return get_affinity_text()
 
 func get_second_interaction_text(affinity_change: int) -> String:
+	var dialogue: String = ""
+
 	if affinity_change > 0:
-		return "Supongo que hablar contigo no estuvo mal. Afinidad: " + str(affinity)
+		dialogue = get_personality_dialogue("second_positive")
+		if dialogue == "":
+			dialogue = "Supongo que hablar contigo no estuvo mal."
+
 	elif affinity_change < 0:
-		return "Te dije que no era un buen momento. Afinidad: " + str(affinity)
+		dialogue = get_personality_dialogue("second_negative")
+		if dialogue == "":
+			dialogue = "Te dije que no era un buen momento."
+
 	else:
-		return "No tengo mucho más que decir. Afinidad: " + str(affinity)
+		dialogue = get_personality_dialogue("second_neutral")
+		if dialogue == "":
+			dialogue = "No tengo mucho más que decir."
+
+	return dialogue + " Afinidad: " + str(affinity)
 
 func get_limit_text() -> String:
+	var dialogue: String = ""
+
 	if mood == "irritated":
-		return "Ya basta por hoy."
+		dialogue = get_personality_dialogue("limit_irritated")
+		if dialogue == "":
+			dialogue = "Ya basta por hoy."
+
 	elif mood == "happy":
-		return "Hablemos luego, ¿sí?"
+		dialogue = get_personality_dialogue("limit_happy")
+		if dialogue == "":
+			dialogue = "Hablemos luego, ¿sí?"
+
 	else:
-		return "Creo que ya hablamos suficiente por hoy."
+		dialogue = get_personality_dialogue("limit_neutral")
+		if dialogue == "":
+			dialogue = "Creo que ya hablamos suficiente por hoy."
+
+	return dialogue
 
 func calculate_affinity_change() -> int:
 	var mood_modifier: int = get_mood_modifier()
@@ -106,11 +289,11 @@ func calculate_affinity_change() -> int:
 	
 func get_personality_affinity_modifier() -> int:
 	match personality:
-		"amable":
+		PERSONALITY_AMABLE:
 			return 1
-		"grunon":
+		PERSONALITY_GRUNON:
 			return -1
-		"impredecible":
+		PERSONALITY_IMPREDECIBLE:
 			return randi_range(-2, 2)
 
 	return 0
