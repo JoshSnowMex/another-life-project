@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://fo6wvj3tc72p"]
+
+[ext_resource type="PackedScene" uid="uid://cgwyp1jy5x318" path="res://scenes/player/player.tscn" id="1_dphjl"]
+[ext_resource type="PackedScene" uid="uid://dav545ovdp40w" path="res://scenes/npc/lyria.tscn" id="2_sl2e5"]
+[ext_resource type="PackedScene" uid="uid://cw6b0754w6gve" path="res://scenes/ui/dialogue_box.tscn" id="3_1fp7r"]
+[ext_resource type="PackedScene" uid="uid://bpr5nrvdeu5e1" path="res://scenes/world/training_spot.tscn" id="4_6m72w"]
+[ext_resource type="PackedScene" uid="uid://52n3qbaaudqs" path="res://scenes/ui/stats_hud.tscn" id="5_v5dby"]
+[ext_resource type="PackedScene" uid="uid://dnb17ieah0tt5" path="res://scenes/ui/gift_menu.tscn" id="6_t5ptc"]
+[ext_resource type="PackedScene" uid="uid://dtce8cgg4esew" path="res://scenes/npc/doran.tscn" id="7_bq33v"]
+[ext_resource type="PackedScene" uid="uid://cfdgtxa312s86" path="res://scenes/npc/mira.tscn" id="8_j2gmx"]
+[ext_resource type="PackedScene" uid="uid://dptdvokwel370" path="res://scenes/world/library_spot.tscn" id="9_1yooq"]
+
+[node name="World" type="Node2D" unique_id=379945775]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1789890885]
+
+[node name="player" parent="." unique_id=736873309 instance=ExtResource("1_dphjl")]
+
+[node name="DialogueBox" parent="." unique_id=890622693 instance=ExtResource("3_1fp7r")]
+
+[node name="StatsHud" parent="." unique_id=1159140786 instance=ExtResource("5_v5dby")]
+
+[node name="GiftMenu" parent="." unique_id=2015441141 instance=ExtResource("6_t5ptc")]
+
+[node name="Lyria" parent="." unique_id=561795434 instance=ExtResource("2_sl2e5")]
+position = Vector2(-64, -64)
+npc_name = null
+personality = null
+loved_gifts = null
+liked_gifts = null
+disliked_gifts = null
+
+[node name="Doran" parent="." unique_id=777630715 instance=ExtResource("7_bq33v")]
+position = Vector2(96, -64)
+personality = "grunon"
+
+[node name="Mira" parent="." unique_id=813906961 instance=ExtResource("8_j2gmx")]
+position = Vector2(96, 64)
+personality = "impredecible"
+
+[node name="TrainingSpot" parent="." unique_id=721216541 instance=ExtResource("4_6m72w")]
+position = Vector2(-120, 32)
+
+[node name="LibrarySpot" parent="." unique_id=674097719 instance=ExtResource("9_1yooq")]
+position = Vector2(-120, -96)

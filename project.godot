@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 PlayerStats="*uid://c2une3p0s0ifn"
 TimeSystem="*uid://b4fb7gbyyhhll"
+GameConstants="*uid://ct3htl5mf2jl7"
+DialogueDatabase="*uid://s4gmkedr57aw"
 
 [input]
 
