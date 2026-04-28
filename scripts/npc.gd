@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 @export var npc_name: String = "Lyria"
+@export var personality: String = "kind"
+
 @export var loved_gifts: Array[String] = ["joya"]
 @export var liked_gifts: Array[String] = ["flor", "libro"]
 @export var disliked_gifts: Array[String] = ["extrano"]
@@ -31,19 +33,32 @@ func interact() -> void:
 	else:
 		text = get_limit_text()
 	
-	print("Fuerza actual: ", PlayerStats.strength)
 	dialogue_box.show_dialogue(npc_name, text)
 
 func update_mood_for_today() -> void:
 	var roll: int = randi_range(1, 100)
 	var bias: int = get_affinity_bias()
+	var personality_modifier: int = get_personality_mood_modifier()
 
-	if roll + (bias * 10) >= 75:
+	var final_roll: int = roll + (bias * 10) + personality_modifier
+
+	if final_roll >= 75:
 		mood = "happy"
-	elif roll + (bias * 10) <= 25:
+	elif final_roll <= 25:
 		mood = "irritated"
 	else:
 		mood = "neutral"
+		
+func get_personality_mood_modifier() -> int:
+	match personality:
+		"amable":
+			return 10
+		"grunon":
+			return -10
+		"impredecible":
+			return randi_range(-20, 20)
+
+	return 0
 
 func update_mood_after_affinity_change(affinity_change: int) -> void:
 	if affinity_change > 1:
