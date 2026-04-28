@@ -24,7 +24,6 @@
 
 [node name="Lyria" parent="." unique_id=561795434 instance=ExtResource("2_sl2e5")]
 position = Vector2(-64, -64)
-personality = "amable"
 
 [node name="Doran" parent="." unique_id=777630715 instance=ExtResource("7_bq33v")]
 position = Vector2(96, -64)

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var npc_name: String = "Lyria"
-@export var personality: String = "kind"
+@export var personality: String = "amable"
 
 @export var loved_gifts: Array[String] = ["joya"]
 @export var liked_gifts: Array[String] = ["flor", "libro"]
@@ -93,16 +93,27 @@ func get_limit_text() -> String:
 func calculate_affinity_change() -> int:
 	var mood_modifier: int = get_mood_modifier()
 	var affinity_bias: int = get_affinity_bias()
+	var personality_modifier: int = get_personality_affinity_modifier()
 
 	var luck_roll: int = randi_range(-2, 2)
 
-	# NUEVO: influencia de stats del jugador
 	var charisma_bonus: int = int(PlayerStats.charisma / 5)
 	var luck_bonus: int = int(PlayerStats.luck / 5)
 
-	var result: int = mood_modifier + affinity_bias + luck_roll + charisma_bonus + luck_bonus
+	var result: int = mood_modifier + affinity_bias + personality_modifier + luck_roll + charisma_bonus + luck_bonus
 
-	return clamp(result, -4, 4)
+	return clamp(result, -5, 5)
+	
+func get_personality_affinity_modifier() -> int:
+	match personality:
+		"amable":
+			return 1
+		"grunon":
+			return -1
+		"impredecible":
+			return randi_range(-2, 2)
+
+	return 0
 
 func get_mood_modifier() -> int:
 	if mood == "happy":
