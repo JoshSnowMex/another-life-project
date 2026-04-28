@@ -168,6 +168,14 @@ func get_limit_text() -> String:
 
 	return dialogue
 	
+func get_gift_already_received_text() -> String:
+	var dialogue: String = get_personality_dialogue(GameConstants.DIALOGUE_GIFT_ALREADY_RECEIVED)
+
+	if dialogue != "":
+		return dialogue
+
+	return "Ya me diste algo hoy."
+	
 func get_personality_affinity_modifier() -> int:
 	match personality:
 		GameConstants.PERSONALITY_AMABLE:
@@ -231,7 +239,7 @@ func receive_gift(gift_type: String) -> void:
 	var dialogue_box = get_tree().current_scene.get_node("DialogueBox")
 
 	if RelationshipSystem.has_received_gift_today(npc_id):
-		dialogue_box.show_dialogue(npc_name, "Ya me diste algo hoy.")
+		dialogue_box.show_dialogue(npc_name, get_gift_already_received_text())
 		return
 
 	RelationshipSystem.mark_gift_received_today(npc_id)
@@ -246,7 +254,7 @@ func receive_gift(gift_type: String) -> void:
 	else:
 		RelationshipSystem.set_mood(npc_id, GameConstants.MOOD_NEUTRAL)
 
-	dialogue_box.show_dialogue(npc_name, get_gift_response_text(gift_type, affinity_change, new_affinity))
+	dialogue_box.show_dialogue(npc_name, get_gift_response_text(affinity_change, new_affinity))
 
 func calculate_gift_affinity_change(gift_type: String) -> int:
 	var base_change: int = 1
@@ -263,18 +271,34 @@ func calculate_gift_affinity_change(gift_type: String) -> int:
 
 	return clamp(result, -12, 15)
 
-func get_gift_response_text(gift_type: String, affinity_change: int, current_affinity: int) -> String:
-	if affinity_change >= 10:
-		return "¿Esto es para mí? Me encanta. Afinidad: " + str(current_affinity)
-	elif affinity_change > 1:
-		return "Gracias, me gusta. Afinidad: " + str(current_affinity)
-	elif affinity_change == 1:
-		return "Gracias... supongo. Afinidad: " + str(current_affinity)
-	else:
-		return "Esto no me gusta. Afinidad: " + str(current_affinity)
+func get_gift_response_text(affinity_change: int, current_affinity: int) -> String:
+	var dialogue_context: String = get_gift_dialogue_context(affinity_change)
+	var dialogue: String = get_personality_dialogue(dialogue_context)
 
-func reset_daily_interactions() -> void:
-	pass
-	
+	if dialogue == "":
+		dialogue = get_default_gift_response_text(affinity_change)
+
+	return dialogue + " Afinidad: " + str(current_affinity)
+
+func get_gift_dialogue_context(affinity_change: int) -> String:
+	if affinity_change >= 10:
+		return GameConstants.DIALOGUE_GIFT_LOVED
+	elif affinity_change > 1:
+		return GameConstants.DIALOGUE_GIFT_LIKED
+	elif affinity_change == 1:
+		return GameConstants.DIALOGUE_GIFT_NEUTRAL
+	else:
+		return GameConstants.DIALOGUE_GIFT_DISLIKED
+
+func get_default_gift_response_text(affinity_change: int) -> String:
+	if affinity_change >= 10:
+		return "¿Esto es para mí? Me encanta."
+	elif affinity_change > 1:
+		return "Gracias, me gusta."
+	elif affinity_change == 1:
+		return "Gracias... supongo."
+	else:
+		return "Esto no me gusta."
+
 func can_receive_gift() -> bool:
 	return not RelationshipSystem.has_received_gift_today(npc_id)

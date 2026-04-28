@@ -1,128 +1,203 @@
 {
   "amable": {
-	"first_happy": [
-	  "¡Qué alegría verte! Me alegra que hayas venido.",
-	  "Justo estaba esperando encontrarme con alguien amable.",
+    "first_happy": [
+      "¡Qué alegría verte! Me alegra que hayas venido.",
+      "Justo estaba esperando encontrarme con alguien amable.",
       "Tu presencia hace que este día se sienta un poco más ligero."
-	],
-	"first_irritated": [
-	  "Perdón... hoy no me siento del todo bien.",
-	  "No es tu culpa, solo tengo un día complicado.",
+    ],
+    "first_irritated": [
+      "Perdón... hoy no me siento del todo bien.",
+      "No es tu culpa, solo tengo un día complicado.",
       "Intentaré no descargar mi mal humor contigo."
-	],
-	"second_positive": [
-	  "Hablar contigo siempre me deja una buena sensación.",
-	  "Gracias por tomarte el tiempo de hablar conmigo.",
+    ],
+    "second_positive": [
+      "Hablar contigo siempre me deja una buena sensación.",
+      "Gracias por tomarte el tiempo de hablar conmigo.",
       "Me gusta que podamos conversar así."
-	],
-	"second_negative": [
-	  "Creo que esta conversación no salió como esperaba.",
-	  "Perdón, quizá no estoy entendiendo bien tus palabras.",
+    ],
+    "second_negative": [
+      "Creo que esta conversación no salió como esperaba.",
+      "Perdón, quizá no estoy entendiendo bien tus palabras.",
       "Me siento un poco incómoda con esto."
-	],
-	"second_neutral": [
-	  "Supongo que aún nos estamos conociendo.",
-	  "No estuvo mal. Podemos hablar más otro día.",
+    ],
+    "second_neutral": [
+      "Supongo que aún nos estamos conociendo.",
+      "No estuvo mal. Podemos hablar más otro día.",
       "Gracias por acercarte, aunque no tenga mucho que decir ahora."
-	],
-	"limit_happy": [
-	  "Me encantaría seguir hablando, pero dejémoslo para luego.",
-	  "Hablemos más otro día, ¿sí?",
+    ],
+    "limit_happy": [
+      "Me encantaría seguir hablando, pero dejémoslo para luego.",
+      "Hablemos más otro día, ¿sí?",
       "Guardaré algo de conversación para mañana."
-	],
-	"limit_irritated": [
-	  "De verdad necesito descansar un poco.",
-	  "Perdón, pero ya no quiero hablar más por hoy.",
+    ],
+    "limit_irritated": [
+      "De verdad necesito descansar un poco.",
+      "Perdón, pero ya no quiero hablar más por hoy.",
       "Mejor dejémoslo aquí antes de que diga algo feo."
-	],
-	"limit_neutral": [
-	  "Creo que ya hablamos suficiente por hoy.",
-	  "Podemos continuar otro día.",
+    ],
+    "limit_neutral": [
+      "Creo que ya hablamos suficiente por hoy.",
+      "Podemos continuar otro día.",
       "Necesito ocuparme de otras cosas ahora."
-	]
+    ],
+    "gift_loved": [
+      "¿Esto es para mí? Es precioso. Gracias de verdad.",
+      "Me encanta... no tenías que hacerlo, pero lo aprecio mucho.",
+      "Qué detalle tan bonito. Me hiciste muy feliz."
+    ],
+    "gift_liked": [
+      "Gracias, me gusta mucho.",
+      "Qué amable de tu parte. Lo cuidaré bien.",
+      "Me alegra que hayas pensado en mí."
+    ],
+    "gift_neutral": [
+      "Gracias... lo aceptaré con gusto.",
+      "No era necesario, pero gracias.",
+      "Qué detalle. Gracias por traerme algo."
+    ],
+    "gift_disliked": [
+      "Oh... gracias, aunque no es mucho de mi estilo.",
+      "Aprecio la intención, pero esto no me gusta demasiado.",
+      "Perdón, no sé si esto es para mí."
+    ],
+    "gift_already_received": [
+      "Ya me diste algo hoy, pero gracias por pensar en mí.",
+      "No hace falta que me des más cosas por hoy.",
+      "Guardemos los regalos para otro día, ¿sí?"
+    ]
   },
   "grunon": {
-	"first_happy": [
-	  "No te acostumbres, pero hoy estoy de buen humor.",
-	  "Supongo que verte no arruinó mi día.",
+    "first_happy": [
+      "No te acostumbres, pero hoy estoy de buen humor.",
+      "Supongo que verte no arruinó mi día.",
       "Bueno... hoy puedo tolerar una conversación."
-	],
-	"first_irritated": [
-	  "¿Qué quieres ahora?",
-	  "No estoy de humor. Habla rápido.",
+    ],
+    "first_irritated": [
+      "¿Qué quieres ahora?",
+      "No estoy de humor. Habla rápido.",
       "Este no es un buen momento."
-	],
-	"second_positive": [
-	  "No estuvo tan mal como esperaba.",
-	  "Bien. Admito que dijiste algo útil.",
+    ],
+    "second_positive": [
+      "No estuvo tan mal como esperaba.",
+      "Bien. Admito que dijiste algo útil.",
       "Supongo que puedes ser menos molesto de lo normal."
-	],
-	"second_negative": [
-	  "Sabía que esto iba a ser una pérdida de tiempo.",
-	  "Eso fue exactamente lo que no quería escuchar.",
+    ],
+    "second_negative": [
+      "Sabía que esto iba a ser una pérdida de tiempo.",
+      "Eso fue exactamente lo que no quería escuchar.",
       "Me estás dando razones para terminar esta conversación."
-	],
-	"second_neutral": [
-	  "No tengo una opinión sobre eso.",
-	  "Ajá. ¿Eso era todo?",
+    ],
+    "second_neutral": [
+      "No tengo una opinión sobre eso.",
+      "Ajá. ¿Eso era todo?",
       "No fue terrible. Tampoco interesante."
-	],
-	"limit_happy": [
-	  "Ya hablamos bastante. No arruines el momento.",
-	  "Terminemos aquí mientras aún estoy de buen humor.",
+    ],
+    "limit_happy": [
+      "Ya hablamos bastante. No arruines el momento.",
+      "Terminemos aquí mientras aún estoy de buen humor.",
       "Vuelve luego. Tal vez."
-	],
-	"limit_irritated": [
-	  "Ya basta.",
-	  "No voy a repetirlo: déjame en paz por hoy.",
+    ],
+    "limit_irritated": [
+      "Ya basta.",
+      "No voy a repetirlo: déjame en paz por hoy.",
       "Se acabó la conversación."
-	],
-	"limit_neutral": [
-	  "Eso es suficiente por hoy.",
-	  "No tengo más que decir.",
+    ],
+    "limit_neutral": [
+      "Eso es suficiente por hoy.",
+      "No tengo más que decir.",
       "Vuelve otro día si insistes."
-	]
+    ],
+    "gift_loved": [
+      "Hmm. Esto sí me gusta.",
+      "No esperaba que acertaras. Buen regalo.",
+      "Está bien... admito que me gustó."
+    ],
+    "gift_liked": [
+      "No está mal.",
+      "Supongo que esto sirve.",
+      "Bien. Lo aceptaré."
+    ],
+    "gift_neutral": [
+      "Ajá. Gracias.",
+      "No sé qué esperas que diga.",
+      "Lo tomaré, supongo."
+    ],
+    "gift_disliked": [
+      "¿En serio pensaste que esto me gustaría?",
+      "No. Esto no va conmigo.",
+      "Guárdate estas ideas para alguien más."
+    ],
+    "gift_already_received": [
+      "Ya me diste algo hoy. No insistas.",
+      "Uno por día es suficiente.",
+      "No necesito que me llenes de cosas."
+    ]
   },
   "impredecible": {
-	"first_happy": [
-	  "¡Hoy el aire sabe a aventura!",
-	  "Qué curioso verte justo ahora. Tal vez era destino.",
+    "first_happy": [
+      "¡Hoy el aire sabe a aventura!",
+      "Qué curioso verte justo ahora. Tal vez era destino.",
       "¡Perfecto! Necesitaba una interrupción interesante."
-	],
-	"first_irritated": [
-	  "No sé si quiero hablar... o lanzar una piedra al río.",
-	  "Hoy todo suena demasiado fuerte, incluso tus pasos.",
+    ],
+    "first_irritated": [
+      "No sé si quiero hablar... o lanzar una piedra al río.",
+      "Hoy todo suena demasiado fuerte, incluso tus pasos.",
       "Mi humor está mordiendo. Cuidado."
-	],
-	"second_positive": [
-	  "Eso fue inesperadamente divertido.",
-	  "Me agradas un poco más. No preguntes por qué.",
+    ],
+    "second_positive": [
+      "Eso fue inesperadamente divertido.",
+      "Me agradas un poco más. No preguntes por qué.",
       "Interesante... cambiaste el color del día."
-	],
-	"second_negative": [
-	  "Uy. Eso cayó como sopa fría.",
-	  "No sé qué esperaba, pero no era eso.",
+    ],
+    "second_negative": [
+      "Uy. Eso cayó como sopa fría.",
+      "No sé qué esperaba, pero no era eso.",
       "Algo en mí acaba de cerrar una puerta imaginaria."
-	],
-	"second_neutral": [
-	  "Eso fue... una conversación.",
-	  "Ni bien ni mal. Como pan sin mermelada.",
+    ],
+    "second_neutral": [
+      "Eso fue... una conversación.",
+      "Ni bien ni mal. Como pan sin mermelada.",
       "Lo guardaré en mi caja mental de cosas raras."
-	],
-	"limit_happy": [
-	  "Sigamos otro día antes de que se evapore la magia.",
-	  "Me voy antes de cambiar de opinión.",
+    ],
+    "limit_happy": [
+      "Sigamos otro día antes de que se evapore la magia.",
+      "Me voy antes de cambiar de opinión.",
       "Demasiadas palabras arruinan los buenos misterios."
-	],
-	"limit_irritated": [
-	  "Ya no. Mi paciencia se fue caminando.",
-	  "Necesito silencio antes de convertirme en tormenta.",
+    ],
+    "limit_irritated": [
+      "Ya no. Mi paciencia se fue caminando.",
+      "Necesito silencio antes de convertirme en tormenta.",
       "Fin de la función por hoy."
-	],
-	"limit_neutral": [
-	  "Mi cabeza ya cambió de canal.",
-	  "Podemos hablar luego, si el universo insiste.",
+    ],
+    "limit_neutral": [
+      "Mi cabeza ya cambió de canal.",
+      "Podemos hablar luego, si el universo insiste.",
       "Ya gasté mis palabras de este momento."
-	]
+    ],
+    "gift_loved": [
+      "¡Oh! Esto brilla en mi alma de una forma rara.",
+      "Perfecto. No sé por qué, pero perfecto.",
+      "Esto acaba de mejorar la trama del día."
+    ],
+    "gift_liked": [
+      "Interesante elección. Me gusta.",
+      "Esto tiene buena energía.",
+      "Lo acepto. Mi intuición dice que sí."
+    ],
+    "gift_neutral": [
+      "Curioso. No sé qué hacer con esto, pero gracias.",
+      "Lo pondré en mi colección de cosas con destino incierto.",
+      "Gracias. Esto podría ser importante... o no."
+    ],
+    "gift_disliked": [
+      "Mi instinto acaba de hacer una mueca.",
+      "No. Esto tiene vibras torcidas.",
+      "Algo en esto me dice que debería alejarlo de mí."
+    ],
+    "gift_already_received": [
+      "Ya hubo regalo hoy. El ritual está completo.",
+      "No podemos abusar del misterio de los regalos.",
+      "Otro regalo hoy rompería el equilibrio cósmico."
+    ]
   }
 }

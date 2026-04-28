@@ -1,37 +1,37 @@
 {
   "comida": {
-	"display_name": "Comida",
-	"type": "gift",
-	"starting_amount": 2
+    "display_name": "Comida",
+    "type": "gift",
+    "starting_amount": 2
   },
   "flor": {
-	"display_name": "Flor",
-	"type": "gift",
-	"starting_amount": 1
+    "display_name": "Flor",
+    "type": "gift",
+    "starting_amount": 1
   },
   "joya": {
-	"display_name": "Joya",
-	"type": "gift",
-	"starting_amount": 1
+    "display_name": "Joya",
+    "type": "gift",
+    "starting_amount": 1
   },
   "libro": {
-	"display_name": "Libro",
-	"type": "gift",
-	"starting_amount": 1
+    "display_name": "Libro",
+    "type": "gift",
+    "starting_amount": 1
   },
   "artesania": {
-	"display_name": "Artesanía",
-	"type": "gift",
-	"starting_amount": 1
+    "display_name": "Artesanía",
+    "type": "gift",
+    "starting_amount": 1
   },
   "extrano": {
-	"display_name": "Extraño",
-	"type": "gift",
-	"starting_amount": 1
+    "display_name": "Extraño",
+    "type": "gift",
+    "starting_amount": 1
   },
   "perfume": {
-  "display_name": "Perfume",
-  "type": "gift",
-  "starting_amount": 1
+    "display_name": "Perfume",
+    "type": "gift",
+    "starting_amount": 1
   }
 }
