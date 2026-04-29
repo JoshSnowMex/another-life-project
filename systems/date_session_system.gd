@@ -2,10 +2,14 @@ extends Node
 
 var active_session: Dictionary = {}
 var active_npc = null
-var active_steps: Array[Dictionary] = []
-var current_step_index: int = 0
+
 var current_score: int = 0
-var gift_used: bool = false
+var talks_used: int = 0
+var gifts_used: int = 0
+var actions_used: int = 0
+
+var pending_question: Dictionary = {}
+var waiting_for_question_answer: bool = false
 
 func get_available_sessions_for_npc(npc_id: String) -> Array[Dictionary]:
 	var sessions: Dictionary = DialogueDatabase.get_date_sessions_for_npc(npc_id)
@@ -40,43 +44,7 @@ func can_session_be_used(session_data: Dictionary) -> bool:
 		if not EventSystem.has_flag(str(flag_id)):
 			return false
 
-	var steps: Array = session_data.get("steps", [])
-
-	if steps.is_empty():
-		return false
-
-	return has_at_least_one_usable_step(steps)
-
-func has_at_least_one_usable_step(steps: Array) -> bool:
-	for raw_step in steps:
-		var step: Dictionary = raw_step
-
-		if can_step_be_used(step):
-			return true
-
-	return false
-
-func can_step_be_used(step: Dictionary) -> bool:
-	var step_type: String = str(step.get("type", ""))
-
-	match step_type:
-		"dialogue":
-			return true
-		"gift":
-			return true
-		"action":
-			var action_id: String = str(step.get("action_id", ""))
-			return not DialogueDatabase.get_date_action_data(action_id).is_empty()
-		"question":
-			var question_id: String = str(step.get("question_id", ""))
-			var question_data: Dictionary = DialogueDatabase.get_date_question_data(question_id)
-
-			if question_data.is_empty():
-				return false
-
-			return DateQuestionSystem.can_question_be_used_for_session(question_data)
-
-	return false
+	return true
 
 func start_session(npc, session_id: String) -> Dictionary:
 	var session_data: Dictionary = DialogueDatabase.get_date_session_data(session_id)
@@ -97,242 +65,284 @@ func start_session(npc, session_id: String) -> Dictionary:
 
 	active_npc = npc
 	active_session = session_data
-	active_steps = build_session_steps(session_data)
-	current_step_index = 0
 	current_score = 0
-	gift_used = false
-
-	if active_steps.is_empty():
-		clear_session()
-		return {
-			"success": false,
-			"text": "No hay pasos disponibles para esta cita."
-		}
+	talks_used = 0
+	gifts_used = 0
+	actions_used = 0
+	pending_question = {}
+	waiting_for_question_answer = false
 
 	return {
 		"success": true,
 		"text": str(session_data.get("intro_text", "La cita comienza."))
 	}
 
-func build_session_steps(session_data: Dictionary) -> Array[Dictionary]:
-	var result: Array[Dictionary] = []
-	var steps: Array = session_data.get("steps", [])
-
-	for raw_step in steps:
-		var step: Dictionary = raw_step.duplicate(true)
-
-		if not can_step_be_used(step):
-			continue
-
-		result.append(step)
-
-	return result
-
 func has_active_session() -> bool:
 	return not active_session.is_empty()
 
-func get_current_step() -> Dictionary:
-	if current_step_index < 0 or current_step_index >= active_steps.size():
-		return {}
+func get_status_text() -> String:
+	if active_session.is_empty():
+		return ""
 
-	return active_steps[current_step_index]
+	var max_score: int = int(active_session.get("max_score", 10))
+	var success_score: int = int(active_session.get("success_score", 8))
+	var max_talks: int = int(active_session.get("max_talks", 5))
+	var max_gifts: int = int(active_session.get("max_gifts", 2))
+	var max_actions: int = int(active_session.get("max_actions", 1))
 
-func get_current_step_number() -> int:
-	return current_step_index + 1
+	return "Progreso: " + str(current_score) + "/" + str(max_score) + " | Éxito: " + str(success_score) + "/" + str(max_score) + "\nCharlar: " + str(talks_used) + "/" + str(max_talks) + " | Regalos: " + str(gifts_used) + "/" + str(max_gifts) + " | Movimiento: " + str(actions_used) + "/" + str(max_actions)
 
-func get_total_steps() -> int:
-	return active_steps.size()
+func can_talk() -> bool:
+	if active_session.is_empty():
+		return false
 
-func advance_dialogue_step() -> Dictionary:
-	var step: Dictionary = get_current_step()
+	return talks_used < int(active_session.get("max_talks", 5))
 
-	if step.is_empty():
-		return finish_session_with_wrapper("")
+func can_gift() -> bool:
+	if active_session.is_empty():
+		return false
 
-	current_step_index += 1
+	return gifts_used < int(active_session.get("max_gifts", 2))
 
-	if current_step_index >= active_steps.size():
-		return finish_session_with_wrapper(str(step.get("text", "")))
+func can_action() -> bool:
+	if active_session.is_empty():
+		return false
 
-	return {
-		"finished": false,
-		"text": str(step.get("text", "")),
-		"continue_to_next": true
-	}
+	return actions_used < int(active_session.get("max_actions", 1))
 
-func answer_question_step(selected_answer: String) -> Dictionary:
-	var step: Dictionary = get_current_step()
-	var question_id: String = str(step.get("question_id", ""))
-	var question_data: Dictionary = DialogueDatabase.get_date_question_data(question_id)
+func perform_talk() -> Dictionary:
+	if not can_talk():
+		return create_action_result("Ya no hay mucho más que conversar en esta cita.")
+
+	talks_used += 1
+
+	if should_trigger_question():
+		var question_data: Dictionary = get_available_question_for_session()
+
+		if not question_data.is_empty():
+			pending_question = question_data
+			waiting_for_question_answer = true
+
+			return {
+				"requires_answer": true,
+				"text": DateQuestionSystem.get_question_prompt(question_data),
+				"options": DateQuestionSystem.get_question_options(question_data)
+			}
+
+	var talk_data: Dictionary = get_random_talk()
+	var score_gain: int = int(talk_data.get("score", 1))
+	current_score = clamp(current_score + score_gain, -99, int(active_session.get("max_score", 10)))
+
+	var text: String = str(talk_data.get("text", "La conversación fluye de forma tranquila."))
+	text += "\nProgreso +" + str(score_gain) + "."
+
+	return create_action_result(text)
+
+func should_trigger_question() -> bool:
+	var chance: int = int(active_session.get("question_chance", 40))
+	var question_data: Dictionary = get_available_question_for_session()
 
 	if question_data.is_empty():
-		current_step_index += 1
-		return {
-			"finished": false,
-			"text": "La pregunta no está disponible."
-		}
+		return false
 
-	var correct_answer: String = str(question_data.get("correct_answer", ""))
+	return randi_range(1, 100) <= chance
+
+func get_available_question_for_session() -> Dictionary:
+	var question_pool: Array = active_session.get("question_pool", [])
+	var available: Array[Dictionary] = []
+
+	for question_id in question_pool:
+		var question_data: Dictionary = DialogueDatabase.get_date_question_data(str(question_id))
+
+		if question_data.is_empty():
+			continue
+
+		if DateQuestionSystem.can_question_be_used_for_session(question_data):
+			available.append(question_data)
+
+	if available.is_empty():
+		return {}
+
+	return available.pick_random()
+
+func answer_pending_question(selected_answer: String) -> Dictionary:
+	if not waiting_for_question_answer or pending_question.is_empty():
+		return create_action_result("No hay pregunta pendiente.")
+
+	var correct_answer: String = str(pending_question.get("correct_answer", ""))
 	var is_correct: bool = selected_answer == correct_answer
 
+	var score_change: int = -1
+
 	if is_correct:
-		current_score += int(step.get("success_score", 1))
+		score_change = 2
+
+	current_score = clamp(current_score + score_change, -99, int(active_session.get("max_score", 10)))
+
+	var text: String = DateQuestionSystem.get_result_text_for_session(pending_question, is_correct)
+
+	if is_correct:
+		text += "\nProgreso +2."
 	else:
-		current_score += int(step.get("failure_score", 0))
+		text += "\nProgreso -1."
 
-	var result_text: String = DateQuestionSystem.get_result_text_for_session(question_data, is_correct)
+	pending_question = {}
+	waiting_for_question_answer = false
 
-	current_step_index += 1
+	return create_action_result(text)
 
-	if current_step_index >= active_steps.size():
-		return finish_session_with_wrapper(result_text)
+func get_random_talk() -> Dictionary:
+	var talk_pool: Array = active_session.get("talk_pool", [])
+	var valid_talks: Array[Dictionary] = []
 
-	return {
-		"finished": false,
-		"text": result_text,
-		"score": current_score
-	}
+	for talk_id in talk_pool:
+		var talk_data: Dictionary = DialogueDatabase.get_date_talk_data(str(talk_id))
 
-func use_gift_step(gift_type: String) -> Dictionary:
-	var step: Dictionary = get_current_step()
+		if talk_data.is_empty():
+			continue
 
-	if gift_used:
+		valid_talks.append(talk_data)
+
+	if valid_talks.is_empty():
 		return {
-			"finished": false,
-			"text": "Ya diste un regalo durante esta cita."
+			"text": "La conversación fluye de forma tranquila.",
+			"score": 1
 		}
+
+	return valid_talks.pick_random()
+
+func use_gift(gift_type: String) -> Dictionary:
+	if not can_gift():
+		return create_action_result("Ya diste todos los regalos posibles durante esta cita.")
 
 	if active_npc == null:
-		return {
-			"finished": false,
-			"text": "No hay NPC para recibir el regalo."
-		}
+		return create_action_result("No hay NPC para recibir el regalo.")
 
 	if not PlayerStats.remove_item(gift_type):
-		return {
-			"finished": false,
-			"text": "No tienes ese regalo."
-		}
+		return create_action_result("No tienes ese regalo.")
 
-	gift_used = true
+	gifts_used += 1
 
-	var score_change: int = calculate_gift_score(step, gift_type)
-	current_score += score_change
-
-	var gift_display_name: String = DialogueDatabase.get_item_display_name(gift_type)
-	var result_text: String = get_gift_result_text(gift_type, score_change)
-	result_text = "Diste: " + gift_display_name + ".\n" + result_text
+	var score_change: int = calculate_date_gift_score(gift_type)
+	current_score = clamp(current_score + score_change, -99, int(active_session.get("max_score", 10)))
 
 	if active_npc.has_method("unlock_gift_knowledge"):
 		active_npc.unlock_gift_knowledge(gift_type, score_change)
 
-	current_step_index += 1
+	var display_name: String = DialogueDatabase.get_item_display_name(gift_type)
+	var text: String = "Diste: " + display_name + ".\n" + get_gift_result_text(score_change)
 
-	if current_step_index >= active_steps.size():
-		return finish_session_with_wrapper(result_text)
-
-	return {
-		"finished": false,
-		"text": result_text,
-		"score": current_score
-	}
-
-func skip_gift_step() -> Dictionary:
-	var result_text: String = "Decidiste no dar ningún regalo en este momento."
-
-	current_step_index += 1
-
-	if current_step_index >= active_steps.size():
-		return finish_session_with_wrapper(result_text)
-
-	return {
-		"finished": false,
-		"text": result_text,
-		"score": current_score
-	}
-
-func calculate_gift_score(step: Dictionary, gift_type: String) -> int:
-	if active_npc == null:
-		return int(step.get("neutral_score", 0))
-
-	if not "gift_preferences" in active_npc:
-		return int(step.get("neutral_score", 0))
-
-	var preferences: Dictionary = active_npc.gift_preferences
-
-	if preferences.has("loved") and gift_type in preferences["loved"]:
-		return int(step.get("success_score", 2))
-
-	if preferences.has("liked") and gift_type in preferences["liked"]:
-		return int(step.get("success_score", 2))
-
-	if preferences.has("disliked") and gift_type in preferences["disliked"]:
-		return int(step.get("failure_score", -1))
-
-	return int(step.get("neutral_score", 0))
-
-func get_gift_result_text(gift_type: String, score_change: int) -> String:
 	if score_change > 0:
-		return "El regalo parece mejorar el ambiente de la cita."
+		text += "\nProgreso +" + str(score_change) + "."
+	elif score_change < 0:
+		text += "\nProgreso " + str(score_change) + "."
+	else:
+		text += "\nProgreso sin cambios."
+
+	return create_action_result(text)
+
+func calculate_date_gift_score(gift_type: String) -> int:
+	if active_npc == null:
+		return 0
+
+	if not active_npc.has_method("get_gift_preference_level"):
+		return 0
+
+	var preference_level: String = active_npc.get_gift_preference_level(gift_type)
+
+	match preference_level:
+		"loved":
+			return 3
+		"liked":
+			return 2
+		"neutral":
+			return 0
+		"disliked":
+			return -3
+
+	return 0
+
+func get_gift_result_text(score_change: int) -> String:
+	if score_change >= 3:
+		return "El regalo fue excelente. El ambiente mejora mucho."
+
+	if score_change > 0:
+		return "El regalo fue bien recibido."
 
 	if score_change < 0:
 		return "El regalo no fue bien recibido."
 
 	return "El regalo fue aceptado, aunque no cambió demasiado el ambiente."
 
-func perform_action_step() -> Dictionary:
-	var step: Dictionary = get_current_step()
-	var action_id: String = str(step.get("action_id", ""))
+func get_available_actions() -> Array[Dictionary]:
+	var action_pool: Array = active_session.get("action_pool", [])
+	var result: Array[Dictionary] = []
+	var tier: int = int(active_session.get("tier", 20))
+
+	for action_id in action_pool:
+		var action_data: Dictionary = DialogueDatabase.get_date_action_data(str(action_id))
+
+		if action_data.is_empty():
+			continue
+
+		var min_tier: int = int(action_data.get("min_tier", 20))
+
+		if tier < min_tier:
+			continue
+
+		result.append(action_data)
+
+	return result
+
+func perform_action(action_id: String) -> Dictionary:
+	if not can_action():
+		return create_action_result("Ya intentaste un movimiento durante esta cita.")
+
 	var action_data: Dictionary = DialogueDatabase.get_date_action_data(action_id)
 
 	if action_data.is_empty():
-		current_step_index += 1
-		return {
-			"finished": false,
-			"text": "La acción no está disponible."
-		}
+		return create_action_result("Esa acción no está disponible.")
+
+	actions_used += 1
 
 	var min_score: int = int(action_data.get("min_score", 0))
-	var result_text: String = ""
 	var score_change: int = 0
+	var text: String = ""
 
 	if current_score >= min_score:
 		score_change = int(action_data.get("success_score", 1))
-		result_text = str(action_data.get("success_text", "La acción salió bien."))
+		text = str(action_data.get("success_text", "La acción salió bien."))
 	else:
 		score_change = int(action_data.get("failure_score", -1))
-		result_text = str(action_data.get("failure_text", "La acción no salió bien."))
+		text = str(action_data.get("failure_text", "La acción no salió bien."))
 
-	current_score += score_change
-	current_step_index += 1
+	current_score = clamp(current_score + score_change, -99, int(active_session.get("max_score", 10)))
 
-	if current_step_index >= active_steps.size():
-		return finish_session_with_wrapper(result_text)
+	if score_change > 0:
+		text += "\nProgreso +" + str(score_change) + "."
+	elif score_change < 0:
+		text += "\nProgreso " + str(score_change) + "."
+	else:
+		text += "\nProgreso sin cambios."
 
-	return {
-		"finished": false,
-		"text": result_text,
-		"score": current_score
-	}
-
-func finish_session_with_wrapper(previous_text: String) -> Dictionary:
-	var final_result: Dictionary = finish_session()
-
-	if previous_text != "":
-		final_result["text"] = previous_text + "\n\n" + str(final_result.get("text", ""))
-
-	final_result["finished"] = true
-	return final_result
+	return create_action_result(text)
 
 func finish_session() -> Dictionary:
+	if active_session.is_empty():
+		return {
+			"text": "No hay cita activa.",
+			"finished": true
+		}
+
 	var npc_id: String = str(active_session.get("npc_id", ""))
-	var success_score: int = int(active_session.get("success_score", 4))
+	var success_score: int = int(active_session.get("success_score", 8))
 	var was_successful: bool = current_score >= success_score
-	var affinity_change: int = int(active_session.get("failure_affinity_penalty", 0))
+
+	var affinity_change: int = int(active_session.get("failure_affinity_penalty", -3))
 	var final_text: String = str(active_session.get("failure_text", "La cita no salió demasiado bien."))
 
 	if was_successful:
-		affinity_change = int(active_session.get("success_affinity_reward", 0))
+		affinity_change = int(active_session.get("success_affinity_reward", 8))
 		final_text = str(active_session.get("success_text", "La cita fue un éxito."))
 
 	var new_affinity: int = RelationshipSystem.add_affinity(npc_id, affinity_change)
@@ -343,25 +353,31 @@ func finish_session() -> Dictionary:
 		if success_flag != "":
 			EventSystem.set_flag(success_flag, true)
 
-	var result: Dictionary = {
-		"session_success": was_successful,
-		"score": current_score,
-		"success_score": success_score,
-		"affinity_change": affinity_change,
-		"new_affinity": new_affinity,
-		"text": final_text + "\nResultado: " + str(current_score) + "/" + str(success_score) + ". Afinidad: " + str(new_affinity) + "."
-	}
+	var result_text: String = final_text + "\nResultado: " + str(current_score) + "/" + str(success_score) + ". Afinidad: " + str(new_affinity) + "."
 
 	clear_session()
-	return result
+
+	return {
+		"text": result_text,
+		"finished": true,
+		"session_success": was_successful
+	}
+
+func create_action_result(text: String) -> Dictionary:
+	return {
+		"text": text,
+		"finished": false
+	}
 
 func clear_session() -> void:
 	active_session = {}
 	active_npc = null
-	active_steps.clear()
-	current_step_index = 0
 	current_score = 0
-	gift_used = false
+	talks_used = 0
+	gifts_used = 0
+	actions_used = 0
+	pending_question = {}
+	waiting_for_question_answer = false
 
 func get_session_display_name(session_data: Dictionary) -> String:
 	var display_name: String = str(session_data.get("display_name", "Cita"))

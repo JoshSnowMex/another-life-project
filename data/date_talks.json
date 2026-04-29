@@ -1,0 +1,49 @@
+{
+	"lyria_park_flowers": {
+		"npc_id": "lyria",
+		"text": "Lyria habla de las flores del parque con una calma amable.",
+		"score": 1
+	},
+	"lyria_quiet_moment": {
+		"npc_id": "lyria",
+		"text": "Lyria parece disfrutar de una conversación tranquila contigo.",
+		"score": 1
+	},
+	"lyria_small_laugh": {
+		"npc_id": "lyria",
+		"text": "Una pequeña broma hace que Lyria suelte una risa suave.",
+		"score": 1
+	},
+
+	"doran_training_memory": {
+		"npc_id": "doran",
+		"text": "Doran habla brevemente de una vieja rutina de entrenamiento.",
+		"score": 1
+	},
+	"doran_respect": {
+		"npc_id": "doran",
+		"text": "Doran parece valorar que no fuerces demasiado la conversación.",
+		"score": 1
+	},
+	"doran_blunt_comment": {
+		"npc_id": "doran",
+		"text": "Doran hace un comentario brusco, pero no parece molesto.",
+		"score": 1
+	},
+
+	"mira_books": {
+		"npc_id": "mira",
+		"text": "Mira habla de libros como si fueran lugares que puede visitar.",
+		"score": 1
+	},
+	"mira_strange_thought": {
+		"npc_id": "mira",
+		"text": "Mira comparte un pensamiento extraño, pero sorprendentemente tierno.",
+		"score": 1
+	},
+	"mira_soft_smile": {
+		"npc_id": "mira",
+		"text": "Mira sonríe distraída mientras la conversación fluye.",
+		"score": 1
+	}
+}

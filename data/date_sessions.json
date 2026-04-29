@@ -7,41 +7,20 @@
 		"required_affinity": 20,
 		"required_success_flags": [],
 		"success_flag": "date_success_lyria_park_date",
-		"success_score": 4,
+		"max_score": 10,
+		"success_score": 8,
+		"max_talks": 5,
+		"max_gifts": 2,
+		"max_actions": 1,
+		"question_chance": 40,
+		"talk_pool": ["lyria_park_flowers", "lyria_quiet_moment", "lyria_small_laugh"],
+		"question_pool": ["lyria_liked_gift_flor", "lyria_loved_gift_joya"],
+		"action_pool": ["gentle_compliment", "playful_poke", "hold_hands"],
 		"success_affinity_reward": 8,
 		"failure_affinity_penalty": -3,
 		"intro_text": "Lyria acepta acompañarte al parque. El ambiente es tranquilo y parece una buena oportunidad para conocerla mejor.",
 		"success_text": "La cita en el parque fue agradable. Lyria parece feliz de que hayas prestado atención a lo que le importa.",
-		"failure_text": "La cita fue algo incómoda. Lyria no parece molesta, pero queda claro que aún necesitas conocerla mejor.",
-		"steps": [
-			{
-				"type": "dialogue",
-				"text": "Lyria observa las flores del parque con una sonrisa tranquila."
-			},
-			{
-				"type": "question",
-				"question_id": "lyria_liked_gift_flor",
-				"success_score": 1,
-				"failure_score": 0
-			},
-			{
-				"type": "gift",
-				"prompt": "¿Quieres darle un regalo durante la cita?",
-				"success_score": 2,
-				"neutral_score": 0,
-				"failure_score": -1
-			},
-			{
-				"type": "action",
-				"action_id": "gentle_compliment"
-			},
-			{
-				"type": "question",
-				"question_id": "lyria_loved_gift_joya",
-				"success_score": 1,
-				"failure_score": 0
-			}
-		]
+		"failure_text": "La cita fue algo incómoda. Lyria no parece molesta, pero queda claro que aún necesitas conocerla mejor."
 	},
 	"lyria_beach_date": {
 		"npc_id": "lyria",
@@ -51,39 +30,20 @@
 		"required_affinity": 20,
 		"required_success_flags": ["date_success_lyria_park_date"],
 		"success_flag": "date_success_lyria_beach_date",
-		"success_score": 4,
+		"max_score": 10,
+		"success_score": 8,
+		"max_talks": 5,
+		"max_gifts": 2,
+		"max_actions": 1,
+		"question_chance": 40,
+		"talk_pool": ["lyria_park_flowers", "lyria_quiet_moment", "lyria_small_laugh"],
+		"question_pool": ["lyria_liked_gift_flor", "lyria_loved_gift_joya"],
+		"action_pool": ["gentle_compliment", "share_personal_story", "hold_hands"],
 		"success_affinity_reward": 8,
 		"failure_affinity_penalty": -3,
 		"intro_text": "Lyria mira el movimiento del agua con una sonrisa suave. La cita en la playa comienza con calma.",
 		"success_text": "La cita en la playa terminó con una sensación cálida. Lyria parece mucho más cómoda contigo.",
-		"failure_text": "La cita en la playa no salió tan bien como esperabas. Tal vez faltó atención a los detalles.",
-		"steps": [
-			{
-				"type": "dialogue",
-				"text": "La brisa mueve el cabello de Lyria mientras caminan junto al agua."
-			},
-			{
-				"type": "question",
-				"question_id": "lyria_liked_gift_flor",
-				"success_score": 1,
-				"failure_score": 0
-			},
-			{
-				"type": "action",
-				"action_id": "share_personal_story"
-			},
-			{
-				"type": "gift",
-				"prompt": "¿Quieres darle un regalo para cerrar el momento?",
-				"success_score": 2,
-				"neutral_score": 0,
-				"failure_score": -1
-			},
-			{
-				"type": "action",
-				"action_id": "hold_hands"
-			}
-		]
+		"failure_text": "La cita en la playa no salió tan bien como esperabas. Tal vez faltó atención a los detalles."
 	},
 
 	"doran_park_date": {
@@ -94,41 +54,20 @@
 		"required_affinity": 20,
 		"required_success_flags": [],
 		"success_flag": "date_success_doran_park_date",
-		"success_score": 4,
+		"max_score": 10,
+		"success_score": 8,
+		"max_talks": 5,
+		"max_gifts": 2,
+		"max_actions": 1,
+		"question_chance": 40,
+		"talk_pool": ["doran_training_memory", "doran_respect", "doran_blunt_comment"],
+		"question_pool": ["doran_liked_gift_artesania", "doran_loved_gift_comida"],
+		"action_pool": ["gentle_compliment", "share_personal_story", "playful_poke"],
 		"success_affinity_reward": 8,
 		"failure_affinity_penalty": -3,
 		"intro_text": "Doran acepta caminar contigo, aunque intenta fingir que no le importa demasiado.",
 		"success_text": "Doran no lo dice directamente, pero parece satisfecho. La cita fue mejor de lo que esperaba.",
-		"failure_text": "Doran suspira con brusquedad. La cita no fue un desastre, pero tampoco lo impresionaste.",
-		"steps": [
-			{
-				"type": "dialogue",
-				"text": "Doran camina con los brazos cruzados, observando el lugar con expresión seria."
-			},
-			{
-				"type": "question",
-				"question_id": "doran_liked_gift_artesania",
-				"success_score": 1,
-				"failure_score": 0
-			},
-			{
-				"type": "gift",
-				"prompt": "¿Quieres darle un regalo durante la caminata?",
-				"success_score": 2,
-				"neutral_score": 0,
-				"failure_score": -1
-			},
-			{
-				"type": "action",
-				"action_id": "share_personal_story"
-			},
-			{
-				"type": "question",
-				"question_id": "doran_loved_gift_comida",
-				"success_score": 1,
-				"failure_score": 0
-			}
-		]
+		"failure_text": "Doran suspira con brusquedad. La cita no fue un desastre, pero tampoco lo impresionaste."
 	},
 	"doran_training_date": {
 		"npc_id": "doran",
@@ -138,41 +77,20 @@
 		"required_affinity": 20,
 		"required_success_flags": ["date_success_doran_park_date"],
 		"success_flag": "date_success_doran_training_date",
-		"success_score": 4,
+		"max_score": 10,
+		"success_score": 8,
+		"max_talks": 5,
+		"max_gifts": 2,
+		"max_actions": 1,
+		"question_chance": 40,
+		"talk_pool": ["doran_training_memory", "doran_respect", "doran_blunt_comment"],
+		"question_pool": ["doran_liked_gift_artesania", "doran_loved_gift_comida"],
+		"action_pool": ["gentle_compliment", "share_personal_story", "hold_hands"],
 		"success_affinity_reward": 8,
 		"failure_affinity_penalty": -3,
 		"intro_text": "Doran parece más cómodo en el campo de entrenamiento. Esta cita tiene un aire más práctico que romántico.",
 		"success_text": "Doran reconoce tu esfuerzo con una mirada firme. Para él, eso vale más que muchas palabras.",
-		"failure_text": "Doran parece decepcionado. No esperaba perfección, pero sí más atención.",
-		"steps": [
-			{
-				"type": "dialogue",
-				"text": "Doran revisa el campo y parece menos tenso que de costumbre."
-			},
-			{
-				"type": "question",
-				"question_id": "doran_liked_gift_artesania",
-				"success_score": 1,
-				"failure_score": 0
-			},
-			{
-				"type": "action",
-				"action_id": "gentle_compliment"
-			},
-			{
-				"type": "gift",
-				"prompt": "¿Quieres darle algo útil para este momento?",
-				"success_score": 2,
-				"neutral_score": 0,
-				"failure_score": -1
-			},
-			{
-				"type": "question",
-				"question_id": "doran_loved_gift_comida",
-				"success_score": 1,
-				"failure_score": 0
-			}
-		]
+		"failure_text": "Doran parece decepcionado. No esperaba perfección, pero sí más atención."
 	},
 
 	"mira_park_date": {
@@ -183,41 +101,20 @@
 		"required_affinity": 20,
 		"required_success_flags": [],
 		"success_flag": "date_success_mira_park_date",
-		"success_score": 4,
+		"max_score": 10,
+		"success_score": 8,
+		"max_talks": 5,
+		"max_gifts": 2,
+		"max_actions": 1,
+		"question_chance": 40,
+		"talk_pool": ["mira_books", "mira_strange_thought", "mira_soft_smile"],
+		"question_pool": ["mira_liked_gift_flor", "mira_loved_gift_libro"],
+		"action_pool": ["gentle_compliment", "share_personal_story", "playful_poke"],
 		"success_affinity_reward": 8,
 		"failure_affinity_penalty": -3,
 		"intro_text": "Mira observa el parque como si cada árbol estuviera contando una historia distinta.",
 		"success_text": "Mira sonríe de forma distraída, pero sincera. La cita dejó un recuerdo bonito.",
-		"failure_text": "Mira parece perderse en sus pensamientos. La cita no fue terrible, pero algo no terminó de conectar.",
-		"steps": [
-			{
-				"type": "dialogue",
-				"text": "Mira se detiene frente a una flor como si estuviera escuchando algo que nadie más oye."
-			},
-			{
-				"type": "question",
-				"question_id": "mira_liked_gift_flor",
-				"success_score": 1,
-				"failure_score": 0
-			},
-			{
-				"type": "gift",
-				"prompt": "¿Quieres darle un regalo durante este momento?",
-				"success_score": 2,
-				"neutral_score": 0,
-				"failure_score": -1
-			},
-			{
-				"type": "action",
-				"action_id": "share_personal_story"
-			},
-			{
-				"type": "question",
-				"question_id": "mira_loved_gift_libro",
-				"success_score": 1,
-				"failure_score": 0
-			}
-		]
+		"failure_text": "Mira parece perderse en sus pensamientos. La cita no fue terrible, pero algo no terminó de conectar."
 	},
 	"mira_library_date": {
 		"npc_id": "mira",
@@ -227,38 +124,19 @@
 		"required_affinity": 20,
 		"required_success_flags": ["date_success_mira_park_date"],
 		"success_flag": "date_success_mira_library_date",
-		"success_score": 4,
+		"max_score": 10,
+		"success_score": 8,
+		"max_talks": 5,
+		"max_gifts": 2,
+		"max_actions": 1,
+		"question_chance": 40,
+		"talk_pool": ["mira_books", "mira_strange_thought", "mira_soft_smile"],
+		"question_pool": ["mira_liked_gift_flor", "mira_loved_gift_libro"],
+		"action_pool": ["gentle_compliment", "share_personal_story", "hold_hands"],
 		"success_affinity_reward": 8,
 		"failure_affinity_penalty": -3,
 		"intro_text": "Mira parece especialmente tranquila entre libros. La cita empieza con una calma casi mágica.",
 		"success_text": "Mira parece encantada. Entre libros y palabras suaves, la conexión se sintió más clara.",
-		"failure_text": "Mira no parece molesta, pero la cita se sintió algo dispersa.",
-		"steps": [
-			{
-				"type": "dialogue",
-				"text": "Mira recorre los lomos de los libros con la punta de los dedos."
-			},
-			{
-				"type": "question",
-				"question_id": "mira_loved_gift_libro",
-				"success_score": 1,
-				"failure_score": 0
-			},
-			{
-				"type": "action",
-				"action_id": "gentle_compliment"
-			},
-			{
-				"type": "gift",
-				"prompt": "¿Quieres darle un regalo en la biblioteca?",
-				"success_score": 2,
-				"neutral_score": 0,
-				"failure_score": -1
-			},
-			{
-				"type": "action",
-				"action_id": "hold_hands"
-			}
-		]
+		"failure_text": "Mira no parece molesta, pero la cita se sintió algo dispersa."
 	}
 }

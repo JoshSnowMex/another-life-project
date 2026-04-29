@@ -1,26 +1,56 @@
 {
-	"hold_hands": {
-		"display_name": "Tomar la mano",
+	"playful_poke": {
+		"display_name": "Dar un toque juguetón",
+		"min_tier": 20,
 		"min_score": 2,
 		"success_score": 1,
 		"failure_score": -1,
-		"success_text": "El gesto es bien recibido. La cercanía se siente natural.",
-		"failure_text": "Parece que aún no era el momento adecuado."
+		"success_text": "El gesto rompe un poco la tensión y provoca una reacción divertida.",
+		"failure_text": "El gesto no cae del todo bien. Parece demasiado pronto para bromear así."
 	},
 	"gentle_compliment": {
 		"display_name": "Hacer un cumplido amable",
+		"min_tier": 20,
 		"min_score": 1,
 		"success_score": 1,
 		"failure_score": 0,
 		"success_text": "El cumplido parece llegar en buen momento.",
 		"failure_text": "El comentario no incomoda, pero tampoco parece tener mucho impacto."
 	},
+	"hold_hands": {
+		"display_name": "Tomar la mano",
+		"min_tier": 20,
+		"min_score": 5,
+		"success_score": 2,
+		"failure_score": -2,
+		"success_text": "Acepta tu mano. La cercanía se siente natural.",
+		"failure_text": "Retira la mano con incomodidad. Todavía no parece ser el momento."
+	},
 	"share_personal_story": {
 		"display_name": "Contar algo personal",
+		"min_tier": 20,
 		"min_score": 1,
 		"success_score": 1,
 		"failure_score": 0,
 		"success_text": "Compartir algo personal hace que la conversación se sienta más honesta.",
 		"failure_text": "La historia queda en el aire. Tal vez faltaba más confianza."
+	},
+	"hug": {
+		"display_name": "Dar un abrazo",
+		"min_tier": 40,
+		"min_score": 5,
+		"success_score": 2,
+		"failure_score": -2,
+		"success_text": "El abrazo es aceptado y el ambiente se vuelve más cercano.",
+		"failure_text": "El abrazo es rechazado con suavidad. Aún no hay tanta confianza."
+	},
+	"kiss": {
+		"display_name": "Intentar un beso",
+		"min_tier": 60,
+		"min_score": 7,
+		"success_score": 3,
+		"failure_score": -3,
+		"success_text": "El beso es correspondido. La cita da un giro claramente romántico.",
+		"failure_text": "El intento es rechazado. Fue demasiado rápido o demasiado pronto."
 	}
 }

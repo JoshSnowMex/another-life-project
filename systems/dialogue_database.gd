@@ -11,6 +11,7 @@ const DATE_QUESTIONS_PATH: String = "res://data/date_questions.json"
 const SHOP_ITEMS_PATH: String = "res://data/shop_items.json"
 const DATE_SESSIONS_PATH: String = "res://data/date_sessions.json"
 const DATE_ACTIONS_PATH: String = "res://data/date_actions.json"
+const DATE_TALKS_PATH: String = "res://data/date_talks.json"
 
 var npc_personality_dialogues: Dictionary = {}
 var npc_profiles: Dictionary = {}
@@ -23,6 +24,7 @@ var date_questions: Dictionary = {}
 var shop_items: Dictionary = {}
 var date_sessions: Dictionary = {}
 var date_actions: Dictionary = {}
+var date_talks: Dictionary = {}
 
 func _ready() -> void:
 	load_all_data()
@@ -39,6 +41,7 @@ func load_all_data() -> void:
 	load_shop_items()
 	load_date_sessions()
 	load_date_actions()
+	load_date_talks()
 
 func load_npc_personality_dialogues() -> void:
 	npc_personality_dialogues = load_json_file(NPC_PERSONALITY_DIALOGUES_PATH)
@@ -72,6 +75,9 @@ func load_date_sessions() -> void:
 	
 func load_date_actions() -> void:
 	date_actions = load_json_file(DATE_ACTIONS_PATH)
+
+func load_date_talks() -> void:
+	date_talks = load_json_file(DATE_TALKS_PATH)
 
 func load_json_file(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -255,3 +261,11 @@ func get_date_action_data(action_id: String) -> Dictionary:
 	var action_data: Dictionary = date_actions[action_id].duplicate(true)
 	action_data["action_id"] = action_id
 	return action_data
+
+func get_date_talk_data(talk_id: String) -> Dictionary:
+	if not date_talks.has(talk_id):
+		return {}
+
+	var talk_data: Dictionary = date_talks[talk_id].duplicate(true)
+	talk_data["talk_id"] = talk_id
+	return talk_data
