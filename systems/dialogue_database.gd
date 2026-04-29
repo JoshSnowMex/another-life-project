@@ -6,6 +6,7 @@ const ITEMS_PATH: String = "res://data/items.json"
 const RELATIONSHIP_EVENTS_PATH: String = "res://data/relationship_events.json"
 const RELATIONSHIP_STAGES_PATH: String = "res://data/relationship_stages.json"
 const NPC_KNOWLEDGE_PATH: String = "res://data/npc_knowledge.json"
+const ACTIVITIES_PATH: String = "res://data/activities.json"
 
 var npc_personality_dialogues: Dictionary = {}
 var npc_profiles: Dictionary = {}
@@ -13,6 +14,7 @@ var items: Dictionary = {}
 var relationship_events: Dictionary = {}
 var relationship_stages: Dictionary = {}
 var npc_knowledge: Dictionary = {}
+var activities: Dictionary = {}
 
 func _ready() -> void:
 	load_all_data()
@@ -24,6 +26,7 @@ func load_all_data() -> void:
 	load_relationship_events()
 	load_relationship_stages()
 	load_npc_knowledge()
+	load_activities()
 
 func load_npc_personality_dialogues() -> void:
 	npc_personality_dialogues = load_json_file(NPC_PERSONALITY_DIALOGUES_PATH)
@@ -42,6 +45,9 @@ func load_relationship_stages() -> void:
 
 func load_npc_knowledge() -> void:
 	npc_knowledge = load_json_file(NPC_KNOWLEDGE_PATH)
+
+func load_activities() -> void:
+	activities = load_json_file(ACTIVITIES_PATH)
 
 func load_json_file(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -151,3 +157,13 @@ func get_npc_knowledge_data(npc_id: String) -> Dictionary:
 		return {}
 
 	return npc_knowledge[npc_id].duplicate(true)
+
+func get_activity_data(activity_id: String) -> Dictionary:
+	if not activities.has(activity_id):
+		push_error("No existe actividad con id: " + activity_id)
+		return {}
+
+	return activities[activity_id].duplicate(true)
+
+func get_activities() -> Dictionary:
+	return activities.duplicate(true)

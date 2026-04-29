@@ -1,16 +1,16 @@
-[gd_scene format=3 uid="uid://dptdvokwel370"]
+[gd_scene format=3 uid="uid://chli67e4jt7du"]
 
-[ext_resource type="Script" uid="uid://d2gsba52oktph" path="res://scripts/activity_spot.gd" id="1_iv0kd"]
+[ext_resource type="Script" uid="uid://d2gsba52oktph" path="res://scripts/activity_spot.gd" id="1_oo700"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tt7j0"]
 size = Vector2(80, 80)
 
-[node name="LibrarySpot" type="StaticBody2D" unique_id=674097719]
-script = ExtResource("1_iv0kd")
-activity_id = "study_intelligence"
+[node name="EnduranceSpot" type="StaticBody2D" unique_id=674097719]
+script = ExtResource("1_oo700")
+activity_id = "practice_charisma"
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=1883063756]
-color = Color(0.7819992, 3.3691526e-06, 0.47311974, 1)
+color = Color(0.558509, 0.65994686, 0.91619164, 1)
 polygon = PackedVector2Array(40, 40, 40, -40, -40, -40, -40, 40)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1449720008]

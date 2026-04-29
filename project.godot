@@ -26,6 +26,7 @@ EventSystem="*uid://by447u8gvawe2"
 RelationshipEventSystem="*uid://uxi0vor78l4y"
 RelationshipStageSystem="*uid://bv60ao60vvkgf"
 NpcKnowledgeSystem="*uid://5jj7gu70u8br"
+ActivitySystem="*uid://b3hb5nhtkjkr2"
 SaveSystem="*uid://ddurkrmeifomn"
 
 [global_group]

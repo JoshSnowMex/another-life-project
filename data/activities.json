@@ -1,0 +1,56 @@
+{
+	"train_strength": {
+		"display_name": "Entrenar fuerza",
+		"stat": "strength",
+		"base_gain": 3,
+		"energy_cost": 12,
+		"speaker_name": "Campo de entrenamiento",
+		"success_text": "Entrenaste con intensidad. Fuerza aumentó en {gain}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para entrenar fuerza."
+	},
+	"study_intelligence": {
+		"display_name": "Estudiar",
+		"stat": "intelligence",
+		"base_gain": 3,
+		"energy_cost": 10,
+		"speaker_name": "Biblioteca",
+		"success_text": "Estudiaste con atención. Inteligencia aumentó en {gain}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para estudiar."
+	},
+	"practice_dexterity": {
+		"display_name": "Practicar destreza",
+		"stat": "dexterity",
+		"base_gain": 3,
+		"energy_cost": 10,
+		"speaker_name": "Taller",
+		"success_text": "Trabajaste con precisión. Destreza aumentó en {gain}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para practicar destreza."
+	},
+	"practice_charisma": {
+		"display_name": "Practicar carisma",
+		"stat": "charisma",
+		"base_gain": 3,
+		"energy_cost": 10,
+		"speaker_name": "Plaza social",
+		"success_text": "Conversaste y mejoraste tu presencia. Carisma aumentó en {gain}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para practicar carisma."
+	},
+	"train_constitution": {
+		"display_name": "Entrenar resistencia",
+		"stat": "constitution",
+		"base_gain": 3,
+		"energy_cost": 12,
+		"speaker_name": "Zona de resistencia",
+		"success_text": "Resististe el esfuerzo. Constitución aumentó en {gain}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para entrenar resistencia."
+	},
+	"test_luck": {
+		"display_name": "Probar suerte",
+		"stat": "luck",
+		"base_gain": 3,
+		"energy_cost": 8,
+		"speaker_name": "Fuente de la suerte",
+		"success_text": "Tentaste al destino. Suerte aumentó en {gain}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para tentar a la suerte."
+	}
+}

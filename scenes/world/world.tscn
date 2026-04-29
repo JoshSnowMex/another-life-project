@@ -11,6 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://dtce8cgg4esew" path="res://scenes/npc/doran.tscn" id="7_bq33v"]
 [ext_resource type="PackedScene" uid="uid://cfdgtxa312s86" path="res://scenes/npc/mira.tscn" id="8_j2gmx"]
 [ext_resource type="PackedScene" uid="uid://dptdvokwel370" path="res://scenes/world/library_spot.tscn" id="9_1yooq"]
+[ext_resource type="PackedScene" uid="uid://vyj2lbrvo2xr" path="res://scenes/world/workshop_spot.tscn" id="12_mxkvs"]
+[ext_resource type="PackedScene" uid="uid://bs7ivsi2lmjwo" path="res://scenes/world/social_plaza_spot.tscn" id="13_m114p"]
+[ext_resource type="PackedScene" uid="uid://chli67e4jt7du" path="res://scenes/world/endurance_spot.tscn" id="14_71ii3"]
+[ext_resource type="PackedScene" uid="uid://cks4demsks1qw" path="res://scenes/world/luck_fountain_spot.tscn" id="15_bt7bg"]
 
 [node name="World" type="Node2D" unique_id=379945775]
 
@@ -41,7 +45,19 @@ position = Vector2(96, 64)
 npc_id = "mira"
 
 [node name="TrainingSpot" parent="." unique_id=721216541 instance=ExtResource("4_6m72w")]
-position = Vector2(-120, 32)
+position = Vector2(-432, -48)
 
 [node name="LibrarySpot" parent="." unique_id=674097719 instance=ExtResource("9_1yooq")]
-position = Vector2(-168, -144)
+position = Vector2(-432, -216)
+
+[node name="WorkshopSpot" parent="." unique_id=202193710 instance=ExtResource("12_mxkvs")]
+position = Vector2(424, 160)
+
+[node name="SocialPlazaSpot" parent="." unique_id=1904823194 instance=ExtResource("13_m114p")]
+position = Vector2(432, -16)
+
+[node name="EnduranceSpot" parent="." unique_id=677543613 instance=ExtResource("14_71ii3")]
+position = Vector2(424, -200)
+
+[node name="LuckFountainSpot" parent="." unique_id=1114868111 instance=ExtResource("15_bt7bg")]
+position = Vector2(-424, 120)
