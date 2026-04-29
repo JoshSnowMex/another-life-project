@@ -90,7 +90,10 @@ func get_status_text() -> String:
 	var max_gifts: int = int(active_session.get("max_gifts", 2))
 	var max_actions: int = int(active_session.get("max_actions", 1))
 
-	return "Progreso: " + str(current_score) + "/" + str(max_score) + " | Éxito: " + str(success_score) + "/" + str(max_score) + "\nCharlar: " + str(talks_used) + "/" + str(max_talks) + " | Regalos: " + str(gifts_used) + "/" + str(max_gifts) + " | Movimiento: " + str(actions_used) + "/" + str(max_actions)
+	var progress_percent: int = int(round((float(current_score) / float(max_score)) * 100.0))
+	var success_percent: int = int(round((float(success_score) / float(max_score)) * 100.0))
+
+	return "Calidad de la cita: " + str(progress_percent) + "% | Éxito: " + str(success_percent) + "%\nCharlar: " + str(talks_used) + "/" + str(max_talks) + " | Regalos: " + str(gifts_used) + "/" + str(max_gifts) + " | Movimiento: " + str(actions_used) + "/" + str(max_actions)
 
 func can_talk() -> bool:
 	if active_session.is_empty():
@@ -278,6 +281,8 @@ func get_available_actions() -> Array[Dictionary]:
 	var action_pool: Array = active_session.get("action_pool", [])
 	var result: Array[Dictionary] = []
 	var tier: int = int(active_session.get("tier", 20))
+	var npc_id: String = str(active_session.get("npc_id", ""))
+	var affinity: int = RelationshipSystem.get_affinity(npc_id)
 
 	for action_id in action_pool:
 		var action_data: Dictionary = DialogueDatabase.get_date_action_data(str(action_id))
@@ -286,8 +291,12 @@ func get_available_actions() -> Array[Dictionary]:
 			continue
 
 		var min_tier: int = int(action_data.get("min_tier", 20))
+		var min_affinity: int = int(action_data.get("min_affinity", 0))
 
 		if tier < min_tier:
+			continue
+
+		if affinity < min_affinity:
 			continue
 
 		result.append(action_data)
@@ -353,7 +362,11 @@ func finish_session() -> Dictionary:
 		if success_flag != "":
 			EventSystem.set_flag(success_flag, true)
 
-	var result_text: String = final_text + "\nResultado: " + str(current_score) + "/" + str(success_score) + ". Afinidad: " + str(new_affinity) + "."
+	var max_score: int = int(active_session.get("max_score", 10))
+	var progress_percent: int = int(round((float(current_score) / float(max_score)) * 100.0))
+	var success_percent: int = int(round((float(success_score) / float(max_score)) * 100.0))
+
+	var result_text: String = final_text + "\nCalidad final: " + str(progress_percent) + "% / Éxito requerido: " + str(success_percent) + "%. Afinidad: " + str(new_affinity) + "."
 
 	clear_session()
 

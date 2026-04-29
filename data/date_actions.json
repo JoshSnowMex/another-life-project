@@ -2,6 +2,7 @@
 	"playful_poke": {
 		"display_name": "Dar un toque juguetón",
 		"min_tier": 20,
+		"min_affinity": 20,
 		"min_score": 2,
 		"success_score": 1,
 		"failure_score": -1,
@@ -11,6 +12,7 @@
 	"gentle_compliment": {
 		"display_name": "Hacer un cumplido amable",
 		"min_tier": 20,
+		"min_affinity": 20,
 		"min_score": 1,
 		"success_score": 1,
 		"failure_score": 0,
@@ -20,6 +22,7 @@
 	"hold_hands": {
 		"display_name": "Tomar la mano",
 		"min_tier": 20,
+		"min_affinity": 40,
 		"min_score": 5,
 		"success_score": 2,
 		"failure_score": -2,
@@ -29,6 +32,7 @@
 	"share_personal_story": {
 		"display_name": "Contar algo personal",
 		"min_tier": 20,
+		"min_affinity": 20,
 		"min_score": 1,
 		"success_score": 1,
 		"failure_score": 0,
@@ -38,6 +42,7 @@
 	"hug": {
 		"display_name": "Dar un abrazo",
 		"min_tier": 40,
+		"min_affinity": 40,
 		"min_score": 5,
 		"success_score": 2,
 		"failure_score": -2,
@@ -47,6 +52,7 @@
 	"kiss": {
 		"display_name": "Intentar un beso",
 		"min_tier": 60,
+		"min_affinity": 60,
 		"min_score": 7,
 		"success_score": 3,
 		"failure_score": -3,

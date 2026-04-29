@@ -176,9 +176,10 @@ func show_action_options() -> void:
 		var action_id: String = str(action_data.get("action_id", ""))
 		var display_name: String = str(action_data.get("display_name", action_id))
 		var min_score: int = int(action_data.get("min_score", 0))
+		var min_affinity: int = int(action_data.get("min_affinity", 0))
 
 		var button := Button.new()
-		button.text = display_name + " | requiere progreso " + str(min_score)
+		button.text = display_name + " | ambiente " + str(min_score) + " | afinidad " + str(min_affinity)
 		button.custom_minimum_size = Vector2(320, 36)
 		button.pressed.connect(func(): choose_action(action_id))
 		options_container.add_child(button)
