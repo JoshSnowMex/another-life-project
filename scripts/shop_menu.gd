@@ -49,9 +49,8 @@ func buy_item(shop_item_id: String) -> void:
 	var dialogue_box = get_tree().current_scene.get_node("DialogueBox")
 	var result: Dictionary = ShopSystem.buy_item(shop_item_id, 1)
 
-	refresh_menu()
-
 	var speaker_name: String = str(result.get("speaker_name", "Tienda"))
 	var text: String = str(result.get("text", ""))
 
+	close_menu()
 	dialogue_box.show_dialogue(speaker_name, text)
