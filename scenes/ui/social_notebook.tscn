@@ -13,10 +13,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -956.0
-offset_top = -544.0
-offset_right = -196.0
-offset_bottom = -104.0
+offset_left = -380.0
+offset_top = -220.0
+offset_right = 380.0
+offset_bottom = 220.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -37,14 +37,14 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 
 [node name="NpcListPanel" type="PanelContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=1753880060]
-custom_minimum_size = Vector2(0, 220)
+custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 
 [node name="NpcList" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer/NpcListPanel" unique_id=798934394]
 layout_mode = 2
 
 [node name="DetailPanel" type="PanelContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=898831558]
-custom_minimum_size = Vector2(0, 480)
+custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
 
 [node name="DetailMargin" type="MarginContainer" parent="Panel/MarginContainer/HBoxContainer/DetailPanel" unique_id=1315078334]
