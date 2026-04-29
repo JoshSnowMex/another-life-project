@@ -1,7 +1,8 @@
 extends Node
 
 const SAVE_FILE_PATH: String = "user://save_game.json"
-const SAVE_VERSION: int = 1
+const SAVE_VERSION: int = 2
+const POSITION_SAVE_GROUP: String = "save_position"
 
 func save_game() -> bool:
 	var save_data: Dictionary = create_save_data()
@@ -57,7 +58,9 @@ func create_save_data() -> Dictionary:
 		"version": SAVE_VERSION,
 		"current_day": TimeSystem.current_day,
 		"player": create_player_save_data(),
-		"relationships": RelationshipSystem.relationships.duplicate(true)
+		"relationships": RelationshipSystem.relationships.duplicate(true),
+		"event_flags": EventSystem.get_all_flags(),
+		"positions": create_positions_save_data()
 	}
 
 func create_player_save_data() -> Dictionary:
@@ -74,6 +77,31 @@ func create_player_save_data() -> Dictionary:
 		"inventory": PlayerStats.inventory.duplicate(true)
 	}
 
+func create_positions_save_data() -> Dictionary:
+	var result: Dictionary = {}
+	var nodes: Array[Node] = get_tree().get_nodes_in_group(POSITION_SAVE_GROUP)
+
+	for node in nodes:
+		if not node is Node2D:
+			continue
+
+		if not "save_id" in node:
+			continue
+
+		var save_id: String = str(node.save_id)
+
+		if save_id == "":
+			continue
+
+		var node_2d := node as Node2D
+
+		result[save_id] = {
+			"x": node_2d.global_position.x,
+			"y": node_2d.global_position.y
+		}
+
+	return result
+
 func apply_save_data(save_data: Dictionary) -> void:
 	TimeSystem.current_day = int(save_data.get("current_day", 1))
 
@@ -82,6 +110,12 @@ func apply_save_data(save_data: Dictionary) -> void:
 
 	var relationships_data: Dictionary = save_data.get("relationships", {})
 	RelationshipSystem.relationships = relationships_data.duplicate(true)
+
+	var event_flags_data: Dictionary = save_data.get("event_flags", {})
+	EventSystem.load_flags(event_flags_data)
+
+	var positions_data: Dictionary = save_data.get("positions", {})
+	apply_positions_save_data(positions_data)
 
 func apply_player_save_data(player_data: Dictionary) -> void:
 	PlayerStats.strength = int(player_data.get("strength", 1))
@@ -102,3 +136,28 @@ func apply_player_save_data(player_data: Dictionary) -> void:
 	PlayerStats.max_energy = saved_max_energy
 	PlayerStats.current_energy = int(player_data.get("current_energy", PlayerStats.max_energy))
 	PlayerStats.current_energy = clamp(PlayerStats.current_energy, 0, PlayerStats.max_energy)
+
+func apply_positions_save_data(positions_data: Dictionary) -> void:
+	var nodes: Array[Node] = get_tree().get_nodes_in_group(POSITION_SAVE_GROUP)
+
+	for node in nodes:
+		if not node is Node2D:
+			continue
+
+		if not "save_id" in node:
+			continue
+
+		var save_id: String = str(node.save_id)
+
+		if save_id == "":
+			continue
+
+		if not positions_data.has(save_id):
+			continue
+
+		var position_data: Dictionary = positions_data[save_id]
+		var x: float = float(position_data.get("x", 0.0))
+		var y: float = float(position_data.get("y", 0.0))
+
+		var node_2d := node as Node2D
+		node_2d.global_position = Vector2(x, y)

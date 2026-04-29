@@ -14,7 +14,7 @@
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1789890885]
 
-[node name="player" parent="." unique_id=736873309 instance=ExtResource("1_dphjl")]
+[node name="player" parent="." unique_id=736873309 groups=["save_position"] instance=ExtResource("1_dphjl")]
 
 [node name="DialogueBox" parent="." unique_id=890622693 instance=ExtResource("3_1fp7r")]
 

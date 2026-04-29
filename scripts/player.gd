@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var speed: float = 160.0
+@export var save_id: String = "player"
 
 @onready var interaction_area: Area2D = $Area2D
 
