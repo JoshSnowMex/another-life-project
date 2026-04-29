@@ -1,0 +1,26 @@
+{
+	"hold_hands": {
+		"display_name": "Tomar la mano",
+		"min_score": 2,
+		"success_score": 1,
+		"failure_score": -1,
+		"success_text": "El gesto es bien recibido. La cercanía se siente natural.",
+		"failure_text": "Parece que aún no era el momento adecuado."
+	},
+	"gentle_compliment": {
+		"display_name": "Hacer un cumplido amable",
+		"min_score": 1,
+		"success_score": 1,
+		"failure_score": 0,
+		"success_text": "El cumplido parece llegar en buen momento.",
+		"failure_text": "El comentario no incomoda, pero tampoco parece tener mucho impacto."
+	},
+	"share_personal_story": {
+		"display_name": "Contar algo personal",
+		"min_score": 1,
+		"success_score": 1,
+		"failure_score": 0,
+		"success_text": "Compartir algo personal hace que la conversación se sienta más honesta.",
+		"failure_text": "La historia queda en el aire. Tal vez faltaba más confianza."
+	}
+}

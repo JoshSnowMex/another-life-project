@@ -2,9 +2,10 @@ extends Node
 
 var active_session: Dictionary = {}
 var active_npc = null
-var active_questions: Array[Dictionary] = []
-var current_round_index: int = 0
+var active_steps: Array[Dictionary] = []
+var current_step_index: int = 0
 var current_score: int = 0
+var gift_used: bool = false
 
 func get_available_sessions_for_npc(npc_id: String) -> Array[Dictionary]:
 	var sessions: Dictionary = DialogueDatabase.get_date_sessions_for_npc(npc_id)
@@ -39,16 +40,41 @@ func can_session_be_used(session_data: Dictionary) -> bool:
 		if not EventSystem.has_flag(str(flag_id)):
 			return false
 
-	var question_ids: Array = session_data.get("questions", [])
+	var steps: Array = session_data.get("steps", [])
 
-	for question_id in question_ids:
-		var question_data: Dictionary = DialogueDatabase.get_date_question_data(str(question_id))
+	if steps.is_empty():
+		return false
 
-		if question_data.is_empty():
-			continue
+	return has_at_least_one_usable_step(steps)
 
-		if DateQuestionSystem.can_question_be_used_for_session(question_data):
+func has_at_least_one_usable_step(steps: Array) -> bool:
+	for raw_step in steps:
+		var step: Dictionary = raw_step
+
+		if can_step_be_used(step):
 			return true
+
+	return false
+
+func can_step_be_used(step: Dictionary) -> bool:
+	var step_type: String = str(step.get("type", ""))
+
+	match step_type:
+		"dialogue":
+			return true
+		"gift":
+			return true
+		"action":
+			var action_id: String = str(step.get("action_id", ""))
+			return not DialogueDatabase.get_date_action_data(action_id).is_empty()
+		"question":
+			var question_id: String = str(step.get("question_id", ""))
+			var question_data: Dictionary = DialogueDatabase.get_date_question_data(question_id)
+
+			if question_data.is_empty():
+				return false
+
+			return DateQuestionSystem.can_question_be_used_for_session(question_data)
 
 	return false
 
@@ -71,15 +97,16 @@ func start_session(npc, session_id: String) -> Dictionary:
 
 	active_npc = npc
 	active_session = session_data
-	active_questions = build_session_questions(session_data)
-	current_round_index = 0
+	active_steps = build_session_steps(session_data)
+	current_step_index = 0
 	current_score = 0
+	gift_used = false
 
-	if active_questions.is_empty():
+	if active_steps.is_empty():
 		clear_session()
 		return {
 			"success": false,
-			"text": "No hay preguntas disponibles para esta cita."
+			"text": "No hay pasos disponibles para esta cita."
 		}
 
 	return {
@@ -87,90 +114,219 @@ func start_session(npc, session_id: String) -> Dictionary:
 		"text": str(session_data.get("intro_text", "La cita comienza."))
 	}
 
-func build_session_questions(session_data: Dictionary) -> Array[Dictionary]:
+func build_session_steps(session_data: Dictionary) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
-	var valid_questions: Array[Dictionary] = []
-	var question_ids: Array = session_data.get("questions", [])
-	var rounds: int = int(session_data.get("rounds", 3))
+	var steps: Array = session_data.get("steps", [])
 
-	for question_id in question_ids:
-		var question_data: Dictionary = DialogueDatabase.get_date_question_data(str(question_id))
+	for raw_step in steps:
+		var step: Dictionary = raw_step.duplicate(true)
 
-		if question_data.is_empty():
+		if not can_step_be_used(step):
 			continue
 
-		if DateQuestionSystem.can_question_be_used_for_session(question_data):
-			valid_questions.append(question_data)
-
-	if valid_questions.is_empty():
-		return result
-
-	for index in range(rounds):
-		var selected_question: Dictionary = valid_questions[index % valid_questions.size()].duplicate(true)
-		result.append(selected_question)
+		result.append(step)
 
 	return result
 
 func has_active_session() -> bool:
 	return not active_session.is_empty()
 
-func get_current_question() -> Dictionary:
-	if current_round_index < 0 or current_round_index >= active_questions.size():
+func get_current_step() -> Dictionary:
+	if current_step_index < 0 or current_step_index >= active_steps.size():
 		return {}
 
-	return active_questions[current_round_index]
+	return active_steps[current_step_index]
 
-func answer_current_question(selected_answer: String) -> Dictionary:
-	var question_data: Dictionary = get_current_question()
+func get_current_step_number() -> int:
+	return current_step_index + 1
+
+func get_total_steps() -> int:
+	return active_steps.size()
+
+func advance_dialogue_step() -> Dictionary:
+	var step: Dictionary = get_current_step()
+
+	if step.is_empty():
+		return finish_session_with_wrapper("")
+
+	current_step_index += 1
+
+	if current_step_index >= active_steps.size():
+		return finish_session_with_wrapper(str(step.get("text", "")))
+
+	return {
+		"finished": false,
+		"text": str(step.get("text", "")),
+		"continue_to_next": true
+	}
+
+func answer_question_step(selected_answer: String) -> Dictionary:
+	var step: Dictionary = get_current_step()
+	var question_id: String = str(step.get("question_id", ""))
+	var question_data: Dictionary = DialogueDatabase.get_date_question_data(question_id)
 
 	if question_data.is_empty():
+		current_step_index += 1
 		return {
-			"finished": true,
-			"text": "La cita terminó inesperadamente."
+			"finished": false,
+			"text": "La pregunta no está disponible."
 		}
 
 	var correct_answer: String = str(question_data.get("correct_answer", ""))
 	var is_correct: bool = selected_answer == correct_answer
 
 	if is_correct:
-		current_score += 1
+		current_score += int(step.get("success_score", 1))
+	else:
+		current_score += int(step.get("failure_score", 0))
 
-	var result_text: String = get_round_result_text(question_data, is_correct)
+	var result_text: String = DateQuestionSystem.get_result_text_for_session(question_data, is_correct)
 
-	current_round_index += 1
+	current_step_index += 1
 
-	if current_round_index >= active_questions.size():
-		var final_result: Dictionary = finish_session()
-		final_result["round_text"] = result_text
-		final_result["finished"] = true
-		return final_result
+	if current_step_index >= active_steps.size():
+		return finish_session_with_wrapper(result_text)
 
 	return {
 		"finished": false,
-		"is_correct": is_correct,
 		"text": result_text,
-		"score": current_score,
-		"round": current_round_index + 1,
-		"total_rounds": active_questions.size()
+		"score": current_score
 	}
 
-func get_round_result_text(question_data: Dictionary, is_correct: bool) -> String:
+func use_gift_step(gift_type: String) -> Dictionary:
+	var step: Dictionary = get_current_step()
+
+	if gift_used:
+		return {
+			"finished": false,
+			"text": "Ya diste un regalo durante esta cita."
+		}
+
+	if active_npc == null:
+		return {
+			"finished": false,
+			"text": "No hay NPC para recibir el regalo."
+		}
+
+	if not PlayerStats.remove_item(gift_type):
+		return {
+			"finished": false,
+			"text": "No tienes ese regalo."
+		}
+
+	gift_used = true
+
+	var score_change: int = calculate_gift_score(step, gift_type)
+	current_score += score_change
+
+	var gift_display_name: String = DialogueDatabase.get_item_display_name(gift_type)
+	var result_text: String = get_gift_result_text(gift_type, score_change)
+	result_text = "Diste: " + gift_display_name + ".\n" + result_text
+
+	if active_npc.has_method("unlock_gift_knowledge"):
+		active_npc.unlock_gift_knowledge(gift_type, score_change)
+
+	current_step_index += 1
+
+	if current_step_index >= active_steps.size():
+		return finish_session_with_wrapper(result_text)
+
+	return {
+		"finished": false,
+		"text": result_text,
+		"score": current_score
+	}
+
+func skip_gift_step() -> Dictionary:
+	var result_text: String = "Decidiste no dar ningún regalo en este momento."
+
+	current_step_index += 1
+
+	if current_step_index >= active_steps.size():
+		return finish_session_with_wrapper(result_text)
+
+	return {
+		"finished": false,
+		"text": result_text,
+		"score": current_score
+	}
+
+func calculate_gift_score(step: Dictionary, gift_type: String) -> int:
+	if active_npc == null:
+		return int(step.get("neutral_score", 0))
+
+	if not "gift_preferences" in active_npc:
+		return int(step.get("neutral_score", 0))
+
+	var preferences: Dictionary = active_npc.gift_preferences
+
+	if preferences.has("loved") and gift_type in preferences["loved"]:
+		return int(step.get("success_score", 2))
+
+	if preferences.has("liked") and gift_type in preferences["liked"]:
+		return int(step.get("success_score", 2))
+
+	if preferences.has("disliked") and gift_type in preferences["disliked"]:
+		return int(step.get("failure_score", -1))
+
+	return int(step.get("neutral_score", 0))
+
+func get_gift_result_text(gift_type: String, score_change: int) -> String:
+	if score_change > 0:
+		return "El regalo parece mejorar el ambiente de la cita."
+
+	if score_change < 0:
+		return "El regalo no fue bien recibido."
+
+	return "El regalo fue aceptado, aunque no cambió demasiado el ambiente."
+
+func perform_action_step() -> Dictionary:
+	var step: Dictionary = get_current_step()
+	var action_id: String = str(step.get("action_id", ""))
+	var action_data: Dictionary = DialogueDatabase.get_date_action_data(action_id)
+
+	if action_data.is_empty():
+		current_step_index += 1
+		return {
+			"finished": false,
+			"text": "La acción no está disponible."
+		}
+
+	var min_score: int = int(action_data.get("min_score", 0))
 	var result_text: String = ""
+	var score_change: int = 0
 
-	if is_correct:
-		result_text = str(question_data.get("date_correct_text", question_data.get("correct_text", "La respuesta parece alegrarle.")))
+	if current_score >= min_score:
+		score_change = int(action_data.get("success_score", 1))
+		result_text = str(action_data.get("success_text", "La acción salió bien."))
 	else:
-		result_text = str(question_data.get("date_wrong_text", question_data.get("wrong_text", "La respuesta no parece convencerle.")))
+		score_change = int(action_data.get("failure_score", -1))
+		result_text = str(action_data.get("failure_text", "La acción no salió bien."))
 
-	result_text = result_text.replace("{affinity}", "")
-	result_text = result_text.replace("Afinidad: .", "")
-	result_text = result_text.strip_edges()
+	current_score += score_change
+	current_step_index += 1
 
-	return result_text
+	if current_step_index >= active_steps.size():
+		return finish_session_with_wrapper(result_text)
+
+	return {
+		"finished": false,
+		"text": result_text,
+		"score": current_score
+	}
+
+func finish_session_with_wrapper(previous_text: String) -> Dictionary:
+	var final_result: Dictionary = finish_session()
+
+	if previous_text != "":
+		final_result["text"] = previous_text + "\n\n" + str(final_result.get("text", ""))
+
+	final_result["finished"] = true
+	return final_result
 
 func finish_session() -> Dictionary:
 	var npc_id: String = str(active_session.get("npc_id", ""))
-	var success_score: int = int(active_session.get("success_score", 2))
+	var success_score: int = int(active_session.get("success_score", 4))
 	var was_successful: bool = current_score >= success_score
 	var affinity_change: int = int(active_session.get("failure_affinity_penalty", 0))
 	var final_text: String = str(active_session.get("failure_text", "La cita no salió demasiado bien."))
@@ -190,10 +346,10 @@ func finish_session() -> Dictionary:
 	var result: Dictionary = {
 		"session_success": was_successful,
 		"score": current_score,
-		"total_rounds": active_questions.size(),
+		"success_score": success_score,
 		"affinity_change": affinity_change,
 		"new_affinity": new_affinity,
-		"text": final_text + "\nResultado: " + str(current_score) + "/" + str(active_questions.size()) + ". Afinidad: " + str(new_affinity) + "."
+		"text": final_text + "\nResultado: " + str(current_score) + "/" + str(success_score) + ". Afinidad: " + str(new_affinity) + "."
 	}
 
 	clear_session()
@@ -202,9 +358,10 @@ func finish_session() -> Dictionary:
 func clear_session() -> void:
 	active_session = {}
 	active_npc = null
-	active_questions.clear()
-	current_round_index = 0
+	active_steps.clear()
+	current_step_index = 0
 	current_score = 0
+	gift_used = false
 
 func get_session_display_name(session_data: Dictionary) -> String:
 	var display_name: String = str(session_data.get("display_name", "Cita"))

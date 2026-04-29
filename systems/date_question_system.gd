@@ -102,3 +102,17 @@ func get_question_prompt(question_data: Dictionary) -> String:
 func get_question_options(question_data: Dictionary) -> Array:
 	var options: Array = question_data.get("options", [])
 	return options.duplicate(true)
+
+func get_result_text_for_session(question_data: Dictionary, is_correct: bool) -> String:
+	var result_text: String = ""
+
+	if is_correct:
+		result_text = str(question_data.get("correct_text", "La respuesta parece alegrarle."))
+	else:
+		result_text = str(question_data.get("wrong_text", "La respuesta no parece convencerle."))
+
+	result_text = result_text.replace("{affinity}", "")
+	result_text = result_text.replace("Afinidad: .", "")
+	result_text = result_text.strip_edges()
+
+	return result_text
