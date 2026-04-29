@@ -17,6 +17,17 @@
 		"success_text": "Ayudaste cargando mercancía. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para cargar mercancía."
 	},
+	"part_time_cargo_training": {
+		"display_name": "Medio tiempo: carga ligera",
+		"stat": "strength",
+		"base_gain": 1,
+		"money_gain": 11,
+		"money_stat": "strength",
+		"energy_cost": 10,
+		"speaker_name": "Campo de entrenamiento",
+		"success_text": "Hiciste carga ligera mientras practicabas técnica. Fuerza aumentó en {gain}. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para hacer carga ligera."
+	},
 
 	"study_intelligence": {
 		"display_name": "Estudiar",
@@ -35,6 +46,17 @@
 		"speaker_name": "Biblioteca",
 		"success_text": "Ayudaste con tutoría y copias. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para trabajar en la biblioteca."
+	},
+	"part_time_library_assistant": {
+		"display_name": "Medio tiempo: asistente de biblioteca",
+		"stat": "intelligence",
+		"base_gain": 1,
+		"money_gain": 10,
+		"money_stat": "intelligence",
+		"energy_cost": 8,
+		"speaker_name": "Biblioteca",
+		"success_text": "Ordenaste libros y repasaste apuntes entre tareas. Inteligencia aumentó en {gain}. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para ayudar en la biblioteca."
 	},
 
 	"practice_dexterity": {
@@ -55,6 +77,17 @@
 		"success_text": "Completaste algunos encargos de taller. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para hacer encargos de taller."
 	},
+	"part_time_workshop_helper": {
+		"display_name": "Medio tiempo: ayudante de taller",
+		"stat": "dexterity",
+		"base_gain": 1,
+		"money_gain": 10,
+		"money_stat": "dexterity",
+		"energy_cost": 8,
+		"speaker_name": "Taller",
+		"success_text": "Ayudaste con piezas sencillas mientras practicabas precisión. Destreza aumentó en {gain}. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para ayudar en el taller."
+	},
 
 	"practice_charisma": {
 		"display_name": "Practicar carisma",
@@ -73,6 +106,17 @@
 		"speaker_name": "Plaza social",
 		"success_text": "Ayudaste atendiendo visitantes. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para atender visitantes."
+	},
+	"part_time_social_helper": {
+		"display_name": "Medio tiempo: apoyo social",
+		"stat": "charisma",
+		"base_gain": 1,
+		"money_gain": 9,
+		"money_stat": "charisma",
+		"energy_cost": 7,
+		"speaker_name": "Plaza social",
+		"success_text": "Ayudaste a organizar conversaciones y practicaste trato social. Carisma aumentó en {gain}. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para apoyar en la plaza."
 	},
 
 	"train_constitution": {
@@ -93,6 +137,17 @@
 		"success_text": "Ayudaste en tareas físicamente exigentes. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para hacer ayuda física."
 	},
+	"part_time_endurance_helper": {
+		"display_name": "Medio tiempo: asistencia física",
+		"stat": "constitution",
+		"base_gain": 1,
+		"money_gain": 10,
+		"money_stat": "constitution",
+		"energy_cost": 9,
+		"speaker_name": "Zona de resistencia",
+		"success_text": "Ayudaste con tareas moderadas y entrenaste tu aguante. Constitución aumentó en {gain}. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para hacer asistencia física."
+	},
 
 	"test_luck": {
 		"display_name": "Probar suerte",
@@ -111,5 +166,16 @@
 		"speaker_name": "Fuente de la suerte",
 		"success_text": "Probaste suerte en pequeños encargos. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para trabajar en el puesto de azar."
+	},
+	"part_time_luck_errands": {
+		"display_name": "Medio tiempo: encargos inciertos",
+		"stat": "luck",
+		"base_gain": 1,
+		"money_gain": 9,
+		"money_stat": "luck",
+		"energy_cost": 6,
+		"speaker_name": "Fuente de la suerte",
+		"success_text": "Hiciste encargos impredecibles y aprendiste a leer mejor el azar. Suerte aumentó en {gain}. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para hacer encargos inciertos."
 	}
 }
