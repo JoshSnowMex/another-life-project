@@ -35,23 +35,11 @@ func _physics_process(_delta: float) -> void:
 		else:
 			check_interaction()
 
-	if Input.is_action_just_pressed("gift_menu"):
-		if gift_menu.visible:
-			gift_menu.close_menu()
-		elif not is_any_ui_visible([dialogue_box, social_notebook, pause_menu, date_menu, location_menu, npc_interaction_menu, shop_menu]):
-				open_gift_menu_for_nearby_npc()
-
 	if Input.is_action_just_pressed("social_notebook"):
 		if social_notebook.visible:
 			social_notebook.close_notebook()
 		elif not is_any_ui_visible([dialogue_box, gift_menu, pause_menu, date_menu, location_menu, npc_interaction_menu, shop_menu]):
 			social_notebook.open_notebook()
-
-	if Input.is_action_just_pressed("date_menu"):
-		if date_menu.visible:
-			date_menu.close_menu()
-		elif not is_any_ui_visible([dialogue_box, gift_menu, social_notebook, pause_menu, location_menu, npc_interaction_menu, shop_menu]):
-			open_date_menu_for_nearby_npc()
 
 	if Input.is_action_just_pressed("pause_menu"):
 		if dialogue_box.is_open():
