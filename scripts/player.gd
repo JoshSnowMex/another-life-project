@@ -12,9 +12,9 @@ func _physics_process(_delta: float) -> void:
 
 	if Input.is_action_just_pressed("interact"):
 		if dialogue_box.is_open():
-			dialogue_box.hide_dialogue()
-		else:
-			check_interaction()
+			dialogue_box.advance_dialogue()
+	else:
+		check_interaction()
 
 	if Input.is_action_just_pressed("gift_menu"):
 		if not gift_menu.visible:
