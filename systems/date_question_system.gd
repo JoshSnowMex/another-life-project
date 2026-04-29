@@ -34,6 +34,19 @@ func can_question_be_used(question_data: Dictionary) -> bool:
 
 	return true
 
+func can_question_be_used_for_session(question_data: Dictionary) -> bool:
+	var npc_id: String = str(question_data.get("npc_id", ""))
+	var required_fact_id: String = str(question_data.get("required_fact_id", ""))
+
+	if required_fact_id != "":
+		if npc_id == "":
+			return false
+
+		if not NpcKnowledgeSystem.is_fact_unlocked(npc_id, required_fact_id):
+			return false
+
+	return true
+	
 func answer_question(question_data: Dictionary, selected_answer: String) -> Dictionary:
 	var npc_id: String = str(question_data.get("npc_id", ""))
 	var correct_answer: String = str(question_data.get("correct_answer", ""))

@@ -8,8 +8,8 @@
 		"answered_flag": "date_question_lyria_liked_gift_flor_answered",
 		"affinity_reward": 5,
 		"affinity_penalty": -2,
-		"correct_text": "Lyria sonríe al notar que recordaste ese detalle. Afinidad: {affinity}.",
-		"wrong_text": "Lyria parece un poco confundida. Quizá aún necesitas conocerla mejor. Afinidad: {affinity}."
+		"correct_text": "Lyria sonríe al notar que recordaste ese detalle.",
+		"wrong_text": "Lyria parece un poco confundida. Quizá aún necesitas conocerla mejor."
 	},
 	"lyria_loved_gift_joya": {
 		"npc_id": "lyria",
@@ -20,8 +20,8 @@
 		"answered_flag": "date_question_lyria_loved_gift_joya_answered",
 		"affinity_reward": 8,
 		"affinity_penalty": -3,
-		"correct_text": "Lyria se alegra de que hayas prestado tanta atención. Afinidad: {affinity}.",
-		"wrong_text": "Lyria intenta no darle importancia, pero nota la confusión. Afinidad: {affinity}."
+		"correct_text": "Lyria se alegra de que hayas prestado tanta atención.",
+		"wrong_text": "Lyria intenta no darle importancia, pero nota la confusión."
 	},
 	"doran_liked_gift_artesania": {
 		"npc_id": "doran",
@@ -32,8 +32,8 @@
 		"answered_flag": "date_question_doran_liked_gift_artesania_answered",
 		"affinity_reward": 5,
 		"affinity_penalty": -2,
-		"correct_text": "Doran asiente con seriedad. Parece que recordaste algo útil. Afinidad: {affinity}.",
-		"wrong_text": "Doran frunce el ceño. No parece impresionado. Afinidad: {affinity}."
+		"correct_text": "Doran asiente con seriedad. Parece que recordaste algo útil.",
+		"wrong_text": "Doran frunce el ceño. No parece impresionado."
 	},
 	"doran_loved_gift_comida": {
 		"npc_id": "doran",
@@ -44,8 +44,8 @@
 		"answered_flag": "date_question_doran_loved_gift_comida_answered",
 		"affinity_reward": 8,
 		"affinity_penalty": -3,
-		"correct_text": "Doran intenta ocultarlo, pero parece satisfecho. Afinidad: {affinity}.",
-		"wrong_text": "Doran suelta un resoplido. Esa no era la respuesta. Afinidad: {affinity}."
+		"correct_text": "Doran intenta ocultarlo, pero parece satisfecho.",
+		"wrong_text": "Doran suelta un resoplido. Esa no era la respuesta."
 	},
 	"mira_liked_gift_flor": {
 		"npc_id": "mira",
@@ -56,8 +56,8 @@
 		"answered_flag": "date_question_mira_liked_gift_flor_answered",
 		"affinity_reward": 5,
 		"affinity_penalty": -2,
-		"correct_text": "Mira sonríe como si la respuesta hubiera confirmado una teoría secreta. Afinidad: {affinity}.",
-		"wrong_text": "Mira parpadea lentamente. \"No, esa no era la forma del recuerdo.\" Afinidad: {affinity}."
+		"correct_text": "Mira sonríe como si la respuesta hubiera confirmado una teoría secreta.",
+		"wrong_text": "Mira parpadea lentamente. \"No, esa no era la forma del recuerdo.\""
 	},
 	"mira_loved_gift_libro": {
 		"npc_id": "mira",
@@ -68,7 +68,7 @@
 		"answered_flag": "date_question_mira_loved_gift_libro_answered",
 		"affinity_reward": 8,
 		"affinity_penalty": -3,
-		"correct_text": "Mira abraza la idea de la respuesta como si fuera un pequeño secreto. Afinidad: {affinity}.",
-		"wrong_text": "Mira inclina la cabeza. \"Casi, pero el eco era distinto.\" Afinidad: {affinity}."
+		"correct_text": "Mira abraza la idea de la respuesta como si fuera un pequeño secreto.",
+		"wrong_text": "Mira inclina la cabeza. \"Casi, pero el eco era distinto.\""
 	}
 }

@@ -83,14 +83,9 @@ func can_open_date_menu() -> bool:
 		return false
 
 	var npc_id: String = str(current_npc.npc_id)
-	var affinity: int = RelationshipSystem.get_affinity(npc_id)
+	var sessions: Array[Dictionary] = DateSessionSystem.get_available_sessions_for_npc(npc_id)
 
-	if affinity < 20:
-		return false
-
-	var question: Dictionary = DateQuestionSystem.get_available_question_for_npc(npc_id)
-
-	return not question.is_empty()
+	return not sessions.is_empty()
 
 func get_date_button_text() -> String:
 	if current_npc == null:
@@ -102,10 +97,10 @@ func get_date_button_text() -> String:
 	if affinity < 20:
 		return "Cita - requiere afinidad 20"
 
-	var question: Dictionary = DateQuestionSystem.get_available_question_for_npc(npc_id)
+	var sessions: Array[Dictionary] = DateSessionSystem.get_available_sessions_for_npc(npc_id)
 
-	if question.is_empty():
-		return "Cita - sin preguntas disponibles"
+	if sessions.is_empty():
+		return "Cita - sin citas disponibles"
 
 	return "Cita"
 

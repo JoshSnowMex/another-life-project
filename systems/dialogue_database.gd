@@ -9,6 +9,7 @@ const NPC_KNOWLEDGE_PATH: String = "res://data/npc_knowledge.json"
 const ACTIVITIES_PATH: String = "res://data/activities.json"
 const DATE_QUESTIONS_PATH: String = "res://data/date_questions.json"
 const SHOP_ITEMS_PATH: String = "res://data/shop_items.json"
+const DATE_SESSIONS_PATH: String = "res://data/date_sessions.json"
 
 var npc_personality_dialogues: Dictionary = {}
 var npc_profiles: Dictionary = {}
@@ -19,6 +20,7 @@ var npc_knowledge: Dictionary = {}
 var activities: Dictionary = {}
 var date_questions: Dictionary = {}
 var shop_items: Dictionary = {}
+var date_sessions: Dictionary = {}
 
 func _ready() -> void:
 	load_all_data()
@@ -33,6 +35,7 @@ func load_all_data() -> void:
 	load_activities()
 	load_date_questions()
 	load_shop_items()
+	load_date_sessions()
 
 func load_npc_personality_dialogues() -> void:
 	npc_personality_dialogues = load_json_file(NPC_PERSONALITY_DIALOGUES_PATH)
@@ -60,6 +63,9 @@ func load_date_questions() -> void:
 
 func load_shop_items() -> void:
 	shop_items = load_json_file(SHOP_ITEMS_PATH)
+	
+func load_date_sessions() -> void:
+	date_sessions = load_json_file(DATE_SESSIONS_PATH)
 
 func load_json_file(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -202,3 +208,33 @@ func get_shop_item_data(shop_item_id: String) -> Dictionary:
 		return {}
 
 	return shop_items[shop_item_id].duplicate(true)
+
+func get_date_sessions() -> Dictionary:
+	return date_sessions.duplicate(true)
+
+func get_date_sessions_for_npc(npc_id: String) -> Dictionary:
+	var result: Dictionary = {}
+
+	for session_id in date_sessions.keys():
+		var session_data: Dictionary = date_sessions[session_id]
+
+		if str(session_data.get("npc_id", "")) == npc_id:
+			result[session_id] = session_data
+
+	return result
+
+func get_date_session_data(session_id: String) -> Dictionary:
+	if not date_sessions.has(session_id):
+		return {}
+
+	return date_sessions[session_id].duplicate(true)
+
+func get_date_question_data(question_id: String) -> Dictionary:
+	var questions: Dictionary = get_date_questions()
+
+	if not questions.has(question_id):
+		return {}
+
+	var question_data: Dictionary = questions[question_id].duplicate(true)
+	question_data["question_id"] = question_id
+	return question_data

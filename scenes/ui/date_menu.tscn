@@ -7,9 +7,9 @@ script = ExtResource("1_t2v6x")
 
 [node name="Panel" type="Panel" parent="." unique_id=1684779911]
 offset_left = 624.0
-offset_top = 512.0
+offset_top = 256.0
 offset_right = 1144.0
-offset_bottom = 640.0
+offset_bottom = 576.0
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1575917799]
 layout_mode = 0
