@@ -98,7 +98,8 @@ func create_player_save_data() -> Dictionary:
 		"max_energy": PlayerStats.max_energy,
 		"current_energy": PlayerStats.current_energy,
 		"life_path": PlayerStats.life_path,
-		"inventory": PlayerStats.inventory.duplicate(true)
+		"inventory": PlayerStats.inventory.duplicate(true),
+		"money": PlayerStats.money
 	}
 
 func create_positions_save_data() -> Dictionary:
@@ -153,6 +154,7 @@ func apply_player_save_data(player_data: Dictionary) -> void:
 
 	var inventory_data: Dictionary = player_data.get("inventory", {})
 	PlayerStats.inventory = inventory_data.duplicate(true)
+	PlayerStats.money = int(player_data.get("money", 0))
 
 	PlayerStats.update_max_energy()
 

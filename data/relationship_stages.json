@@ -29,9 +29,9 @@
 		"min_affinity": 80,
 		"description": "La relación podría avanzar hacia romance."
 	},
-	"partner": {
-		"display_name": "Pareja",
-		"min_affinity": 100,
-		"description": "Existe una relación romántica formal."
+	"lover": {
+	"display_name": "Amante",
+	"min_affinity": 100,
+	"description": "Existe una conexión romántica profunda, pero la relación formal aún depende de una decisión."
 	}
 }

@@ -9,6 +9,8 @@ var luck: int = 1
 
 var inventory: Dictionary = {}
 
+var money: int = 0
+
 var max_energy: int = 100
 var current_energy: int = 100
 
@@ -27,6 +29,7 @@ func reset_for_new_game(selected_life_path: String) -> void:
 	luck = 1
 
 	life_path = selected_life_path
+	money = 0
 
 	load_starting_inventory()
 	update_max_energy()
@@ -141,3 +144,61 @@ func get_item_count(item_name: String) -> int:
 		return 0
 
 	return inventory[item_name]
+
+func add_money(amount: int) -> void:
+	money += max(amount, 0)
+
+func can_afford(amount: int) -> bool:
+	return money >= amount
+
+func spend_money(amount: int) -> bool:
+	if amount <= 0:
+		return true
+
+	if not can_afford(amount):
+		return false
+
+	money -= amount
+	return true
+
+func calculate_money_gain(work_stat: String, base_amount: int) -> int:
+	var stat_value: int = get_stat_value(work_stat)
+	var stat_modifier: float = 1.0 + (float(stat_value - 1) * 0.03)
+	var life_path_modifier: float = get_life_path_work_modifier(work_stat)
+	var result: int = roundi(float(base_amount) * stat_modifier * life_path_modifier)
+
+	return max(result, 1)
+
+func get_life_path_work_modifier(work_stat: String) -> float:
+	match life_path:
+		"adventurer":
+			if work_stat == "strength" or work_stat == "constitution":
+				return 1.2
+			if work_stat == "intelligence" or work_stat == "charisma":
+				return 0.85
+
+		"scholar":
+			if work_stat == "intelligence" or work_stat == "luck":
+				return 1.2
+			if work_stat == "strength" or work_stat == "constitution":
+				return 0.85
+
+		"artisan":
+			if work_stat == "dexterity" or work_stat == "constitution":
+				return 1.2
+			if work_stat == "charisma" or work_stat == "luck":
+				return 0.85
+
+		"charmer":
+			if work_stat == "charisma" or work_stat == "luck":
+				return 1.2
+			if work_stat == "strength" or work_stat == "dexterity":
+				return 0.85
+
+		"rogue":
+			if work_stat == "dexterity" or work_stat == "luck":
+				return 1.2
+			if work_stat == "intelligence" or work_stat == "constitution":
+				return 0.85
+
+	return 1.0
