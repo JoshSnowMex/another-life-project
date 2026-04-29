@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://dnsphj7cbwd8h"]
+
+[ext_resource type="Script" uid="uid://bo7ljbfl63wf0" path="res://scripts/social_notebook.gd" id="1_wqk3f"]
+
+[node name="SocialNotebook" type="CanvasLayer" unique_id=153127385]
+visible = false
+script = ExtResource("1_wqk3f")
+
+[node name="Panel" type="Panel" parent="." unique_id=489504919]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=69377765]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer" unique_id=1437205003]
+layout_mode = 2
+
+[node name="NpcListPanel" type="PanelContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=1753880060]
+custom_minimum_size = Vector2(0, 260)
+layout_mode = 2
+
+[node name="NpcList" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer/NpcListPanel" unique_id=798934394]
+layout_mode = 2
+
+[node name="DetailPanel" type="PanelContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=898831558]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="DetailMargin" type="MarginContainer" parent="Panel/MarginContainer/HBoxContainer/DetailPanel" unique_id=1315078334]
+layout_mode = 2
+
+[node name="DetailContent" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer/DetailPanel/DetailMargin" unique_id=1093533141]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/DetailPanel/DetailMargin/DetailContent" unique_id=701595313]
+layout_mode = 2
+
+[node name="StageLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/DetailPanel/DetailMargin/DetailContent" unique_id=2091628880]
+layout_mode = 2
+
+[node name="AffinityLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/DetailPanel/DetailMargin/DetailContent" unique_id=2122032609]
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/DetailPanel/DetailMargin/DetailContent" unique_id=1107632518]
+layout_mode = 2
+
+[node name="KnownFacts" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer/DetailPanel/DetailMargin/DetailContent" unique_id=644958282]
+layout_mode = 2

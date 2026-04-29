@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dav545ovdp40w" path="res://scenes/npc/lyria.tscn" id="2_sl2e5"]
 [ext_resource type="PackedScene" uid="uid://cw6b0754w6gve" path="res://scenes/ui/dialogue_box.tscn" id="3_1fp7r"]
 [ext_resource type="PackedScene" uid="uid://bpr5nrvdeu5e1" path="res://scenes/world/training_spot.tscn" id="4_6m72w"]
+[ext_resource type="PackedScene" uid="uid://dnsphj7cbwd8h" path="res://scenes/ui/social_notebook.tscn" id="5_gb53w"]
 [ext_resource type="PackedScene" uid="uid://52n3qbaaudqs" path="res://scenes/ui/stats_hud.tscn" id="5_v5dby"]
 [ext_resource type="PackedScene" uid="uid://dnb17ieah0tt5" path="res://scenes/ui/gift_menu.tscn" id="6_t5ptc"]
 [ext_resource type="PackedScene" uid="uid://dtce8cgg4esew" path="res://scenes/npc/doran.tscn" id="7_bq33v"]
@@ -21,6 +22,8 @@
 [node name="StatsHud" parent="." unique_id=1159140786 instance=ExtResource("5_v5dby")]
 
 [node name="GiftMenu" parent="." unique_id=2015441141 instance=ExtResource("6_t5ptc")]
+
+[node name="SocialNotebook" parent="." unique_id=153127385 instance=ExtResource("5_gb53w")]
 
 [node name="Lyria" parent="." unique_id=561795434 instance=ExtResource("2_sl2e5")]
 position = Vector2(-64, -64)

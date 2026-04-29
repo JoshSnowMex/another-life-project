@@ -45,6 +45,7 @@ func array_to_string_array(value: Variant) -> Array[String]:
 
 func interact() -> void:
 	var dialogue_box = get_tree().current_scene.get_node("DialogueBox")
+	NpcKnowledgeSystem.mark_npc_met(npc_id)
 
 	var relationship_event: Dictionary = RelationshipEventSystem.get_available_event_for_npc(npc_id)
 
@@ -253,6 +254,7 @@ func receive_gift(gift_type: String) -> void:
 	RelationshipSystem.mark_gift_received_today(npc_id)
 
 	var affinity_change: int = calculate_gift_affinity_change(gift_type)
+	unlock_gift_knowledge(gift_type, affinity_change)
 	var new_affinity: int = RelationshipSystem.add_affinity(npc_id, affinity_change)
 
 	if affinity_change >= 6:
@@ -310,3 +312,11 @@ func get_default_gift_response_text(affinity_change: int) -> String:
 
 func can_receive_gift() -> bool:
 	return not RelationshipSystem.has_received_gift_today(npc_id)
+
+func unlock_gift_knowledge(gift_type: String, affinity_change: int) -> void:
+	if loved_gifts.has(gift_type):
+		NpcKnowledgeSystem.unlock_fact(npc_id, "loved_gift_" + gift_type)
+	elif liked_gifts.has(gift_type):
+		NpcKnowledgeSystem.unlock_fact(npc_id, "liked_gift_" + gift_type)
+	elif disliked_gifts.has(gift_type):
+		NpcKnowledgeSystem.unlock_fact(npc_id, "disliked_gift_" + gift_type)

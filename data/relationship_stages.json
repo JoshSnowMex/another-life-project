@@ -1,0 +1,37 @@
+{
+	"stranger": {
+		"display_name": "Desconocido",
+		"min_affinity": -100,
+		"description": "Apenas se conocen."
+	},
+	"acquaintance": {
+		"display_name": "Conocido",
+		"min_affinity": 0,
+		"description": "Ya se han visto algunas veces."
+	},
+	"friendly": {
+		"display_name": "Amistad inicial",
+		"min_affinity": 20,
+		"description": "Empieza a haber confianza."
+	},
+	"friend": {
+		"display_name": "Amistad",
+		"min_affinity": 40,
+		"description": "Hay una relación estable y positiva."
+	},
+	"close_friend": {
+		"display_name": "Amistad cercana",
+		"min_affinity": 60,
+		"description": "Existe una conexión importante."
+	},
+	"romantic_interest": {
+		"display_name": "Interés romántico",
+		"min_affinity": 80,
+		"description": "La relación podría avanzar hacia romance."
+	},
+	"partner": {
+		"display_name": "Pareja",
+		"min_affinity": 100,
+		"description": "Existe una relación romántica formal."
+	}
+}

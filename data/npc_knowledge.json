@@ -1,0 +1,96 @@
+{
+	"lyria": {
+		"profile": {
+			"display_name": "Lyria",
+			"short_description": "Una persona amable que suele responder con calidez."
+		},
+		"facts": {
+			"personality": {
+				"label": "Personalidad",
+				"value": "Amable",
+				"unlock_flag": "met_lyria"
+			},
+			"loved_gift_joya": {
+				"label": "Regalo favorito descubierto",
+				"value": "Joya",
+				"unlock_flag": "lyria_knows_loved_gift_joya"
+			},
+			"liked_gift_flor": {
+				"label": "Regalo que le gusta",
+				"value": "Flor",
+				"unlock_flag": "lyria_knows_liked_gift_flor"
+			},
+			"liked_gift_libro": {
+				"label": "Regalo que le gusta",
+				"value": "Libro",
+				"unlock_flag": "lyria_knows_liked_gift_libro"
+			},
+			"disliked_gift_extrano": {
+				"label": "Regalo que no le gusta",
+				"value": "Extraño",
+				"unlock_flag": "lyria_knows_disliked_gift_extrano"
+			}
+		}
+	},
+	"doran": {
+		"profile": {
+			"display_name": "Doran",
+			"short_description": "Una persona brusca, difícil de agradar, pero no imposible."
+		},
+		"facts": {
+			"personality": {
+				"label": "Personalidad",
+				"value": "Gruñón",
+				"unlock_flag": "met_doran"
+			},
+			"loved_gift_comida": {
+				"label": "Regalo favorito descubierto",
+				"value": "Comida",
+				"unlock_flag": "doran_knows_loved_gift_comida"
+			},
+			"liked_gift_artesania": {
+				"label": "Regalo que le gusta",
+				"value": "Artesanía",
+				"unlock_flag": "doran_knows_liked_gift_artesania"
+			},
+			"disliked_gift_libro": {
+				"label": "Regalo que no le gusta",
+				"value": "Libro",
+				"unlock_flag": "doran_knows_disliked_gift_libro"
+			}
+		}
+	},
+	"mira": {
+		"profile": {
+			"display_name": "Mira",
+			"short_description": "Una persona impredecible, curiosa y difícil de leer."
+		},
+		"facts": {
+			"personality": {
+				"label": "Personalidad",
+				"value": "Impredecible",
+				"unlock_flag": "met_mira"
+			},
+			"loved_gift_libro": {
+				"label": "Regalo favorito descubierto",
+				"value": "Libro",
+				"unlock_flag": "mira_knows_loved_gift_libro"
+			},
+			"liked_gift_extrano": {
+				"label": "Regalo que le gusta",
+				"value": "Extraño",
+				"unlock_flag": "mira_knows_liked_gift_extrano"
+			},
+			"liked_gift_flor": {
+				"label": "Regalo que le gusta",
+				"value": "Flor",
+				"unlock_flag": "mira_knows_liked_gift_flor"
+			},
+			"disliked_gift_comida": {
+				"label": "Regalo que no le gusta",
+				"value": "Comida",
+				"unlock_flag": "mira_knows_disliked_gift_comida"
+			}
+		}
+	}
+}

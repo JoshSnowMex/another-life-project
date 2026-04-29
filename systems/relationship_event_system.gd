@@ -50,6 +50,4 @@ func get_event_text(event_data: Dictionary) -> String:
 	return str(event_data.get("text", ""))
 
 func get_event_title(event_data: Dictionary) -> String:
-	return str(event_data.get("title", "Evento"))# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	return str(event_data.get("title", "Evento"))
