@@ -14,7 +14,8 @@ func get_stats_text() -> String:
 	text += "Destreza: " + str(PlayerStats.dexterity) + "\n"
 	text += "Carisma: " + str(PlayerStats.charisma) + "\n"
 	text += "Constitución: " + str(PlayerStats.constitution) + "\n"
-	text += "Suerte: " + str(PlayerStats.luck) + "\n"
-	text += "Camino: " + PlayerStats.life_path
+	text += "Suerte: " + str(PlayerStats.luck) + "\n" +"\n"
+	text += "Dinero: " + str(PlayerStats.money) + "\n"
+	text += "Camino de Vida: " + PlayerStats.life_path
 
 	return text

@@ -8,6 +8,16 @@
 		"success_text": "Entrenaste con intensidad. Fuerza aumentó en {gain}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para entrenar fuerza."
 	},
+	"work_cargo": {
+		"display_name": "Cargar mercancía",
+		"money_gain": 22,
+		"money_stat": "strength",
+		"energy_cost": 14,
+		"speaker_name": "Campo de entrenamiento",
+		"success_text": "Ayudaste cargando mercancía. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para cargar mercancía."
+	},
+
 	"study_intelligence": {
 		"display_name": "Estudiar",
 		"stat": "intelligence",
@@ -17,6 +27,16 @@
 		"success_text": "Estudiaste con atención. Inteligencia aumentó en {gain}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para estudiar."
 	},
+	"work_tutor": {
+		"display_name": "Tutoría y copiado",
+		"money_gain": 20,
+		"money_stat": "intelligence",
+		"energy_cost": 10,
+		"speaker_name": "Biblioteca",
+		"success_text": "Ayudaste con tutoría y copias. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para trabajar en la biblioteca."
+	},
+
 	"practice_dexterity": {
 		"display_name": "Practicar destreza",
 		"stat": "dexterity",
@@ -26,6 +46,16 @@
 		"success_text": "Trabajaste con precisión. Destreza aumentó en {gain}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para practicar destreza."
 	},
+	"work_workshop": {
+		"display_name": "Encargos de taller",
+		"money_gain": 21,
+		"money_stat": "dexterity",
+		"energy_cost": 11,
+		"speaker_name": "Taller",
+		"success_text": "Completaste algunos encargos de taller. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para hacer encargos de taller."
+	},
+
 	"practice_charisma": {
 		"display_name": "Practicar carisma",
 		"stat": "charisma",
@@ -35,6 +65,16 @@
 		"success_text": "Conversaste y mejoraste tu presencia. Carisma aumentó en {gain}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para practicar carisma."
 	},
+	"work_social": {
+		"display_name": "Atender visitantes",
+		"money_gain": 19,
+		"money_stat": "charisma",
+		"energy_cost": 9,
+		"speaker_name": "Plaza social",
+		"success_text": "Ayudaste atendiendo visitantes. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para atender visitantes."
+	},
+
 	"train_constitution": {
 		"display_name": "Entrenar resistencia",
 		"stat": "constitution",
@@ -44,6 +84,16 @@
 		"success_text": "Resististe el esfuerzo. Constitución aumentó en {gain}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para entrenar resistencia."
 	},
+	"work_endurance": {
+		"display_name": "Ayuda física",
+		"money_gain": 20,
+		"money_stat": "constitution",
+		"energy_cost": 12,
+		"speaker_name": "Zona de resistencia",
+		"success_text": "Ayudaste en tareas físicamente exigentes. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para hacer ayuda física."
+	},
+
 	"test_luck": {
 		"display_name": "Probar suerte",
 		"stat": "luck",
@@ -52,5 +102,14 @@
 		"speaker_name": "Fuente de la suerte",
 		"success_text": "Tentaste al destino. Suerte aumentó en {gain}. Energía restante: {energy}.",
 		"not_enough_energy_text": "Estás demasiado cansado para tentar a la suerte."
+	},
+	"work_luck_stall": {
+		"display_name": "Puesto de azar",
+		"money_gain": 18,
+		"money_stat": "luck",
+		"energy_cost": 8,
+		"speaker_name": "Fuente de la suerte",
+		"success_text": "Probaste suerte en pequeños encargos. Ganaste {money} monedas. Dinero total: {total_money}. Energía restante: {energy}.",
+		"not_enough_energy_text": "Estás demasiado cansado para trabajar en el puesto de azar."
 	}
 }
