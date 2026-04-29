@@ -28,6 +28,7 @@ RelationshipStageSystem="*uid://bv60ao60vvkgf"
 NpcKnowledgeSystem="*uid://5jj7gu70u8br"
 ActivitySystem="*uid://b3hb5nhtkjkr2"
 DateQuestionSystem="*uid://cmaeaq08ho7wp"
+ShopSystem="*uid://dud5i3m7xv5fg"
 SaveSystem="*uid://ddurkrmeifomn"
 
 [global_group]

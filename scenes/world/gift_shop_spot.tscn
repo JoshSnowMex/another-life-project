@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dptenn7m0idi8"]
+
+[ext_resource type="Script" uid="uid://cnwhmu8yq3p37" path="res://scripts/shop_location.gd" id="1_nqjdr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tt7j0"]
+size = Vector2(80, 80)
+
+[node name="GiftShopSpot" type="StaticBody2D" unique_id=674097719]
+script = ExtResource("1_nqjdr")
+location_name = "Tienda de Regalos"
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1883063756]
+position = Vector2(19.047619, 20)
+scale = Vector2(0.47619048, 0.5)
+color = Color(0.32611573, 0.3665047, 0.4863844, 1)
+polygon = PackedVector2Array(128, 120, 128, -40, -40, -40, -40, 120)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1449720008]
+position = Vector2(40, 40)
+shape = SubResource("RectangleShape2D_tt7j0")

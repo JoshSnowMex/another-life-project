@@ -8,6 +8,7 @@ const RELATIONSHIP_STAGES_PATH: String = "res://data/relationship_stages.json"
 const NPC_KNOWLEDGE_PATH: String = "res://data/npc_knowledge.json"
 const ACTIVITIES_PATH: String = "res://data/activities.json"
 const DATE_QUESTIONS_PATH: String = "res://data/date_questions.json"
+const SHOP_ITEMS_PATH: String = "res://data/shop_items.json"
 
 var npc_personality_dialogues: Dictionary = {}
 var npc_profiles: Dictionary = {}
@@ -17,6 +18,7 @@ var relationship_stages: Dictionary = {}
 var npc_knowledge: Dictionary = {}
 var activities: Dictionary = {}
 var date_questions: Dictionary = {}
+var shop_items: Dictionary = {}
 
 func _ready() -> void:
 	load_all_data()
@@ -30,6 +32,7 @@ func load_all_data() -> void:
 	load_npc_knowledge()
 	load_activities()
 	load_date_questions()
+	load_shop_items()
 
 func load_npc_personality_dialogues() -> void:
 	npc_personality_dialogues = load_json_file(NPC_PERSONALITY_DIALOGUES_PATH)
@@ -54,6 +57,9 @@ func load_activities() -> void:
 	
 func load_date_questions() -> void:
 	date_questions = load_json_file(DATE_QUESTIONS_PATH)
+
+func load_shop_items() -> void:
+	shop_items = load_json_file(SHOP_ITEMS_PATH)
 
 func load_json_file(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -187,3 +193,12 @@ func get_date_questions_for_npc(npc_id: String) -> Dictionary:
 			result[question_id] = question_data
 
 	return result
+
+func get_shop_items() -> Dictionary:
+	return shop_items.duplicate(true)
+
+func get_shop_item_data(shop_item_id: String) -> Dictionary:
+	if not shop_items.has(shop_item_id):
+		return {}
+
+	return shop_items[shop_item_id].duplicate(true)

@@ -1,0 +1,37 @@
+{
+	"comida": {
+		"item_id": "comida",
+		"price": 12,
+		"stock": -1
+	},
+	"flor": {
+		"item_id": "flor",
+		"price": 8,
+		"stock": -1
+	},
+	"joya": {
+		"item_id": "joya",
+		"price": 35,
+		"stock": -1
+	},
+	"libro": {
+		"item_id": "libro",
+		"price": 22,
+		"stock": -1
+	},
+	"artesania": {
+		"item_id": "artesania",
+		"price": 18,
+		"stock": -1
+	},
+	"extrano": {
+		"item_id": "extrano",
+		"price": 15,
+		"stock": -1
+	},
+	"perfume": {
+		"item_id": "perfume",
+		"price": 28,
+		"stock": -1
+	}
+}

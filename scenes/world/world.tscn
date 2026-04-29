@@ -14,10 +14,12 @@
 [ext_resource type="PackedScene" uid="uid://t5pbfkmqln6g" path="res://scenes/ui/npc_interaction_menu.tscn" id="8_bt7bg"]
 [ext_resource type="PackedScene" uid="uid://cfdgtxa312s86" path="res://scenes/npc/mira.tscn" id="8_j2gmx"]
 [ext_resource type="PackedScene" uid="uid://dptdvokwel370" path="res://scenes/world/library_spot.tscn" id="9_1yooq"]
+[ext_resource type="PackedScene" uid="uid://f5vacec06vwl" path="res://scenes/ui/shop_menu.tscn" id="9_tytul"]
 [ext_resource type="PackedScene" uid="uid://vyj2lbrvo2xr" path="res://scenes/world/workshop_spot.tscn" id="12_mxkvs"]
 [ext_resource type="PackedScene" uid="uid://bs7ivsi2lmjwo" path="res://scenes/world/social_plaza_spot.tscn" id="13_m114p"]
 [ext_resource type="PackedScene" uid="uid://chli67e4jt7du" path="res://scenes/world/endurance_spot.tscn" id="14_71ii3"]
 [ext_resource type="PackedScene" uid="uid://cks4demsks1qw" path="res://scenes/world/luck_fountain_spot.tscn" id="15_bt7bg"]
+[ext_resource type="PackedScene" uid="uid://dptenn7m0idi8" path="res://scenes/world/gift_shop_spot.tscn" id="20_t634p"]
 
 [node name="World" type="Node2D" unique_id=379945775]
 
@@ -39,6 +41,8 @@ visible = true
 [node name="LocationInteractionMenu" parent="." unique_id=1005758106 instance=ExtResource("7_71ii3")]
 
 [node name="NpcInteractionMenu" parent="." unique_id=69652662 instance=ExtResource("8_bt7bg")]
+
+[node name="ShopMenu" parent="." unique_id=1210080760 instance=ExtResource("9_tytul")]
 
 [node name="player" parent="." unique_id=736873309 groups=["save_position"] instance=ExtResource("1_dphjl")]
 
@@ -70,3 +74,6 @@ position = Vector2(424, -200)
 
 [node name="LuckFountainSpot" parent="." unique_id=1114868111 instance=ExtResource("15_bt7bg")]
 position = Vector2(-424, 120)
+
+[node name="GiftShopSpot" parent="." unique_id=752337103 instance=ExtResource("20_t634p")]
+position = Vector2(-264, 184)

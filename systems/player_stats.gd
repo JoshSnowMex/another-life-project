@@ -144,6 +144,15 @@ func get_item_count(item_name: String) -> int:
 		return 0
 
 	return inventory[item_name]
+	
+func add_item(item_name: String, amount: int = 1) -> void:
+	if amount <= 0:
+		return
+
+	if not inventory.has(item_name):
+		inventory[item_name] = 0
+
+	inventory[item_name] += amount
 
 func add_money(amount: int) -> void:
 	money += max(amount, 0)
