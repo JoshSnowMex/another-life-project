@@ -4,20 +4,23 @@
 		"required_affinity": 20,
 		"flag_id": "lyria_affinity_20_event_seen",
 		"title": "Un momento amable",
-		"text": "Lyria sonríe con más confianza que antes. \"Sabes... al principio pensé que solo eras alguien de paso, pero últimamente me alegra verte llegar.\""
+		"text": "Lyria sonríe con más confianza que antes. \"Sabes... al principio pensé que solo eras alguien de paso, pero últimamente me alegra verte llegar. Me gustan las cosas sencillas, como una flor bien elegida. No sé... quizá porque hacen que un día normal se sienta especial.\"",
+		"unlock_facts": ["liked_gift_flor"]
 	},
 	"doran_affinity_20": {
 		"npc_id": "doran",
 		"required_affinity": 20,
 		"flag_id": "doran_affinity_20_event_seen",
 		"title": "Respeto ganado",
-		"text": "Doran cruza los brazos, evitando mirarte directamente. \"No eres tan molesto como pensé. Eso... es más de lo que puedo decir de la mayoría.\""
+		"text": "Doran cruza los brazos, evitando mirarte directamente. \"No eres tan molesto como pensé. Eso... es más de lo que puedo decir de la mayoría. Si vas a traer algo, al menos que sea útil. Una buena artesanía tiene más valor que una baratija sin propósito.\"",
+		"unlock_facts": ["liked_gift_artesania"]
 	},
 	"mira_affinity_20": {
 		"npc_id": "mira",
 		"required_affinity": 20,
 		"flag_id": "mira_affinity_20_event_seen",
 		"title": "Algo cambia",
-		"text": "Mira inclina la cabeza como si escuchara algo invisible. \"Qué raro... el mundo hace un sonido distinto cuando tú estás cerca. Creo que eso es bueno.\""
+		"text": "Mira inclina la cabeza como si escuchara algo invisible. \"Qué raro... el mundo hace un sonido distinto cuando tú estás cerca. Creo que eso es bueno. También creo que las flores tienen pequeños secretos. No todos los oyen, claro.\"",
+		"unlock_facts": ["liked_gift_flor"]
 	}
 }

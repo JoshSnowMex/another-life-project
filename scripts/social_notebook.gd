@@ -48,6 +48,7 @@ func add_empty_list_label(text: String) -> void:
 	var label := Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	npc_list_container.add_child(label)
 
 func add_npc_button(npc_id: String) -> void:
@@ -105,14 +106,15 @@ func refresh_known_facts(npc_id: String) -> void:
 		var label := Label.new()
 		label.text = "Aún no conoces datos personales."
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		known_facts_container.add_child(label)
-		return
 
 	for fact_data in known_facts:
 		var label_text: String = str(fact_data.get("label", "Dato")) + ": " + str(fact_data.get("value", ""))
 		var label := Label.new()
 		label.text = label_text
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		known_facts_container.add_child(label)
 
 func clear_details() -> void:
@@ -127,4 +129,5 @@ func clear_details() -> void:
 	var label := Label.new()
 	label.text = "Haz click en un nombre para ver la información conocida."
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	known_facts_container.add_child(label)

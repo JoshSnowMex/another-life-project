@@ -32,7 +32,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="DetailPanel" type="PanelContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=898831558]
-custom_minimum_size = Vector2(505, 0)
+custom_minimum_size = Vector2(510, 0)
 layout_mode = 2
 
 [node name="DetailMargin" type="MarginContainer" parent="Panel/MarginContainer/HBoxContainer/DetailPanel" unique_id=1315078334]

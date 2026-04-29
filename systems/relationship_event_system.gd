@@ -41,10 +41,21 @@ func can_event_trigger(event_data: Dictionary, current_affinity: int) -> bool:
 func mark_event_seen(event_data: Dictionary) -> void:
 	var flag_id: String = str(event_data.get("flag_id", ""))
 
-	if flag_id == "":
+	if flag_id != "":
+		EventSystem.set_flag(flag_id, true)
+
+	unlock_event_facts(event_data)
+
+func unlock_event_facts(event_data: Dictionary) -> void:
+	var npc_id: String = str(event_data.get("npc_id", ""))
+
+	if npc_id == "":
 		return
 
-	EventSystem.set_flag(flag_id, true)
+	var unlock_facts: Array = event_data.get("unlock_facts", [])
+
+	for fact_id in unlock_facts:
+		NpcKnowledgeSystem.unlock_fact(npc_id, str(fact_id))
 
 func get_event_text(event_data: Dictionary) -> String:
 	return str(event_data.get("text", ""))
