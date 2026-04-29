@@ -6,7 +6,7 @@ const MAX_CHARACTERS_PER_PAGE: int = 170
 @onready var dialogue_label: Label = $DialoguePanel/DialogueLabel
 
 var current_speaker_name: String = ""
-var pages: Array[String] = []
+var pages: Array = []
 var current_page_index: int = 0
 
 func _ready() -> void:
@@ -14,7 +14,7 @@ func _ready() -> void:
 
 func show_dialogue(speaker_name: String, text: String) -> void:
 	current_speaker_name = speaker_name
-	pages = split_text_into_pages(text, MAX_CHARACTERS_PER_PAGE)
+	pages = split_text_into_pages(str(text), MAX_CHARACTERS_PER_PAGE)
 	current_page_index = 0
 
 	if pages.is_empty():
@@ -45,21 +45,33 @@ func advance_dialogue() -> bool:
 	return false
 
 func show_current_page() -> void:
+	if pages.is_empty():
+		dialogue_label.text = ""
+		return
+
+	current_page_index = clamp(current_page_index, 0, pages.size() - 1)
+
 	name_label.text = current_speaker_name
 
-	var page_text: String = pages[current_page_index]
+	var page_text: String = str(pages[current_page_index])
 
 	if pages.size() > 1:
 		page_text += "\n[" + str(current_page_index + 1) + "/" + str(pages.size()) + "]"
 
 	dialogue_label.text = page_text
 
-func split_text_into_pages(text: String, max_characters: int) -> Array[String]:
-	var result: Array[String] = []
-	var words: PackedStringArray = text.split(" ")
+func split_text_into_pages(text: String, max_characters: int) -> Array:
+	var result: Array = []
+
+	if text.length() <= max_characters:
+		result.append(text)
+		return result
+
+	var words: Array = Array(text.split(" "))
 	var current_page: String = ""
 
-	for word in words:
+	for raw_word in words:
+		var word: String = str(raw_word)
 		var candidate: String = word
 
 		if current_page != "":
