@@ -78,8 +78,8 @@ func calculate_affinity_change() -> int:
 
 	var luck_roll: int = randi_range(-2, 2)
 
-	var charisma_bonus: int = int(PlayerStats.charisma / 5)
-	var luck_bonus: int = int(PlayerStats.luck / 5)
+	var charisma_bonus: int = int(PlayerStats.charisma / 5.0)
+	var luck_bonus: int = int(PlayerStats.luck / 5.0)
 
 	var result: int = mood_modifier + affinity_bias + personality_modifier + luck_roll + charisma_bonus + luck_bonus
 
@@ -313,7 +313,7 @@ func get_default_gift_response_text(affinity_change: int) -> String:
 func can_receive_gift() -> bool:
 	return not RelationshipSystem.has_received_gift_today(npc_id)
 
-func unlock_gift_knowledge(gift_type: String, affinity_change: int) -> void:
+func unlock_gift_knowledge(gift_type: String, _affinity_change: int) -> void:
 	if loved_gifts.has(gift_type):
 		NpcKnowledgeSystem.unlock_fact(npc_id, "loved_gift_" + gift_type)
 	elif liked_gifts.has(gift_type):
