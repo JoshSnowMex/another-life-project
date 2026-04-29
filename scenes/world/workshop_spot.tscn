@@ -1,13 +1,16 @@
 [gd_scene format=3 uid="uid://vyj2lbrvo2xr"]
 
-[ext_resource type="Script" uid="uid://d2gsba52oktph" path="res://scripts/activity_spot.gd" id="1_xox0l"]
+[ext_resource type="Script" uid="uid://brc55yctjsqqy" path="res://scripts/activity_location.gd" id="1_xox0l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tt7j0"]
 size = Vector2(80, 80)
 
 [node name="WorkshopSpot" type="StaticBody2D" unique_id=674097719]
 script = ExtResource("1_xox0l")
-activity_id = "practice_dexterity"
+location_name = "Taller"
+primary_activity_id = "practice_dexterity"
+work_activity_id = "work_workshop"
+hybrid_activity_id = "part_time_workshop_helper"
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=1883063756]
 color = Color(0.9419699, 0.5303505, 0.5349643, 1)

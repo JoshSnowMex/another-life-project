@@ -11,6 +11,7 @@ func _physics_process(_delta: float) -> void:
 	var social_notebook = get_tree().current_scene.get_node("SocialNotebook")
 	var pause_menu = get_tree().current_scene.get_node("PauseMenu")
 	var date_menu = get_tree().current_scene.get_node("DateMenu")
+	var location_menu = get_tree().current_scene.get_node("LocationInteractionMenu")
 
 	if Input.is_action_just_pressed("interact"):
 		if dialogue_box.is_open():
@@ -40,10 +41,14 @@ func _physics_process(_delta: float) -> void:
 			gift_menu.close_menu()
 		elif social_notebook.visible:
 			social_notebook.close_notebook()
+		elif date_menu.visible:
+			date_menu.close_menu()
+		elif location_menu.visible:
+			location_menu.close_menu()
 		else:
 			pause_menu.toggle_menu()
 		
-	if dialogue_box.is_open() or gift_menu.visible or social_notebook.visible or pause_menu.visible or date_menu.visible:
+	if dialogue_box.is_open() or gift_menu.visible or social_notebook.visible or pause_menu.visible or date_menu.visible or location_menu.visible:
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return

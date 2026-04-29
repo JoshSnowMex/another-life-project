@@ -1,13 +1,16 @@
 [gd_scene format=3 uid="uid://dptdvokwel370"]
 
-[ext_resource type="Script" uid="uid://d2gsba52oktph" path="res://scripts/activity_spot.gd" id="1_iv0kd"]
+[ext_resource type="Script" uid="uid://brc55yctjsqqy" path="res://scripts/activity_location.gd" id="1_iv0kd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tt7j0"]
 size = Vector2(80, 80)
 
 [node name="LibrarySpot" type="StaticBody2D" unique_id=674097719]
 script = ExtResource("1_iv0kd")
-activity_id = "study_intelligence"
+location_name = "Biblioteca"
+primary_activity_id = "study_intelligence"
+work_activity_id = "work_tutor"
+hybrid_activity_id = "part_time_library_assistant"
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=1883063756]
 color = Color(0.7819992, 3.3691526e-06, 0.47311974, 1)

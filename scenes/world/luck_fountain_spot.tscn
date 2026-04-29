@@ -1,13 +1,16 @@
 [gd_scene format=3 uid="uid://cks4demsks1qw"]
 
-[ext_resource type="Script" uid="uid://d2gsba52oktph" path="res://scripts/activity_spot.gd" id="1_b3mxm"]
+[ext_resource type="Script" uid="uid://brc55yctjsqqy" path="res://scripts/activity_location.gd" id="1_b3mxm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tt7j0"]
 size = Vector2(80, 80)
 
 [node name="LuckFountainSpot" type="StaticBody2D" unique_id=674097719]
 script = ExtResource("1_b3mxm")
-activity_id = "test_luck"
+location_name = "Fuente de la suerte"
+primary_activity_id = "test_luck"
+work_activity_id = "work_luck_stall"
+hybrid_activity_id = "part_time_luck_errands"
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=1883063756]
 color = Color(0.85321605, 0.61639947, 0.24989736, 1)

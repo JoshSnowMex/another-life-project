@@ -1,12 +1,16 @@
 [gd_scene format=3 uid="uid://bpr5nrvdeu5e1"]
 
-[ext_resource type="Script" uid="uid://d2gsba52oktph" path="res://scripts/activity_spot.gd" id="1_tt7j0"]
+[ext_resource type="Script" uid="uid://brc55yctjsqqy" path="res://scripts/activity_location.gd" id="1_tt7j0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tt7j0"]
 size = Vector2(80, 80)
 
 [node name="TrainingSpot" type="StaticBody2D" unique_id=674097719]
 script = ExtResource("1_tt7j0")
+location_name = "Campo de entrenamiento"
+primary_activity_id = "train_strength"
+work_activity_id = "work_cargo"
+hybrid_activity_id = "part_time_cargo_training"
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=1883063756]
 color = Color(0, 0.7888165, 0.52834135, 1)

@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://77h18kkytipg" path="res://scenes/ui/pause_menu.tscn" id="6_5qq27"]
 [ext_resource type="PackedScene" uid="uid://b7fulsj6y2v1s" path="res://scenes/ui/date_menu.tscn" id="6_m114p"]
 [ext_resource type="PackedScene" uid="uid://dnb17ieah0tt5" path="res://scenes/ui/gift_menu.tscn" id="6_t5ptc"]
+[ext_resource type="PackedScene" uid="uid://dq1i3dyfcw6v8" path="res://scenes/ui/location_interaction_menu.tscn" id="7_71ii3"]
 [ext_resource type="PackedScene" uid="uid://dtce8cgg4esew" path="res://scenes/npc/doran.tscn" id="7_bq33v"]
 [ext_resource type="PackedScene" uid="uid://cfdgtxa312s86" path="res://scenes/npc/mira.tscn" id="8_j2gmx"]
 [ext_resource type="PackedScene" uid="uid://dptdvokwel370" path="res://scenes/world/library_spot.tscn" id="9_1yooq"]
@@ -33,6 +34,8 @@ visible = true
 [node name="PauseMenu" parent="." unique_id=88580162 instance=ExtResource("6_5qq27")]
 
 [node name="DateMenu" parent="." unique_id=436009341 instance=ExtResource("6_m114p")]
+
+[node name="LocationInteractionMenu" parent="." unique_id=1005758106 instance=ExtResource("7_71ii3")]
 
 [node name="player" parent="." unique_id=736873309 groups=["save_position"] instance=ExtResource("1_dphjl")]
 
