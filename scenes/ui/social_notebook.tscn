@@ -7,18 +7,27 @@ visible = false
 script = ExtResource("1_wqk3f")
 
 [node name="Panel" type="Panel" parent="." unique_id=489504919]
+custom_minimum_size = Vector2(760, 420)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -956.0
+offset_top = -544.0
+offset_right = -196.0
+offset_bottom = -104.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=69377765]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
@@ -28,14 +37,14 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 
 [node name="NpcListPanel" type="PanelContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=1753880060]
-custom_minimum_size = Vector2(0, 260)
+custom_minimum_size = Vector2(0, 220)
 layout_mode = 2
 
 [node name="NpcList" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer/NpcListPanel" unique_id=798934394]
 layout_mode = 2
 
 [node name="DetailPanel" type="PanelContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=898831558]
-custom_minimum_size = Vector2(0, 400)
+custom_minimum_size = Vector2(0, 480)
 layout_mode = 2
 
 [node name="DetailMargin" type="MarginContainer" parent="Panel/MarginContainer/HBoxContainer/DetailPanel" unique_id=1315078334]
