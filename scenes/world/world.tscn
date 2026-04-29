@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dnsphj7cbwd8h" path="res://scenes/ui/social_notebook.tscn" id="5_gb53w"]
 [ext_resource type="PackedScene" uid="uid://52n3qbaaudqs" path="res://scenes/ui/stats_hud.tscn" id="5_v5dby"]
 [ext_resource type="PackedScene" uid="uid://77h18kkytipg" path="res://scenes/ui/PauseMenu.tscn" id="6_5qq27"]
+[ext_resource type="PackedScene" uid="uid://b7fulsj6y2v1s" path="res://scenes/ui/date_menu.tscn" id="6_m114p"]
 [ext_resource type="PackedScene" uid="uid://dnb17ieah0tt5" path="res://scenes/ui/gift_menu.tscn" id="6_t5ptc"]
 [ext_resource type="PackedScene" uid="uid://dtce8cgg4esew" path="res://scenes/npc/doran.tscn" id="7_bq33v"]
 [ext_resource type="PackedScene" uid="uid://cfdgtxa312s86" path="res://scenes/npc/mira.tscn" id="8_j2gmx"]
@@ -30,6 +31,8 @@
 visible = true
 
 [node name="PauseMenu" parent="." unique_id=88580162 instance=ExtResource("6_5qq27")]
+
+[node name="DateMenu" parent="." unique_id=436009341 instance=ExtResource("6_m114p")]
 
 [node name="player" parent="." unique_id=736873309 groups=["save_position"] instance=ExtResource("1_dphjl")]
 

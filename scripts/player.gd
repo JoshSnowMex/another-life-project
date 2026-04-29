@@ -10,6 +10,7 @@ func _physics_process(_delta: float) -> void:
 	var gift_menu = get_tree().current_scene.get_node("GiftMenu")
 	var social_notebook = get_tree().current_scene.get_node("SocialNotebook")
 	var pause_menu = get_tree().current_scene.get_node("PauseMenu")
+	var date_menu = get_tree().current_scene.get_node("DateMenu")
 
 	if Input.is_action_just_pressed("interact"):
 		if dialogue_box.is_open():
@@ -25,6 +26,12 @@ func _physics_process(_delta: float) -> void:
 
 	if Input.is_action_just_pressed("social_notebook"):
 		social_notebook.toggle_notebook()
+		
+	if Input.is_action_just_pressed("date_menu"):
+		if not date_menu.visible:
+			open_date_menu_for_nearby_npc()
+		else:
+			date_menu.close_menu()
 	
 	if Input.is_action_just_pressed("pause_menu"):
 		if dialogue_box.is_open():
@@ -36,7 +43,7 @@ func _physics_process(_delta: float) -> void:
 		else:
 			pause_menu.toggle_menu()
 		
-	if dialogue_box.is_open() or gift_menu.visible or social_notebook.visible or pause_menu.visible:
+	if dialogue_box.is_open() or gift_menu.visible or social_notebook.visible or pause_menu.visible or date_menu.visible:
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
@@ -84,4 +91,16 @@ func open_gift_menu_for_nearby_npc() -> void:
 
 		if body.has_method("receive_gift"):
 			gift_menu.open_menu(body)
+			return
+
+func open_date_menu_for_nearby_npc() -> void:
+	var date_menu = get_tree().current_scene.get_node("DateMenu")
+	var bodies = interaction_area.get_overlapping_bodies()
+
+	for body in bodies:
+		if body == self:
+			continue
+
+		if body.has_method("interact") and "npc_id" in body:
+			date_menu.open_menu(body)
 			return

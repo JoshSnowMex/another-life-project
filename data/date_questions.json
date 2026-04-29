@@ -1,0 +1,74 @@
+{
+	"lyria_liked_gift_flor": {
+		"npc_id": "lyria",
+		"question": "¿Qué regalo sabes que le gusta a Lyria?",
+		"required_fact_id": "liked_gift_flor",
+		"options": ["Flor", "Comida", "Artesanía", "Extraño"],
+		"correct_answer": "Flor",
+		"answered_flag": "date_question_lyria_liked_gift_flor_answered",
+		"affinity_reward": 5,
+		"affinity_penalty": -2,
+		"correct_text": "Lyria sonríe al notar que recordaste ese detalle. Afinidad: {affinity}.",
+		"wrong_text": "Lyria parece un poco confundida. Quizá aún necesitas conocerla mejor. Afinidad: {affinity}."
+	},
+	"lyria_loved_gift_joya": {
+		"npc_id": "lyria",
+		"question": "¿Cuál es uno de los regalos favoritos de Lyria?",
+		"required_fact_id": "loved_gift_joya",
+		"options": ["Joya", "Libro", "Comida", "Extraño"],
+		"correct_answer": "Joya",
+		"answered_flag": "date_question_lyria_loved_gift_joya_answered",
+		"affinity_reward": 8,
+		"affinity_penalty": -3,
+		"correct_text": "Lyria se alegra de que hayas prestado tanta atención. Afinidad: {affinity}.",
+		"wrong_text": "Lyria intenta no darle importancia, pero nota la confusión. Afinidad: {affinity}."
+	},
+	"doran_liked_gift_artesania": {
+		"npc_id": "doran",
+		"question": "¿Qué tipo de regalo respeta Doran?",
+		"required_fact_id": "liked_gift_artesania",
+		"options": ["Artesanía", "Flor", "Libro", "Extraño"],
+		"correct_answer": "Artesanía",
+		"answered_flag": "date_question_doran_liked_gift_artesania_answered",
+		"affinity_reward": 5,
+		"affinity_penalty": -2,
+		"correct_text": "Doran asiente con seriedad. Parece que recordaste algo útil. Afinidad: {affinity}.",
+		"wrong_text": "Doran frunce el ceño. No parece impresionado. Afinidad: {affinity}."
+	},
+	"doran_loved_gift_comida": {
+		"npc_id": "doran",
+		"question": "¿Cuál es uno de los regalos favoritos de Doran?",
+		"required_fact_id": "loved_gift_comida",
+		"options": ["Comida", "Flor", "Joya", "Libro"],
+		"correct_answer": "Comida",
+		"answered_flag": "date_question_doran_loved_gift_comida_answered",
+		"affinity_reward": 8,
+		"affinity_penalty": -3,
+		"correct_text": "Doran intenta ocultarlo, pero parece satisfecho. Afinidad: {affinity}.",
+		"wrong_text": "Doran suelta un resoplido. Esa no era la respuesta. Afinidad: {affinity}."
+	},
+	"mira_liked_gift_flor": {
+		"npc_id": "mira",
+		"question": "¿Qué regalo sabes que le gusta a Mira?",
+		"required_fact_id": "liked_gift_flor",
+		"options": ["Flor", "Comida", "Artesanía", "Joya"],
+		"correct_answer": "Flor",
+		"answered_flag": "date_question_mira_liked_gift_flor_answered",
+		"affinity_reward": 5,
+		"affinity_penalty": -2,
+		"correct_text": "Mira sonríe como si la respuesta hubiera confirmado una teoría secreta. Afinidad: {affinity}.",
+		"wrong_text": "Mira parpadea lentamente. \"No, esa no era la forma del recuerdo.\" Afinidad: {affinity}."
+	},
+	"mira_loved_gift_libro": {
+		"npc_id": "mira",
+		"question": "¿Cuál es uno de los regalos favoritos de Mira?",
+		"required_fact_id": "loved_gift_libro",
+		"options": ["Libro", "Comida", "Artesanía", "Joya"],
+		"correct_answer": "Libro",
+		"answered_flag": "date_question_mira_loved_gift_libro_answered",
+		"affinity_reward": 8,
+		"affinity_penalty": -3,
+		"correct_text": "Mira abraza la idea de la respuesta como si fuera un pequeño secreto. Afinidad: {affinity}.",
+		"wrong_text": "Mira inclina la cabeza. \"Casi, pero el eco era distinto.\" Afinidad: {affinity}."
+	}
+}

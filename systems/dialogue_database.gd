@@ -7,6 +7,7 @@ const RELATIONSHIP_EVENTS_PATH: String = "res://data/relationship_events.json"
 const RELATIONSHIP_STAGES_PATH: String = "res://data/relationship_stages.json"
 const NPC_KNOWLEDGE_PATH: String = "res://data/npc_knowledge.json"
 const ACTIVITIES_PATH: String = "res://data/activities.json"
+const DATE_QUESTIONS_PATH: String = "res://data/date_questions.json"
 
 var npc_personality_dialogues: Dictionary = {}
 var npc_profiles: Dictionary = {}
@@ -15,6 +16,7 @@ var relationship_events: Dictionary = {}
 var relationship_stages: Dictionary = {}
 var npc_knowledge: Dictionary = {}
 var activities: Dictionary = {}
+var date_questions: Dictionary = {}
 
 func _ready() -> void:
 	load_all_data()
@@ -27,6 +29,7 @@ func load_all_data() -> void:
 	load_relationship_stages()
 	load_npc_knowledge()
 	load_activities()
+	load_date_questions()
 
 func load_npc_personality_dialogues() -> void:
 	npc_personality_dialogues = load_json_file(NPC_PERSONALITY_DIALOGUES_PATH)
@@ -48,6 +51,9 @@ func load_npc_knowledge() -> void:
 
 func load_activities() -> void:
 	activities = load_json_file(ACTIVITIES_PATH)
+	
+func load_date_questions() -> void:
+	date_questions = load_json_file(DATE_QUESTIONS_PATH)
 
 func load_json_file(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -167,3 +173,17 @@ func get_activity_data(activity_id: String) -> Dictionary:
 
 func get_activities() -> Dictionary:
 	return activities.duplicate(true)
+
+func get_date_questions() -> Dictionary:
+	return date_questions.duplicate(true)
+
+func get_date_questions_for_npc(npc_id: String) -> Dictionary:
+	var result: Dictionary = {}
+
+	for question_id in date_questions.keys():
+		var question_data: Dictionary = date_questions[question_id]
+
+		if str(question_data.get("npc_id", "")) == npc_id:
+			result[question_id] = question_data
+
+	return result

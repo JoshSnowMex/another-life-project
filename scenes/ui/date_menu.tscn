@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://b7fulsj6y2v1s"]
+
+[ext_resource type="Script" uid="uid://13mvmsyvtsfv" path="res://scripts/date_menu.gd" id="1_t2v6x"]
+
+[node name="DateMenu" type="CanvasLayer" unique_id=436009341]
+script = ExtResource("1_t2v6x")
+
+[node name="Panel" type="Panel" parent="." unique_id=1684779911]
+offset_left = 624.0
+offset_top = 512.0
+offset_right = 1144.0
+offset_bottom = 640.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1575917799]
+layout_mode = 0
+offset_right = 520.0
+offset_bottom = 120.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1072705058]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1872411411]
+layout_mode = 2
+text = "Cita"
+horizontal_alignment = 1
+
+[node name="QuestionLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=2066430925]
+layout_mode = 2
+text = "Pregunta"
+autowrap_mode = 2
+
+[node name="OptionsContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=788870165]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=1554676168]
+layout_mode = 2
+text = "Cerrar"
