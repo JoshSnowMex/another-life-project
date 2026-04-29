@@ -69,108 +69,73 @@ func start_selected_session(session_id: String) -> void:
 
 	title_label.text = "Cita con " + target_npc.npc_name
 	question_label.text = str(start_result.get("text", "La cita comienza."))
-	add_continue_button()
+	add_continue_to_date_menu_button()
 
-func show_current_step() -> void:
+func show_date_action_menu() -> void:
 	clear_options()
 
-	var step: Dictionary = DateSessionSystem.get_current_step()
-
-	if step.is_empty():
-		question_label.text = "No hay más pasos."
+	if target_npc == null or not DateSessionSystem.has_active_session():
+		title_label.text = "Cita"
+		question_label.text = "No hay cita activa."
 		add_close_result_button()
 		return
 
-	var step_number: int = DateSessionSystem.get_current_step_number()
-	var total_steps: int = DateSessionSystem.get_total_steps()
-	var step_type: String = str(step.get("type", ""))
+	title_label.text = "Cita con " + target_npc.npc_name
+	question_label.text = DateSessionSystem.get_status_text()
 
-	title_label.text = "Cita con " + target_npc.npc_name + " | Paso " + str(step_number) + "/" + str(total_steps)
+	add_action_menu_button("Charlar", start_talk, not DateSessionSystem.can_talk())
+	add_action_menu_button("Dar regalo", show_gift_options, not DateSessionSystem.can_gift())
+	add_action_menu_button("Movimiento", show_action_options, not DateSessionSystem.can_action())
+	add_action_menu_button("Terminar cita", finish_date, false)
 
-	match step_type:
-		"dialogue":
-			show_dialogue_step(step)
-		"question":
-			show_question_step(step)
-		"gift":
-			show_gift_step(step)
-		"action":
-			show_action_step(step)
-		_:
-			question_label.text = "Paso desconocido."
-			add_continue_button()
+func add_action_menu_button(label: String, callback: Callable, disabled: bool = false) -> void:
+	var button := Button.new()
+	button.text = label
+	button.custom_minimum_size = Vector2(300, 36)
+	button.disabled = disabled
+	button.pressed.connect(callback)
+	options_container.add_child(button)
 
-func show_dialogue_step(step: Dictionary) -> void:
-	question_label.text = str(step.get("text", ""))
-	add_step_continue_button()
-
-func show_question_step(step: Dictionary) -> void:
-	var question_id: String = str(step.get("question_id", ""))
-	var question_data: Dictionary = DialogueDatabase.get_date_question_data(question_id)
-
-	if question_data.is_empty():
-		question_label.text = "Esta pregunta no está disponible."
-		add_step_continue_button()
-		return
-
-	question_label.text = DateQuestionSystem.get_question_prompt(question_data)
-
-	var options: Array = DateQuestionSystem.get_question_options(question_data)
-
-	for option in options:
-		add_option_button(str(option))
-
-func show_gift_step(step: Dictionary) -> void:
-	question_label.text = str(step.get("prompt", "¿Quieres dar un regalo?"))
-	add_gift_buttons()
-	add_skip_gift_button()
-
-func show_action_step(step: Dictionary) -> void:
-	var action_id: String = str(step.get("action_id", ""))
-	var action_data: Dictionary = DialogueDatabase.get_date_action_data(action_id)
-
-	if action_data.is_empty():
-		question_label.text = "Esta acción no está disponible."
-		add_step_continue_button()
-		return
-
-	var display_name: String = str(action_data.get("display_name", action_id))
-	var min_score: int = int(action_data.get("min_score", 0))
-
-	question_label.text = display_name + "\nRequiere ambiente de cita: " + str(min_score) + "\nAmbiente actual: " + str(DateSessionSystem.current_score)
-	add_action_button(display_name)
-
-func add_continue_button() -> void:
+func add_continue_to_date_menu_button() -> void:
 	var button := Button.new()
 	button.text = "Continuar"
 	button.custom_minimum_size = Vector2(260, 36)
-	button.pressed.connect(show_current_step)
+	button.pressed.connect(show_date_action_menu)
 	options_container.add_child(button)
 
-func add_step_continue_button() -> void:
-	var button := Button.new()
-	button.text = "Continuar"
-	button.custom_minimum_size = Vector2(260, 36)
-	button.pressed.connect(resolve_dialogue_step)
-	options_container.add_child(button)
+func start_talk() -> void:
+	var result: Dictionary = DateSessionSystem.perform_talk()
+	clear_options()
 
-func resolve_dialogue_step() -> void:
-	var result: Dictionary = DateSessionSystem.advance_dialogue_step()
-	show_step_result(result)
+	if bool(result.get("requires_answer", false)):
+		question_label.text = str(result.get("text", ""))
+		var options: Array = result.get("options", [])
 
-func add_option_button(option_text: String) -> void:
+		for option in options:
+			add_question_option_button(str(option))
+
+		return
+
+	show_action_result(result)
+
+func add_question_option_button(option_text: String) -> void:
 	var button := Button.new()
 	button.text = option_text
 	button.custom_minimum_size = Vector2(260, 36)
-	button.pressed.connect(func(): choose_answer(option_text))
+	button.pressed.connect(func(): answer_question(option_text))
 	options_container.add_child(button)
 
-func choose_answer(selected_answer: String) -> void:
-	var result: Dictionary = DateSessionSystem.answer_question_step(selected_answer)
-	show_step_result(result)
+func answer_question(selected_answer: String) -> void:
+	var result: Dictionary = DateSessionSystem.answer_pending_question(selected_answer)
+	show_action_result(result)
 
-func add_gift_buttons() -> void:
+func show_gift_options() -> void:
+	clear_options()
+	title_label.text = "Dar regalo"
+	question_label.text = "Elige un regalo. Regalos usados: " + str(DateSessionSystem.gifts_used) + "/" + str(int(DateSessionSystem.active_session.get("max_gifts", 2)))
+
 	var gift_items: Dictionary = DialogueDatabase.get_gift_items()
+	var has_any_gift: bool = false
 
 	for gift_type in gift_items.keys():
 		var amount: int = PlayerStats.get_item_count(gift_type)
@@ -178,47 +143,64 @@ func add_gift_buttons() -> void:
 		if amount <= 0:
 			continue
 
+		has_any_gift = true
 		var display_name: String = DialogueDatabase.get_item_display_name(gift_type)
 		var button := Button.new()
 		button.text = display_name + " x" + str(amount)
-		button.custom_minimum_size = Vector2(260, 36)
+		button.custom_minimum_size = Vector2(280, 36)
 		button.pressed.connect(func(): choose_gift(str(gift_type)))
 		options_container.add_child(button)
 
-func add_skip_gift_button() -> void:
-	var button := Button.new()
-	button.text = "No dar regalo"
-	button.custom_minimum_size = Vector2(260, 36)
-	button.pressed.connect(skip_gift)
-	options_container.add_child(button)
+	if not has_any_gift:
+		question_label.text = "No tienes regalos disponibles."
+
+	add_action_menu_button("Volver", show_date_action_menu, false)
 
 func choose_gift(gift_type: String) -> void:
-	var result: Dictionary = DateSessionSystem.use_gift_step(gift_type)
-	show_step_result(result)
+	var result: Dictionary = DateSessionSystem.use_gift(gift_type)
+	show_action_result(result)
 
-func skip_gift() -> void:
-	var result: Dictionary = DateSessionSystem.skip_gift_step()
-	show_step_result(result)
+func show_action_options() -> void:
+	clear_options()
+	title_label.text = "Movimiento"
+	question_label.text = "Elige un movimiento. Solo puedes intentar uno por cita.\n" + DateSessionSystem.get_status_text()
 
-func add_action_button(label: String) -> void:
-	var button := Button.new()
-	button.text = label
-	button.custom_minimum_size = Vector2(260, 36)
-	button.pressed.connect(resolve_action_step)
-	options_container.add_child(button)
+	var actions: Array[Dictionary] = DateSessionSystem.get_available_actions()
 
-func resolve_action_step() -> void:
-	var result: Dictionary = DateSessionSystem.perform_action_step()
-	show_step_result(result)
+	if actions.is_empty():
+		question_label.text = "No hay movimientos disponibles para esta cita."
+		add_action_menu_button("Volver", show_date_action_menu, false)
+		return
 
-func show_step_result(result: Dictionary) -> void:
+	for action_data in actions:
+		var action_id: String = str(action_data.get("action_id", ""))
+		var display_name: String = str(action_data.get("display_name", action_id))
+		var min_score: int = int(action_data.get("min_score", 0))
+
+		var button := Button.new()
+		button.text = display_name + " | requiere progreso " + str(min_score)
+		button.custom_minimum_size = Vector2(320, 36)
+		button.pressed.connect(func(): choose_action(action_id))
+		options_container.add_child(button)
+
+	add_action_menu_button("Volver", show_date_action_menu, false)
+
+func choose_action(action_id: String) -> void:
+	var result: Dictionary = DateSessionSystem.perform_action(action_id)
+	show_action_result(result)
+
+func show_action_result(result: Dictionary) -> void:
 	clear_options()
 	question_label.text = str(result.get("text", ""))
 
 	if bool(result.get("finished", false)):
 		add_close_result_button()
 	else:
-		add_continue_button()
+		add_continue_to_date_menu_button()
+
+func finish_date() -> void:
+	var result: Dictionary = DateSessionSystem.finish_session()
+	show_action_result(result)
 
 func add_close_result_button() -> void:
 	var button := Button.new()
