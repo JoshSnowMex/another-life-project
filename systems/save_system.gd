@@ -3,6 +3,7 @@ extends Node
 const SAVE_FILE_PATH: String = "user://save_game.json"
 const SAVE_VERSION: int = 2
 const POSITION_SAVE_GROUP: String = "save_position"
+const WORLD_SCENE_PATH: String = "res://scenes/world/world.tscn"
 
 func save_game() -> bool:
 	var save_data: Dictionary = create_save_data()
@@ -52,6 +53,29 @@ func delete_save_file() -> bool:
 		return false
 
 	return true
+	
+func start_new_game(selected_life_path: String) -> void:
+	reset_game_state(selected_life_path)
+	get_tree().change_scene_to_file(WORLD_SCENE_PATH)
+
+func load_game_and_enter_world() -> bool:
+	if not has_save_file():
+		return false
+
+	var change_error: Error = get_tree().change_scene_to_file(WORLD_SCENE_PATH)
+
+	if change_error != OK:
+		push_error("No se pudo cambiar a la escena del mundo.")
+		return false
+
+	call_deferred("load_game")
+	return true
+
+func reset_game_state(selected_life_path: String) -> void:
+	TimeSystem.current_day = 1
+	PlayerStats.reset_for_new_game(selected_life_path)
+	RelationshipSystem.relationships.clear()
+	EventSystem.reset_flags()
 
 func create_save_data() -> Dictionary:
 	return {

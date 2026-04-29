@@ -18,6 +18,20 @@ func _ready() -> void:
 	load_starting_inventory()
 	update_max_energy()
 
+func reset_for_new_game(selected_life_path: String) -> void:
+	strength = 1
+	intelligence = 1
+	dexterity = 1
+	charisma = 1
+	constitution = 1
+	luck = 1
+
+	life_path = selected_life_path
+
+	load_starting_inventory()
+	update_max_energy()
+	current_energy = max_energy
+
 func load_starting_inventory() -> void:
 	inventory = DialogueDatabase.get_starting_inventory()
 

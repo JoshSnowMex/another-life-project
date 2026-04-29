@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://dejdk8qedq504"]
+
+[ext_resource type="Script" uid="uid://cmq2h3ywjosp" path="res://scripts/life_path_selection.gd" id="1_oryou"]
+
+[node name="LifePathSelection" type="CanvasLayer" unique_id=282488244]
+script = ExtResource("1_oryou")
+
+[node name="Panel" type="Panel" parent="." unique_id=1291272385]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=934488746]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer" unique_id=2080869170]
+layout_mode = 2
+
+[node name="PathListPanel" type="PanelContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=2052476943]
+layout_mode = 2
+
+[node name="PathList" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer/PathListPanel" unique_id=1190007411]
+layout_mode = 2
+
+[node name="AdventurerButton" type="Button" parent="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList" unique_id=148289725]
+layout_mode = 2
+text = "Aventurero"
+
+[node name="ScholarButton" type="Button" parent="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList" unique_id=671701164]
+layout_mode = 2
+text = "Estudioso"
+
+[node name="ArtisanButton" type="Button" parent="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList" unique_id=731007584]
+layout_mode = 2
+text = "Artesano"
+
+[node name="CharmerButton" type="Button" parent="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList" unique_id=1845206549]
+layout_mode = 2
+text = "Encantador"
+
+[node name="RogueButton" type="Button" parent="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList" unique_id=168005752]
+layout_mode = 2
+text = "Bribón"
+
+[node name="BalancedButton" type="Button" parent="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList" unique_id=225246276]
+layout_mode = 2
+text = "Equilibrado"
+
+[node name="DetailsPanel" type="PanelContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=543231323]
+layout_mode = 2
+
+[node name="DetailsContent" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer/DetailsPanel" unique_id=2000802083]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/DetailsPanel/DetailsContent" unique_id=1561847975]
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/DetailsPanel/DetailsContent" unique_id=2090390620]
+layout_mode = 2
+
+[node name="BonusLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/DetailsPanel/DetailsContent" unique_id=1102578700]
+layout_mode = 2
+
+[node name="PenaltyLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/DetailsPanel/DetailsContent" unique_id=929278636]
+layout_mode = 2
+
+[node name="NeutralLabel" type="Label" parent="Panel/MarginContainer/HBoxContainer/DetailsPanel/DetailsContent" unique_id=600460520]
+layout_mode = 2
+
+[node name="ConfirmButton" type="Button" parent="Panel/MarginContainer/HBoxContainer/DetailsPanel/DetailsContent" unique_id=65904289]
+layout_mode = 2
+text = "Comenzar"
+
+[node name="BackButton" type="Button" parent="Panel/MarginContainer/HBoxContainer/DetailsPanel/DetailsContent" unique_id=205170752]
+layout_mode = 2
+text = "Volver"
+
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList/AdventurerButton" to="." method="_on_adventurer_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList/ScholarButton" to="." method="_on_scholar_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList/ArtisanButton" to="." method="_on_artisan_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList/CharmerButton" to="." method="_on_charmer_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList/RogueButton" to="." method="_on_rogue_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/PathListPanel/PathList/BalancedButton" to="." method="_on_balanced_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/DetailsPanel/DetailsContent/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/DetailsPanel/DetailsContent/BackButton" to="." method="_on_back_button_pressed"]
