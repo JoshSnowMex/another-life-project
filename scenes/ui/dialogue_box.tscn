@@ -6,15 +6,13 @@
 script = ExtResource("1_xg44k")
 
 [node name="DialoguePanel" type="Panel" parent="." unique_id=509400400]
-anchors_preset = 12
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 40.0
-offset_top = -898.0
-offset_right = -292.0
-offset_bottom = -728.0
-grow_horizontal = 2
+offset_top = -858.0
+offset_right = 890.0
+offset_bottom = -688.0
 grow_vertical = 0
 
 [node name="NameLabel" type="Label" parent="DialoguePanel" unique_id=628627537]
