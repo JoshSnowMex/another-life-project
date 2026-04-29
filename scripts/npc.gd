@@ -45,8 +45,16 @@ func array_to_string_array(value: Variant) -> Array[String]:
 
 func interact() -> void:
 	var dialogue_box = get_tree().current_scene.get_node("DialogueBox")
-	var text: String = ""
 
+	var relationship_event: Dictionary = RelationshipEventSystem.get_available_event_for_npc(npc_id)
+
+	if not relationship_event.is_empty():
+		var event_text: String = RelationshipEventSystem.get_event_text(relationship_event)
+		RelationshipEventSystem.mark_event_seen(relationship_event)
+		dialogue_box.show_dialogue(npc_name, event_text)
+		return
+
+	var text: String = ""
 	var interaction_count: int = RelationshipSystem.increment_interaction_count(npc_id)
 
 	if interaction_count == 1:
@@ -61,7 +69,7 @@ func interact() -> void:
 		text = get_limit_text()
 	
 	dialogue_box.show_dialogue(npc_name, text)
-
+	
 func calculate_affinity_change() -> int:
 	var mood_modifier: int = get_mood_modifier()
 	var affinity_bias: int = get_affinity_bias()

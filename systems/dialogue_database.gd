@@ -3,10 +3,12 @@ extends Node
 const NPC_PERSONALITY_DIALOGUES_PATH: String = "res://data/npc_personality_dialogues.json"
 const NPC_PROFILES_PATH: String = "res://data/npcs.json"
 const ITEMS_PATH: String = "res://data/items.json"
+const RELATIONSHIP_EVENTS_PATH: String = "res://data/relationship_events.json"
 
 var npc_personality_dialogues: Dictionary = {}
 var npc_profiles: Dictionary = {}
 var items: Dictionary = {}
+var relationship_events: Dictionary = {}
 
 func _ready() -> void:
 	load_all_data()
@@ -15,6 +17,7 @@ func load_all_data() -> void:
 	load_npc_personality_dialogues()
 	load_npc_profiles()
 	load_items()
+	load_relationship_events()
 
 func load_npc_personality_dialogues() -> void:
 	npc_personality_dialogues = load_json_file(NPC_PERSONALITY_DIALOGUES_PATH)
@@ -24,6 +27,9 @@ func load_npc_profiles() -> void:
 
 func load_items() -> void:
 	items = load_json_file(ITEMS_PATH)
+
+func load_relationship_events() -> void:
+	relationship_events = load_json_file(RELATIONSHIP_EVENTS_PATH)
 
 func load_json_file(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -105,5 +111,19 @@ func get_starting_inventory() -> Dictionary:
 
 		if starting_amount > 0:
 			result[item_id] = starting_amount
+
+	return result
+
+func get_relationship_events() -> Dictionary:
+	return relationship_events.duplicate(true)
+
+func get_relationship_events_for_npc(npc_id: String) -> Dictionary:
+	var result: Dictionary = {}
+
+	for event_id in relationship_events.keys():
+		var event_data: Dictionary = relationship_events[event_id]
+
+		if str(event_data.get("npc_id", "")) == npc_id:
+			result[event_id] = event_data
 
 	return result

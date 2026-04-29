@@ -23,6 +23,7 @@ RelationshipSystem="*uid://togr7411mag"
 PlayerStats="*uid://c2une3p0s0ifn"
 TimeSystem="*uid://b4fb7gbyyhhll"
 EventSystem="*uid://by447u8gvawe2"
+RelationshipEventSystem="*uid://uxi0vor78l4y"
 SaveSystem="*uid://ddurkrmeifomn"
 
 [global_group]
