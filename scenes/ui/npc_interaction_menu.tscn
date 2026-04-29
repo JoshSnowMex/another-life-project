@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://t5pbfkmqln6g"]
+
+[ext_resource type="Script" uid="uid://swn3tpvwtb5o" path="res://scripts/npc_interaction_menu.gd" id="1_li77t"]
+
+[node name="NpcInteractionMenu" type="CanvasLayer" unique_id=69652662]
+script = ExtResource("1_li77t")
+
+[node name="Panel" type="Panel" parent="." unique_id=1643454247]
+offset_left = 432.0
+offset_top = 176.0
+offset_right = 720.0
+offset_bottom = 464.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=327252768]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=115130251]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1319396486]
+layout_mode = 2
+text = "NPC"
+horizontal_alignment = 1
+
+[node name="OptionsContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=650746102]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=968718023]
+layout_mode = 2
+text = "Cerrar
+"
+
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
