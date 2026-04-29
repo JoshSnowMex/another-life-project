@@ -17,23 +17,35 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("interact"):
 		if dialogue_box.is_open():
 			dialogue_box.advance_dialogue()
+		elif gift_menu.visible:
+			gift_menu.close_menu()
+		elif social_notebook.visible:
+			social_notebook.close_notebook()
+		elif date_menu.visible:
+			date_menu.close_menu()
+		elif location_menu.visible:
+			location_menu.close_menu()
+		elif npc_interaction_menu.visible:
+			npc_interaction_menu.close_menu()
+		elif pause_menu.visible:
+			pause_menu.close_menu()
 		else:
 			check_interaction()
 
 	if Input.is_action_just_pressed("gift_menu"):
-		if not gift_menu.visible:
-			open_gift_menu_for_nearby_npc()
-		else:
+		if gift_menu.visible:
 			gift_menu.close_menu()
+		elif not is_any_ui_visible([dialogue_box, social_notebook, pause_menu, date_menu, location_menu, npc_interaction_menu]):
+			open_gift_menu_for_nearby_npc()
 
 	if Input.is_action_just_pressed("social_notebook"):
 		social_notebook.toggle_notebook()
 		
 	if Input.is_action_just_pressed("date_menu"):
-		if not date_menu.visible:
-			open_date_menu_for_nearby_npc()
-		else:
+		if date_menu.visible:
 			date_menu.close_menu()
+		elif not is_any_ui_visible([dialogue_box, gift_menu, social_notebook, pause_menu, location_menu, npc_interaction_menu]):
+			open_date_menu_for_nearby_npc()
 	
 	if Input.is_action_just_pressed("pause_menu"):
 		if dialogue_box.is_open():
@@ -120,3 +132,16 @@ func open_date_menu_for_nearby_npc() -> void:
 		if body.has_method("interact") and "npc_id" in body:
 			date_menu.open_menu(body)
 			return
+
+func is_any_ui_visible(controls: Array) -> bool:
+	for control in controls:
+		if control == null:
+			continue
+
+		if control.has_method("is_open") and control.is_open():
+			return true
+
+		if "visible" in control and control.visible:
+			return true
+
+	return false
