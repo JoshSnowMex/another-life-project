@@ -7,6 +7,7 @@ var personality: String = GameConstants.PERSONALITY_AMABLE
 
 var loved_gifts: Array[String] = []
 var liked_gifts: Array[String] = []
+var neutral_gifts: Array[String] = []
 var disliked_gifts: Array[String] = []
 
 func _ready() -> void:
@@ -22,6 +23,7 @@ func load_profile() -> void:
 		personality = GameConstants.PERSONALITY_AMABLE
 		loved_gifts = []
 		liked_gifts = []
+		neutral_gifts = []
 		disliked_gifts = []
 		return
 
@@ -30,6 +32,7 @@ func load_profile() -> void:
 
 	loved_gifts = array_to_string_array(profile.get("loved_gifts", []))
 	liked_gifts = array_to_string_array(profile.get("liked_gifts", []))
+	neutral_gifts = array_to_string_array(profile.get("neutral_gifts", []))
 	disliked_gifts = array_to_string_array(profile.get("disliked_gifts", []))
 	
 func array_to_string_array(value: Variant) -> Array[String]:
@@ -266,20 +269,39 @@ func receive_gift(gift_type: String) -> void:
 
 	dialogue_box.show_dialogue(npc_name, get_gift_response_text(affinity_change, new_affinity))
 
+func get_gift_preference_level(gift_type: String) -> String:
+	if loved_gifts.has(gift_type):
+		return "loved"
+
+	if liked_gifts.has(gift_type):
+		return "liked"
+
+	if neutral_gifts.has(gift_type):
+		return "neutral"
+
+	if disliked_gifts.has(gift_type):
+		return "disliked"
+
+	return "neutral"
+	
 func calculate_gift_affinity_change(gift_type: String) -> int:
+	var preference_level: String = get_gift_preference_level(gift_type)
 	var base_change: int = 1
 
-	if loved_gifts.has(gift_type):
-		base_change = 12
-	elif liked_gifts.has(gift_type):
-		base_change = 6
-	elif disliked_gifts.has(gift_type):
-		base_change = -8
+	match preference_level:
+		"loved":
+			base_change = 12
+		"liked":
+			base_change = 6
+		"neutral":
+			base_change = 1
+		"disliked":
+			base_change = -10
 
-	var luck_modifier: int = int(PlayerStats.luck / 5)
+	var luck_modifier: int = int(PlayerStats.luck / 5.0)
 	var result: int = base_change + luck_modifier
 
-	return clamp(result, -12, 15)
+	return clamp(result, -15, 15)
 
 func get_gift_response_text(affinity_change: int, current_affinity: int) -> String:
 	var dialogue_context: String = get_gift_dialogue_context(affinity_change)
@@ -295,7 +317,7 @@ func get_gift_dialogue_context(affinity_change: int) -> String:
 		return GameConstants.DIALOGUE_GIFT_LOVED
 	elif affinity_change > 1:
 		return GameConstants.DIALOGUE_GIFT_LIKED
-	elif affinity_change == 1:
+	elif affinity_change >= 0:
 		return GameConstants.DIALOGUE_GIFT_NEUTRAL
 	else:
 		return GameConstants.DIALOGUE_GIFT_DISLIKED
@@ -314,9 +336,14 @@ func can_receive_gift() -> bool:
 	return not RelationshipSystem.has_received_gift_today(npc_id)
 
 func unlock_gift_knowledge(gift_type: String, _affinity_change: int) -> void:
-	if loved_gifts.has(gift_type):
-		NpcKnowledgeSystem.unlock_fact(npc_id, "loved_gift_" + gift_type)
-	elif liked_gifts.has(gift_type):
-		NpcKnowledgeSystem.unlock_fact(npc_id, "liked_gift_" + gift_type)
-	elif disliked_gifts.has(gift_type):
-		NpcKnowledgeSystem.unlock_fact(npc_id, "disliked_gift_" + gift_type)
+	var preference_level: String = get_gift_preference_level(gift_type)
+
+	match preference_level:
+		"loved":
+			NpcKnowledgeSystem.unlock_fact(npc_id, "loved_gift_" + gift_type)
+		"liked":
+			NpcKnowledgeSystem.unlock_fact(npc_id, "liked_gift_" + gift_type)
+		"neutral":
+			NpcKnowledgeSystem.unlock_fact(npc_id, "neutral_gift_" + gift_type)
+		"disliked":
+			NpcKnowledgeSystem.unlock_fact(npc_id, "disliked_gift_" + gift_type)

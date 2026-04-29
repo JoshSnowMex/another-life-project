@@ -1,23 +1,26 @@
 {
   "lyria": {
-    "display_name": "Lyria",
-    "personality": "amable",
-    "loved_gifts": ["joya"],
-    "liked_gifts": ["flor", "libro"],
-    "disliked_gifts": ["extrano"]
+	"display_name": "Lyria",
+	"personality": "amable",
+	"loved_gifts": ["joya"],
+	"liked_gifts": ["flor", "libro"],
+	"neutral_gifts": ["comida", "artesania", "perfume"],
+	"disliked_gifts": ["extrano"]
   },
   "doran": {
-    "display_name": "Doran",
-    "personality": "grunon",
-    "loved_gifts": ["comida"],
-    "liked_gifts": ["artesania"],
-    "disliked_gifts": ["libro"]
+	"display_name": "Doran",
+	"personality": "grunon",
+	"loved_gifts": ["comida"],
+	"liked_gifts": ["artesania"],
+	"neutral_gifts": ["flor", "joya", "perfume"],
+	"disliked_gifts": ["libro", "extrano"]
   },
   "mira": {
-    "display_name": "Mira",
-    "personality": "impredecible",
-    "loved_gifts": ["libro"],
-    "liked_gifts": ["extrano", "flor"],
-    "disliked_gifts": ["comida"]
+	"display_name": "Mira",
+	"personality": "impredecible",
+	"loved_gifts": ["libro"],
+	"liked_gifts": ["extrano", "flor"],
+	"neutral_gifts": ["joya", "artesania", "perfume"],
+	"disliked_gifts": ["comida"]
   }
 }
