@@ -27,6 +27,14 @@ func _physics_process(_delta: float) -> void:
 		
 	if Input.is_action_just_pressed("next_day"):
 		TimeSystem.next_day()
+		
+	if Input.is_action_just_pressed("save_game"):
+		if SaveSystem.save_game():
+			print("Partida guardada.")
+
+	if Input.is_action_just_pressed("load_game"):
+		if SaveSystem.load_game():
+			print("Partida cargada.")
 
 	var direction: Vector2 = Vector2.ZERO
 
